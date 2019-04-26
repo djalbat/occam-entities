@@ -7,7 +7,6 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Examples](#examples)
 - [Building](#building)
 - [Contact](#contact)
 
