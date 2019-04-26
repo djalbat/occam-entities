@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This package provides a consistent interface to [Open](https://github.com/jecs-imperial/occam-open-cli)'s file and project functionality, as well as providing additional functionality to move and remove project entries.
+This package provides a consistent interface for the [`open`](https://github.com/jecs-imperial/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functionality to move and remove project entries.
 
 ## Installation
 
@@ -39,7 +39,7 @@ const paths = ...,
       projectsDirectoryPath = ...;
 
 loadFiles(paths, projectsDirectoryPath, function(files) {
-
+ ...
 });
 ```
 
