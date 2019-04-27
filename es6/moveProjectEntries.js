@@ -62,7 +62,7 @@ function moveFile(sourcePath, targetPath, projectsDirectoryPath, callback) {
   const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
         absoluteTargetPath = concatenatePaths(projectsDirectoryPath, targetPath);
 
-  move(absoluteSourcePath, absoluteTargetPath, function (error) {
+  move(absoluteSourcePath, absoluteTargetPath, function(error) {
     const success = !error; ///
     
     targetPath = success ?
@@ -83,7 +83,7 @@ function moveDirectory(sourcePath, targetPath, projectsDirectoryPath, callback) 
 
     callback(targetPath);
   } else {
-    move(absoluteSourcePath, absoluteTargetPath, function (error) {
+    move(absoluteSourcePath, absoluteTargetPath, function(error) {
       const success = !error; ///
 
       if (success) {
