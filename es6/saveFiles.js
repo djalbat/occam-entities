@@ -4,7 +4,7 @@ const open = require('occam-open-cli');
 
 const { Files } = open;
 
-function saveFiles(json, projectsDirectoryPath, callback) {
+function saveFiles(projectsDirectoryPath, json, callback) {
   const files = Files.fromJSON(json);
 
   files.save(projectsDirectoryPath);

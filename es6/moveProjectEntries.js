@@ -13,7 +13,7 @@ const { move, remove } = fsExtra,
       { DEST_ALREADY_EXISTS_MESSAGE } = constants,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
 
-function moveProjectEntries(pathMaps, projectsDirectoryPath, callback) {
+function moveProjectEntries(projectsDirectoryPath, pathMaps, callback) {
   const targetPaths = [];
 
   asynchronousForEach(

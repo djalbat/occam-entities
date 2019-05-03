@@ -11,7 +11,7 @@ const { remove } = fsExtra,
       { asynchronousForEach } = pathMapsUtilities,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
 
-function removeProjectEntries(pathMaps, projectsDirectoryPath, callback) {
+function removeProjectEntries(projectsDirectoryPath, pathMaps, callback) {
   const targetPaths = [];
 
   asynchronousForEach(
