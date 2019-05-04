@@ -1,15 +1,9 @@
 'use strict';
 
-const open = require('occam-open-cli');
-
-const { File } = open;
-
-function saveFile(projectsDirectoryPath, json, callback) {
-  const file = File.fromJSON(json);
-
+function saveFile(projectsDirectoryPath, file, callback) {
   file.save(projectsDirectoryPath);
 
-  const success = true;
+  const success = true; ///
 
   callback(success);
 }
