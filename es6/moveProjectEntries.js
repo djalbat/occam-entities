@@ -13,8 +13,9 @@ const { move, remove } = fsExtra,
       { DEST_ALREADY_EXISTS_MESSAGE } = constants,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
 
-function moveProjectEntries(projectsDirectoryPath, pathMaps, callback) {
-  const targetPaths = [];
+function moveProjectEntries(projectsDirectoryPath, json, callback) {
+  const { pathMaps } = json,
+		    targetPaths = [];
 
   asynchronousForEach(
     pathMaps,
@@ -26,7 +27,9 @@ function moveProjectEntries(projectsDirectoryPath, pathMaps, callback) {
       });
     },
     function() {
-      callback(targetPaths);
+    	const json = targetPaths; ///
+
+      callback(json);
     }
   );
 }

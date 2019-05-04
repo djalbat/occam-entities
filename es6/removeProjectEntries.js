@@ -11,8 +11,9 @@ const { remove } = fsExtra,
       { asynchronousForEach } = pathMapsUtilities,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
 
-function removeProjectEntries(projectsDirectoryPath, pathMaps, callback) {
-  const targetPaths = [];
+function removeProjectEntries(projectsDirectoryPath, json, callback) {
+  const { pathMaps } = json,
+		    targetPaths = [];
 
   asynchronousForEach(
     pathMaps,
@@ -24,7 +25,9 @@ function removeProjectEntries(projectsDirectoryPath, pathMaps, callback) {
       });
     },
     function() {
-      callback(targetPaths);
+    	const json = targetPaths; ///
+
+      callback(json);
     }
   );
 }
