@@ -9,7 +9,7 @@ function loadProjects(projectsDirectoryPath, json, callback) {
 		    { doNotLoadHiddenFilesAndDirectories } = json,
         projects = Projects.fromProjectsDirectoryPath(projectsDirectoryPath, allowOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories);
 
-  json = projects.toJSON();
+  json = projects.toJSON(); ///
 
   callback(json);
 }
