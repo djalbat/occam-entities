@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This package provides a consistent interface for the [`open`](https://github.com/jecs-imperial/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functionality to move and remove project entries.
+This package provides a consistent interface for the [`open`](https://github.com/jecs-imperial/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functions to move and remove project entries. Aside from these last two functions, it is unlikely to be of interest to anyone.
 
 ## Installation
 
@@ -32,20 +32,20 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 Look in the `es6/` directory for the function signatures. The exported functions are:
 
-* importProject()
-* saveFiles()
-* saveFile()
-* loadFile()
-* loadFiles()
-* loadProjects()
-* moveProjectEntries()
-* removeProjectEntries()
+* `importProject()`
+* `saveFiles()`
+* `saveFile()`
+* `loadFile()`
+* `loadFiles()`
+* `loadProjects()`
+* `moveProjectEntries()`
+* `removeProjectEntries()`
 
 Typical usage is shown below:
 
 ```js
 const open = require('occam-open-cli'), ///
-      filesystem = require('occam-file-system');    ///
+      filesystem = require('occam-file-system'); ///
 
 const { Files } = open,
       { loadFiles } = filesystem;
