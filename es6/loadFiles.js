@@ -9,7 +9,9 @@ function loadFiles(projectsDirectoryPath, json, callback) {
 		    paths = filePaths, ///
 		    files = Files.fromPaths(paths, projectsDirectoryPath);
 
-  json = files.toJSON();  ///
+  json = (files !== null) ? ///
+		       files.toJSON() :
+		         null;
 
   return callback(json);
 }
