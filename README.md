@@ -30,18 +30,42 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
+Look in the `es6/` directory for the function signatures. The exported functions are:
+
+* importProject()
+* saveFiles()
+* saveFile()
+* loadFile()
+* loadFiles()
+* loadProjects()
+* moveProjectEntries()
+* removeProjectEntries()
+
+Typical usage is shown below:
+
 ```js
-const filesystem = require('occam-file-system');
+const open = require('occam-open-cli'), ///
+      filesystem = require('occam-file-system');    ///
 
-const { loadFiles } = filesystem;
+const { Files } = open,
+      { loadFiles } = filesystem;
 
-const paths = ...,
-      projectsDirectoryPath = ...;
+const filePaths = ...,
+      projectsDirectoryPath = ...,
+      json = {
+        filePaths
+      };
 
-loadFiles(paths, projectsDirectoryPath, function(files) {
- ...
+loadFiles(projectsDirectoryPath, json, function(json) {
+ const files = (json !== null) ?
+                 Files.fromJSON(json) :
+                   null;
+
+  ...
 });
 ```
+
+Note that you get JSON back, not an instance of the `Files` class, and that that JSON might be `null`.
 
 ## Building
 
