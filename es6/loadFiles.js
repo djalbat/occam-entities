@@ -4,10 +4,14 @@ const open = require('occam-open-cli');
 
 const { Files } = open;
 
-function loadFiles(projectsDirectoryPath, paths, callback) {
-  const files = Files.fromPaths(paths, projectsDirectoryPath);
+function loadFiles(projectsDirectoryPath, json, callback) {
+  const { filePaths } = json,
+		    paths = filePaths, ///
+		    files = Files.fromPaths(paths, projectsDirectoryPath);
 
-  return callback(files);
+  json = files.toJSON();  ///
+
+  return callback(json);
 }
 
 module.exports = loadFiles;

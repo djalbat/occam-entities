@@ -9,9 +9,9 @@ function saveFile(projectsDirectoryPath, json, callback) {
 
   file.save(projectsDirectoryPath);
 
-  const success = true;
+  json = {};  ///
 
-  callback(success);
+  callback(json);
 }
 
 module.exports = saveFile;
