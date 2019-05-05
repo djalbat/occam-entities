@@ -1,13 +1,13 @@
 {
   "name": "occam-file-system",
   "author": "James Smith",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "license": "MIT",
-  "homepage": "https://github.com/occam-proof-assistant/occam-file-system",
+  "homepage": "https://github.com/jecs-imperial/occam-file-system",
   "description": "Occam's file system functionality.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/occam-proof-assistant/occam-file-system"
+    "url": "https://github.com/jecs-imperial/occam-file-system"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
