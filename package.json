@@ -12,7 +12,7 @@
   "dependencies": {
     "fs-extra": "^7.0.1",
     "necessary": "^3.1.2",
-    "occam-open-cli": "^2.0.13"
+    "occam-open-cli": "^2.0.14"
   },
   "devDependencies": {
     "babel": "^6.5.2",
