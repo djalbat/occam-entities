@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-	importProject: require('./lib/importProject'),
-	saveFiles: require('./lib/saveFiles'),
+  importProject: require('./lib/importProject'),
+  saveFiles: require('./lib/saveFiles'),
   saveFile: require('./lib/saveFile'),
   loadFile: require('./lib/loadFile'),
   loadFiles: require('./lib/loadFiles'),
