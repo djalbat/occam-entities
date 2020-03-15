@@ -30,6 +30,15 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
+```js
+const open = require('occam-open-cli'), ///
+      filesystem = require('occam-file-system'); ///
+
+const { Files } = open,
+      { loadFiles } = filesystem;
+
+...
+```
 Look in the `es6/` directory for the function signatures. The exported functions are:
 
 * `importProject()`
@@ -44,12 +53,6 @@ Look in the `es6/` directory for the function signatures. The exported functions
 Typical usage is shown below:
 
 ```js
-const open = require('occam-open-cli'), ///
-      filesystem = require('occam-file-system'); ///
-
-const { Files } = open,
-      { loadFiles } = filesystem;
-
 const filePaths = ...,
       projectsDirectoryPath = ...,
       json = {
@@ -57,9 +60,9 @@ const filePaths = ...,
       };
 
 loadFiles(projectsDirectoryPath, json, function(json) {
- const files = (json !== null) ?
-                 Files.fromJSON(json) :
-                   null;
+  const files = (json !== null) ?
+                  Files.fromJSON(json) :
+                    null;
 
   ...
 });
