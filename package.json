@@ -1,10 +1,10 @@
 {
   "name": "@jecs-imperial/occam-file-system",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "dependencies": {
     "fs-extra": "^7.0.1",
     "necessary": "^3.1.2",
-    "occam-open-cli": "^2.0.74"
+    "occam-open-cli": "^2.0.75"
   },
   "devDependencies": {},
   "scripts": {
