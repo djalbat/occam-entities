@@ -41,7 +41,6 @@ const { Files } = open,
 ```
 Look in the `es6/` directory for the function signatures. The exported functions are:
 
-* `importProject()`
 * `saveFiles()`
 * `saveFile()`
 * `loadFile()`
