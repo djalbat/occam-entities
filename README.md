@@ -1,6 +1,6 @@
 # File system
 
-[Occam](https://github.com/jecs-imperial/occam)'s file system functionality.
+[Occam](https://github.com/djalbat/occam)'s file system functionality.
 
 ### Contents
 
@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This package provides a consistent interface for the [`open`](https://github.com/jecs-imperial/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functions to move and remove project entries. Aside from these last two functions, it is unlikely to be of interest to anyone.
+This package provides a consistent interface for the [`open`](https://github.com/djalbat/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functions to move and remove project entries. Aside from these last two functions, it is unlikely to be of interest to anyone.
 
 ## Installation
 
@@ -22,7 +22,7 @@ With [npm](https://www.npmjs.com/):
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/jecs-imperial/occam-file-system.git
+    git clone https://github.com/djalbat/occam-file-system.git
 
 ...and then install the dependencies with npm from within the project's root directory:
 
@@ -76,4 +76,3 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 ## Contact
 
 * james.smith@openmathematics.org
-* http://djalbat.com
