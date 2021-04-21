@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = {
+  postUtilities: require("./lib/utilities/post"),
   saveFiles: require("./lib/saveFiles"),
   saveFile: require("./lib/saveFile"),
   loadFile: require("./lib/loadFile"),
