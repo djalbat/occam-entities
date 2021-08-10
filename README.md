@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This package provides a consistent interface for the [`open`](https://github.com/djalbat/occam-open-cli) command line tool's own file and project functionality, as well as providing additional functions to move and remove project entries. Aside from these last two functions, it is unlikely to be of interest to anyone.
+This package pulls out Occam's file and project functionality as well as providing additional functions to move and remove project entries.
 
 ## Installation
 
