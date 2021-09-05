@@ -1,7 +1,7 @@
 {
   "name": "occam-file-system",
   "author": "James Smith",
-  "version": "3.1.4",
+  "version": "3.1.6",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/occam-file-system",
   "description": "Occam's file system functionality.",
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./lib",
-    "watchful": "watchful -m --transpiler=swc --source-directory=./src --lib-directory=./lib --pause=100",
+    "watchful": "watchful -m --transpiler=swc --source-directory=./src --lib-directory=./lib",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",
