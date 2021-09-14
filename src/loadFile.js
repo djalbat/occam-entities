@@ -2,12 +2,12 @@
 
 import { fileSystemUtilities } from "occam-open-cli";
 
-const { fileFromPath } = fileSystemUtilities;
+const { loadFile: loadFileEx } = fileSystemUtilities;
 
 export default function loadFile(projectsDirectoryPath, json, callback) {
   const { filePath } = json,
         path = filePath,  ///
-        file = fileFromPath(path, projectsDirectoryPath);
+        file = loadFileEx(path, projectsDirectoryPath);
 
   json = (file !== null) ?  ///
            file.toJSON():
