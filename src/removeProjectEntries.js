@@ -1,8 +1,8 @@
 "use strict";
 
+import { remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
-import { remove } from "./utilities/fileSystem";
 import { asynchronousForEach } from "./utilities/pathMaps";
 
 const { concatenatePaths } = pathUtilities,
@@ -29,35 +29,39 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
   );
 }
 
-function removeEntry(sourcePath, targetPath, projectsDirectoryPath, callback) {
+export function removeEntry(sourcePath, targetPath, projectsDirectoryPath, callback) {
   if (sourcePath === targetPath) {
     callback(targetPath);
-  } else {
-    const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
-          entryExists = checkEntryExists(absoluteSourcePath);
 
-    if (!entryExists) {
-      targetPath = null;
-
-      callback(targetPath);
-    } else {
-      const entryDirectory = isEntryDirectory(absoluteSourcePath);
-
-      entryDirectory ?
-        removeDirectory(sourcePath, projectsDirectoryPath, callback) :
-          removeFile(sourcePath, projectsDirectoryPath, callback);
-    }
+    return;
   }
+
+  const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
+        entryExists = checkEntryExists(absoluteSourcePath);
+
+  if (!entryExists) {
+    targetPath = null;
+
+    callback(targetPath);
+
+    return;
+  }
+
+  const entryDirectory = isEntryDirectory(absoluteSourcePath);
+
+  entryDirectory ?
+    removeDirectory(sourcePath, projectsDirectoryPath, callback) :
+      removeFile(sourcePath, projectsDirectoryPath, callback);
 }
 
 function removeFile(sourcePath, projectsDirectoryPath, callback) {
   const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath);
 
   remove(absoluteSourcePath, (error) => {
-    const success = !error, ///
+    const success = !error,
           targetPath = success ?
                          null :
-                           sourcePath;
+                           sourcePath;  ///
 
     callback(targetPath);
   });
@@ -71,14 +75,16 @@ function removeDirectory(sourcePath, projectsDirectoryPath, callback) {
     const targetPath = sourcePath;  ///
 
     callback(targetPath);
-  } else {
-    remove(absoluteSourcePath, (error) => {
-      const success = !error, ///
-            targetPath = success ?
-                            null :
-                              sourcePath;
 
-      callback(targetPath);
-    });
+    return;
   }
+
+  remove(absoluteSourcePath, (error) => {
+    const success = !error,
+          targetPath = success ?
+                          null :
+                            sourcePath; ///
+
+    callback(targetPath);
+  });
 }

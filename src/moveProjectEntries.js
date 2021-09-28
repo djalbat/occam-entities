@@ -1,10 +1,10 @@
 "use strict";
 
+import { move } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
-import { move, remove } from "./utilities/fileSystem";
+import { removeEntry } from "./removeProjectEntries";
 import { asynchronousForEach } from "./utilities/pathMaps";
-import { DEST_ALREADY_EXISTS_MESSAGE } from "./constants";
 
 const { concatenatePaths } = pathUtilities,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
@@ -30,29 +30,46 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
   );
 }
 
-function moveEntry(sourcePath, targetPath, projectsDirectoryPath, callback) {
+export function moveEntry(sourcePath, targetPath, projectsDirectoryPath, callback) {
   if (targetPath === null) {
-    callback(targetPath);
-  } else {
-    if (sourcePath === targetPath) {
-      callback(targetPath);
-    } else {
-      const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
-            entryExists = checkEntryExists(absoluteSourcePath);
+    removeEntry(sourcePath, targetPath, projectsDirectoryPath, callback);
 
-      if (!entryExists) {
-        targetPath = null;
-
-        callback(targetPath);
-      } else {
-        const entryDirectory = isEntryDirectory(absoluteSourcePath);
-
-        entryDirectory ?
-          moveDirectory(sourcePath, targetPath, projectsDirectoryPath, callback) :
-            moveFile(sourcePath, targetPath, projectsDirectoryPath, callback);
-      }
-    }
+    return;
   }
+
+  if (sourcePath === targetPath) {
+    callback(targetPath);
+
+    return;
+  }
+
+  const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
+        sourceEntryExists = checkEntryExists(absoluteSourcePath);
+
+  if (!sourceEntryExists) {
+    targetPath = null;
+
+    callback(targetPath);
+
+    return;
+  }
+
+  const absoluteTargetPath = concatenatePaths(projectsDirectoryPath, targetPath),
+        targetEntryExists = checkEntryExists(absoluteTargetPath);
+
+  if (targetEntryExists) {
+    targetPath = sourcePath;  ///
+
+    callback(targetPath);
+
+    return;
+  }
+
+  const entryDirectory = isEntryDirectory(absoluteSourcePath);
+
+  entryDirectory ?
+    moveDirectory(sourcePath, targetPath, projectsDirectoryPath, callback) :
+      moveFile(sourcePath, targetPath, projectsDirectoryPath, callback);
 }
 
 function moveFile(sourcePath, targetPath, projectsDirectoryPath, callback) {
@@ -60,11 +77,11 @@ function moveFile(sourcePath, targetPath, projectsDirectoryPath, callback) {
         absoluteTargetPath = concatenatePaths(projectsDirectoryPath, targetPath);
 
   move(absoluteSourcePath, absoluteTargetPath, (error) => {
-    const success = !error; ///
+    const success = !error;
     
     targetPath = success ?
                    targetPath :
-                     sourcePath;
+                     sourcePath;  ///
 
     callback(targetPath);
   });
@@ -76,34 +93,20 @@ function moveDirectory(sourcePath, targetPath, projectsDirectoryPath, callback) 
         directoryEmpty = isDirectoryEmpty(absoluteSourcePath);
 
   if (!directoryEmpty) {
-    const targetPath = sourcePath;
+    const targetPath = sourcePath;  ///
 
     callback(targetPath);
-  } else {
-    move(absoluteSourcePath, absoluteTargetPath, (error) => {
-      const success = !error; ///
 
-      if (success) {
-        callback(targetPath);
-      } else {
-        const { message } = error;
-
-        if (message !== DEST_ALREADY_EXISTS_MESSAGE) {
-          const targetPath = sourcePath;
-
-          callback(targetPath);
-        } else {
-          remove(absoluteSourcePath, (error) => {
-            const success = !error; ///
-
-            if (!success) {
-              targetPath = sourcePath;
-            }
-
-            callback(targetPath);
-          });
-        }
-      }
-    });
+    return;
   }
+
+  move(absoluteSourcePath, absoluteTargetPath, (error) => {
+    const success = !error;
+
+    targetPath = success ?
+                   targetPath :
+                     sourcePath;  ///
+
+    callback(targetPath);
+  });
 }
