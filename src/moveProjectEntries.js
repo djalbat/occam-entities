@@ -1,8 +1,8 @@
 "use strict";
 
-import { move, remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
+import { move, remove } from "./utilities/fileSystem";
 import { asynchronousForEach } from "./utilities/pathMaps";
 import { DEST_ALREADY_EXISTS_MESSAGE } from "./constants";
 

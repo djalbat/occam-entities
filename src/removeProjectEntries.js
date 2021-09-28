@@ -1,8 +1,8 @@
 "use strict";
 
-import { remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
+import { remove } from "./utilities/fileSystem";
 import { asynchronousForEach } from "./utilities/pathMaps";
 
 const { concatenatePaths } = pathUtilities,
@@ -68,7 +68,7 @@ function removeDirectory(sourcePath, projectsDirectoryPath, callback) {
         directoryEmpty = isDirectoryEmpty(absoluteSourcePath);
 
   if (!directoryEmpty) {
-    const targetPath = sourcePath;
+    const targetPath = sourcePath;  ///
 
     callback(targetPath);
   } else {
