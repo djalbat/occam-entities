@@ -8,9 +8,9 @@ export function asynchronousForEach(pathMaps, callback, done) {
   forEach(
     pathMaps,
     (pathMap, next, done, context, index) => {
-      const { sourcePath, targetPath, directory } = pathMap;
+      const { sourceEntryPath, targetEntryPath, entryDirectory } = pathMap;
 
-      callback(sourcePath, targetPath, directory, next, done, index);
+      callback(sourceEntryPath, targetEntryPath, entryDirectory, next, done, index);
     },
     done
   );

@@ -10,81 +10,81 @@ const { concatenatePaths } = pathUtilities,
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
-		    targetPaths = [];
+		    targetEntryPaths = [];
 
   asynchronousForEach(
     pathMaps,
-    (sourcePath, targetPath, directory, next, done, index) => {
-      removeEntry(sourcePath, targetPath, projectsDirectoryPath, (targetPath) => {
-        targetPaths.push(targetPath);
+    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
+      removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (targetEntryPath) => {
+        targetEntryPaths.push(targetEntryPath);
 
         next();
       });
     },
     () => {
-    	const json = targetPaths; ///
+    	const json = targetEntryPaths; ///
 
       callback(json);
     }
   );
 }
 
-export function removeEntry(sourcePath, targetPath, projectsDirectoryPath, callback) {
-  if (sourcePath === targetPath) {
-    callback(targetPath);
+export function removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+  if (sourceEntryPath === targetEntryPath) {
+    callback(targetEntryPath);
 
     return;
   }
 
-  const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
-        entryExists = checkEntryExists(absoluteSourcePath);
+  const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
+        entryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!entryExists) {
-    targetPath = null;
+    targetEntryPath = null;
 
-    callback(targetPath);
+    callback(targetEntryPath);
 
     return;
   }
 
-  const entryDirectory = isEntryDirectory(absoluteSourcePath);
+  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
-    removeDirectory(sourcePath, projectsDirectoryPath, callback) :
-      removeFile(sourcePath, projectsDirectoryPath, callback);
+    removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) :
+      removeFile(sourceEntryPath, projectsDirectoryPath, callback);
 }
 
-function removeFile(sourcePath, projectsDirectoryPath, callback) {
-  const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath);
+function removeFile(sourceEntryPath, projectsDirectoryPath, callback) {
+  const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath);
 
-  remove(absoluteSourcePath, (error) => {
+  remove(absoluteSourceEntryPath, (error) => {
     const success = !error,
-          targetPath = success ?
-                         null :
-                           sourcePath;  ///
+          targetEntryPath = success ?
+                              null :
+                                sourceEntryPath;  ///
 
-    callback(targetPath);
+    callback(targetEntryPath);
   });
 }
 
-function removeDirectory(sourcePath, projectsDirectoryPath, callback) {
-  const absoluteSourcePath = concatenatePaths(projectsDirectoryPath, sourcePath),
-        directoryEmpty = isDirectoryEmpty(absoluteSourcePath);
+function removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) {
+  const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
+        directoryEmpty = isDirectoryEmpty(absoluteSourceEntryPath);
 
   if (!directoryEmpty) {
-    const targetPath = sourcePath;  ///
+    const targetEntryPath = sourceEntryPath;  ///
 
-    callback(targetPath);
+    callback(targetEntryPath);
 
     return;
   }
 
-  remove(absoluteSourcePath, (error) => {
+  remove(absoluteSourceEntryPath, (error) => {
     const success = !error,
-          targetPath = success ?
+          targetEntryPath = success ?
                           null :
-                            sourcePath; ///
+                            sourceEntryPath; ///
 
-    callback(targetPath);
+    callback(targetEntryPath);
   });
 }
