@@ -107,7 +107,7 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
       const success = !error;
 
       targetEntryPath = success ?
-                          null :
+                          targetEntryPath :
                             sourceEntryPath;  ///
 
       callback(targetEntryPath);
