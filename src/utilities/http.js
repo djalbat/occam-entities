@@ -4,21 +4,28 @@ import { Readable } from "stream";
 
 import { requestUtilities } from "necessary";
 
-const { post: postEx } = requestUtilities;
+const { request: makeRequest } = requestUtilities;
 
-import { END, DATA, OKAY_200, EMPTY_STRING, CONTENT_LENGTH } from "../constants";
+import { POST_METHOD } from "../methods";
+import { OKAY_200_STATUS_CODE } from "../statusCodes";
+import { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../contentTypes"
+import { END, DATA, EMPTY_STRING, CONTENT_TYPE, CONTENT_LENGTH } from "../constants";
 
 export function post(host, uri, parameters, json, callback) {
 	const content = JSON.stringify(json),	///
-				contentLength = content.length,
-				headers = {};
+				method = POST_METHOD,
+				headers = {},
+				contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE,
+				contentLength = content.length;
+
+	headers[CONTENT_TYPE] = contentType;
 
 	headers[CONTENT_LENGTH] = contentLength;
 
-	const request = postEx(host, uri, parameters, headers, (error, response) => {
+	const request = makeRequest(host, uri, parameters, method, headers, (error, response) => {
 					const { statusCode } = response;
 
-					error = error || (statusCode !== OKAY_200);
+					error = error || (statusCode !== OKAY_200_STATUS_CODE);
 
 					if (error) {
 						const json = null;
