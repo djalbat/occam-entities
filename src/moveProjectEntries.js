@@ -49,8 +49,7 @@ export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPat
   }
 
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath),
-        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
     targetEntryPath = null;
@@ -59,6 +58,8 @@ export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPat
 
     return;
   }
+
+  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
     moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
