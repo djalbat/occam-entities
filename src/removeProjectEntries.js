@@ -10,19 +10,24 @@ const { concatenatePaths } = pathUtilities,
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
+        sourceEntryPaths = [],
 		    targetEntryPaths = [];
 
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (targetEntryPath) => {
+      removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
         next();
       });
     },
     () => {
-    	const json = targetEntryPaths; ///
+    	const json = {
+        sourceEntryPaths,
+        targetEntryPaths
+      }
 
       callback(json);
     }
@@ -31,7 +36,7 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
 
 export function removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   if (sourceEntryPath === targetEntryPath) {
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
@@ -40,9 +45,9 @@ export function removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryP
         entryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!entryExists) {
-    targetEntryPath = null;
+    const targetEntryPath = null;
 
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
@@ -58,12 +63,17 @@ function removeFile(sourceEntryPath, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath);
 
   remove(absoluteSourceEntryPath, (error) => {
-    const success = !error,
-          targetEntryPath = success ?
-                              null :
-                                sourceEntryPath;  ///
+    const targetEntryPath = null;
 
-    callback(targetEntryPath);
+    if (error) {
+      const sourceEntryPath = null;
+
+      callback(sourceEntryPath, targetEntryPath);
+
+      return;
+    }
+
+    callback(sourceEntryPath, targetEntryPath);
   });
 }
 
@@ -72,19 +82,25 @@ function removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) {
         directoryEmpty = isDirectoryEmpty(absoluteSourceEntryPath);
 
   if (!directoryEmpty) {
-    const targetEntryPath = sourceEntryPath;  ///
+    const sourceEntryPath = null,
+          targetEntryPath = null;
 
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
 
   remove(absoluteSourceEntryPath, (error) => {
-    const success = !error,
-          targetEntryPath = success ?
-                          null :
-                            sourceEntryPath; ///
+    const targetEntryPath = null;
 
-    callback(targetEntryPath);
+    if (error) {
+      const sourceEntryPath = null;
+
+      callback(sourceEntryPath, targetEntryPath);
+
+      return;
+    }
+
+    callback(sourceEntryPath, targetEntryPath);
   });
 }

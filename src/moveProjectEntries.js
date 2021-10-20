@@ -11,19 +11,24 @@ const { concatenatePaths } = pathUtilities,
 
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
+        sourceEntryPaths = [],
 		    targetEntryPaths = [];
 
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (targetEntryPath) => {
+      moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
         next();
       });
     },
     () => {
-    	const json = targetEntryPaths; ///
+    	const json = {
+        sourceEntryPaths,
+        targetEntryPaths
+      };
 
       callback(json);
     }
@@ -38,7 +43,7 @@ export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPat
   }
 
   if (sourceEntryPath === targetEntryPath) {
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
@@ -48,9 +53,9 @@ export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPat
         entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
-    targetEntryPath = null;
+    const targetEntryPath = null;
 
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
@@ -68,21 +73,23 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
-    targetEntryPath = sourceEntryPath;  ///
+    const sourceEntryPath = null;
 
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
 
   move(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
-    const success = !error;
-    
-    targetEntryPath = success ?
-                        targetEntryPath :
-                          sourceEntryPath;  ///
+    if (error) {
+      const sourceEntryPath = null;
 
-    callback(targetEntryPath);
+      callback(sourceEntryPath, targetEntryPath);
+
+      return;
+    }
+
+    callback(sourceEntryPath, targetEntryPath);
   });
 }
 
@@ -95,34 +102,38 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
         directoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
   if (!directoryEmpty) {
-    targetEntryPath = sourceEntryPath;  ///
+    const sourceEntryPath = null;
 
-    callback(targetEntryPath);
+    callback(sourceEntryPath, targetEntryPath);
 
     return;
   }
 
   if (targetDirectoryExists) {
     remove(absoluteSourceDirectoryPath, (error) => {
-      const success = !error;
+      if (error) {
+        const sourceEntryPath = null;
 
-      targetEntryPath = success ?
-                          targetEntryPath :
-                            sourceEntryPath;  ///
+        callback(sourceEntryPath, targetEntryPath);
 
-      callback(targetEntryPath);
+        return;
+      }
+
+      callback(sourceEntryPath, targetEntryPath);
     });
 
     return;
   }
 
   move(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
-    const success = !error;
+    if (error) {
+      const sourceEntryPath = null;
 
-    targetEntryPath = success ?
-                        targetEntryPath :
-                          sourceEntryPath;  ///
+      callback(sourceEntryPath, targetEntryPath);
 
-    callback(targetEntryPath);
+      return;
+    }
+
+    callback(sourceEntryPath, targetEntryPath);
   });
 }
