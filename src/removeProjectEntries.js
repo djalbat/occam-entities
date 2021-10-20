@@ -45,7 +45,7 @@ export function removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryP
         entryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!entryExists) {
-    const targetEntryPath = null;
+    targetEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -66,7 +66,7 @@ function removeFile(sourceEntryPath, projectsDirectoryPath, callback) {
     const targetEntryPath = null;
 
     if (error) {
-      const sourceEntryPath = null;
+      sourceEntryPath = null;
 
       callback(sourceEntryPath, targetEntryPath);
 
@@ -82,8 +82,9 @@ function removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) {
         directoryEmpty = isDirectoryEmpty(absoluteSourceEntryPath);
 
   if (!directoryEmpty) {
-    const sourceEntryPath = null,
-          targetEntryPath = null;
+    const targetEntryPath = null;
+
+    sourceEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -94,11 +95,7 @@ function removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) {
     const targetEntryPath = null;
 
     if (error) {
-      const sourceEntryPath = null;
-
-      callback(sourceEntryPath, targetEntryPath);
-
-      return;
+      sourceEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);

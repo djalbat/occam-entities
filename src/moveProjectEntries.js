@@ -53,7 +53,7 @@ export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPat
         entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
-    const targetEntryPath = null;
+    targetEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -73,7 +73,7 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
-    const sourceEntryPath = null;
+    sourceEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -82,11 +82,7 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
 
   move(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
     if (error) {
-      const sourceEntryPath = null;
-
-      callback(sourceEntryPath, targetEntryPath);
-
-      return;
+      sourceEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);
@@ -102,7 +98,7 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
         directoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
   if (!directoryEmpty) {
-    const sourceEntryPath = null;
+    sourceEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -112,11 +108,7 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
   if (targetDirectoryExists) {
     remove(absoluteSourceDirectoryPath, (error) => {
       if (error) {
-        const sourceEntryPath = null;
-
-        callback(sourceEntryPath, targetEntryPath);
-
-        return;
+        sourceEntryPath = null;
       }
 
       callback(sourceEntryPath, targetEntryPath);
@@ -127,11 +119,7 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
 
   move(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
     if (error) {
-      const sourceEntryPath = null;
-
-      callback(sourceEntryPath, targetEntryPath);
-
-      return;
+      sourceEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);
