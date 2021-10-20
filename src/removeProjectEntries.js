@@ -79,9 +79,9 @@ function removeFile(sourceEntryPath, projectsDirectoryPath, callback) {
 
 function removeDirectory(sourceEntryPath, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        directoryEmpty = isDirectoryEmpty(absoluteSourceEntryPath);
+        sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceEntryPath);
 
-  if (!directoryEmpty) {
+  if (!sourceDirectoryEmpty) {
     const targetEntryPath = null;
 
     sourceEntryPath = null;

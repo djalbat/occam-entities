@@ -96,9 +96,9 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
         absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
         absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath),
-        directoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
+        sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
-  if (!directoryEmpty) {
+  if (!sourceDirectoryEmpty) {
     sourceEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
