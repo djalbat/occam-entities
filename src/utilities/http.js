@@ -8,19 +8,16 @@ const { request: makeRequest } = requestUtilities;
 
 import { POST_METHOD } from "../methods";
 import { OKAY_200_STATUS_CODE } from "../statusCodes";
+import { END, DATA, EMPTY_STRING, CONTENT_TYPE } from "../constants";
 import { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../contentTypes"
-import { END, DATA, EMPTY_STRING, CONTENT_TYPE, CONTENT_LENGTH } from "../constants";
 
 export function post(host, uri, query, json, callback) {
 	const content = JSON.stringify(json),	///
 				method = POST_METHOD,
 				headers = {},
-				contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE,
-				contentLength = content.length;
+				contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE;
 
 	headers[CONTENT_TYPE] = contentType;
-
-	headers[CONTENT_LENGTH] = contentLength;
 
 	const request = makeRequest(host, uri, query, method, headers, (error, response) => {
 					const { statusCode } = response;
