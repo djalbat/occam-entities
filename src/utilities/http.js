@@ -35,11 +35,11 @@ export function post(host, uri, query, json, callback) {
 						return;
 					}
 
-					bodyFromResponse(response, (body) => {
+					contentFromResponse(response, (content) => {
 						let json = null;
 
 						try {
-							json = JSON.parse(body);
+							json = JSON.parse(content);
 						} catch (error) {}	///
 
 						callback(json);
@@ -54,14 +54,14 @@ export default {
 	post
 };
 
-function bodyFromResponse(response, callback) {
-	let body = EMPTY_STRING;
+function contentFromResponse(response, callback) {
+	let content = EMPTY_STRING;
 
 	response.on(DATA, (data) => {
-		body += data;
+		content += data;
 	});
 
 	response.on(END, () => {
-		callback(body);
+		callback(content);
 	});
 }
