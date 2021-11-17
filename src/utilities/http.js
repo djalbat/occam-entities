@@ -20,9 +20,15 @@ export function post(host, uri, query, json, callback) {
 	headers[CONTENT_TYPE] = contentType;
 
 	const request = makeRequest(host, uri, query, method, headers, (error, response) => {
-					const { statusCode } = response;
+					if (response === null) {
+						error = true;
+					} else {
+						const { statusCode } = response;
 
-					error = error || (statusCode !== OKAY_200_STATUS_CODE);
+						if (statusCode !== OKAY_200_STATUS_CODE) {
+							error = true;
+						}
+					}
 
 					if (error) {
 						const json = null;
