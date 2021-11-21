@@ -4,7 +4,7 @@ import { Readable } from "stream";
 
 import { requestUtilities } from "necessary";
 
-const { request: makeRequest } = requestUtilities;
+const { request: createRequest } = requestUtilities;
 
 import { POST_METHOD } from "../methods";
 import { OKAY_200_STATUS_CODE } from "../statusCodes";
@@ -19,7 +19,7 @@ export function post(host, uri, query, json, callback) {
 
 	headers[CONTENT_TYPE] = contentType;
 
-	const request = makeRequest(host, uri, query, method, headers, (error, response) => {
+	const request = createRequest(host, uri, query, method, headers, (error, response) => {
 					if (response === null) {
 						error = true;
 					} else {
