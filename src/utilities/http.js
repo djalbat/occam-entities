@@ -4,7 +4,7 @@ import { Readable } from "stream";
 
 import { requestUtilities } from "necessary";
 
-const { request: createRequest } = requestUtilities;
+const { createRequest } = requestUtilities;
 
 import { POST_METHOD } from "../methods";
 import { OKAY_200_STATUS_CODE } from "../statusCodes";
