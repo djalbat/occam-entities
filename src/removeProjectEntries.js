@@ -16,7 +16,7 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+      removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
         sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
@@ -34,7 +34,7 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
   );
 }
 
-export function removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+export function removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   if (sourceEntryPath === targetEntryPath) {
     callback(sourceEntryPath, targetEntryPath);
 

@@ -3,8 +3,8 @@
 import { move, remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
-import { removeEntry } from "./removeProjectEntries";
 import { asynchronousForEach } from "./utilities/pathMaps";
+import { removeEntryOperation } from "./removeProjectEntries";
 
 const { concatenatePaths } = pathUtilities,
       { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
@@ -17,7 +17,7 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+      moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
         sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
@@ -35,9 +35,9 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
   );
 }
 
-export function moveEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   if (targetEntryPath === null) {
-    removeEntry(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+    removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 
     return;
   }
