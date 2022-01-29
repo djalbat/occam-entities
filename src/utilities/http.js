@@ -2,14 +2,15 @@
 
 import { Readable } from "stream";
 
-import { requestUtilities } from "necessary";
+import { methods, headers, contentTypes, statusCodes, requestUtilities } from "necessary";
 
-const { createRequest } = requestUtilities;
+import { END, DATA, EMPTY_STRING } from "../constants";
 
-import { POST_METHOD } from "../methods";
-import { OKAY_200_STATUS_CODE } from "../statusCodes";
-import { END, DATA, EMPTY_STRING, CONTENT_TYPE } from "../constants";
-import { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../contentTypes"
+const { POST_METHOD } = methods,
+      { createRequest } = requestUtilities,
+      { OK_200_STATUS_CODE } = statusCodes,
+      { CONTENT_TYPE_HEADER } = headers,
+      { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } = contentTypes;
 
 export function post(host, uri, query, json, callback) {
 	const content = JSON.stringify(json),	///
@@ -17,7 +18,7 @@ export function post(host, uri, query, json, callback) {
 				headers = {},
 				contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE;
 
-	headers[CONTENT_TYPE] = contentType;
+	headers[CONTENT_TYPE_HEADER] = contentType;
 
 	const request = createRequest(host, uri, query, method, headers, (error, response) => {
 					if (response === null) {
@@ -25,7 +26,7 @@ export function post(host, uri, query, json, callback) {
 					} else {
 						const { statusCode } = response;
 
-						if (statusCode !== OKAY_200_STATUS_CODE) {
+						if (statusCode !== OK_200_STATUS_CODE) {
 							error = true;
 						}
 					}
