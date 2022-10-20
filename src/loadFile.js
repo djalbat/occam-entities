@@ -1,8 +1,6 @@
 "use strict";
 
-import { fileSystemUtilities } from "occam-open-cli";
-
-const { loadFile: loadFileEx } = fileSystemUtilities;
+import { loadFile as loadFileEx } from "./utilities/fileSystem"
 
 export default function loadFile(projectsDirectoryPath, json, callback) {
   const { filePath } = json,

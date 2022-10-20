@@ -1,8 +1,6 @@
 "use strict";
 
-import { File, fileSystemUtilities } from "occam-open-cli";
-
-const { saveFile: saveFileEx } = fileSystemUtilities;
+import { saveFile as saveFileEx } from "./utilities/fileSystem"
 
 export default function saveFile(projectsDirectoryPath, json, callback) {
   const file = File.fromJSON(json);
