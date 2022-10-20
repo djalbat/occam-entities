@@ -2,8 +2,8 @@
 
 import mkdirp from "mkdirp";
 
-import { pathUtilities, entriesUtilities, fileSystemUtilities } from "necessary";
-import { File, Files, Project, Projects, nameUtilities, contentUtilities } from "occam-open-cli";
+import { pathUtilities, fileSystemUtilities } from "necessary";
+import { File, Files, Project, Projects, nameUtilities, entriesUtilities, contentUtilities } from "occam-open-cli";
 
 const { isNameHiddenName } = nameUtilities,
       { convertContentTabsToWhitespace } = contentUtilities,
