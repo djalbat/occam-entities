@@ -3,10 +3,10 @@
 import mkdirp from "mkdirp";
 
 import { pathUtilities, fileSystemUtilities } from "necessary";
-import { File, Files, Project, Projects, nameUtilitlies, contentUtiltiies } from "occam-open-cli";
+import { File, Files, Project, Projects, nameUtilitlies, contentUtilities } from "occam-open-cli";
 
 const { isNameHiddenName } = nameUtilitlies,
-      { convertContentTabsToWhitespace } = contentUtiltiies,
+      { convertContentTabsToWhitespace } = contentUtilities,
       { concatenatePaths, topmostDirectoryPathFromPath } = pathUtilities,
       { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities;
 
