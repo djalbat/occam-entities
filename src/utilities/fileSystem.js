@@ -2,11 +2,12 @@
 
 import mkdirp from "mkdirp";
 
-import { pathUtilities, fileSystemUtilities } from "necessary";
+import { pathUtilities, entriesUtilities, fileSystemUtilities } from "necessary";
 import { File, Files, Project, Projects, nameUtilities, contentUtilities } from "occam-open-cli";
 
 const { isNameHiddenName } = nameUtilities,
       { convertContentTabsToWhitespace } = contentUtilities,
+      { entriesFromTopmostDirectoryName } = entriesUtilities,
       { concatenatePaths, topmostDirectoryPathFromPath } = pathUtilities,
       { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities;
 
