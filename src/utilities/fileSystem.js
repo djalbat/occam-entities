@@ -144,7 +144,7 @@ export function loadReleases(projectsDirectoryPath) {
     topmostFileNames.forEach((topmostFileName) => {
       const release = loadRelease(topmostFileName, projectsDirectoryPath);
 
-      if (release 1== null) {
+      if (release !== null) {
         releases.addRelease(release);
       }
     });
