@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This package pulls out Occam's file and project functionality as well as providing additional functions to move and remove project entries.
+Occam's file system functionality.
 
 ## Installation
 
@@ -32,10 +32,10 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 The exported functions are:
 
-* `saveFiles()`
-* `saveFile()`
 * `loadFile()`
+* `saveFile()`
 * `loadFiles()`
+* `saveFiles()`
 * `loadProjects()`
 * `moveProjectEntries()`
 * `removeProjectEntries()`
@@ -64,7 +64,7 @@ loadFiles(projectsDirectoryPath, json, function(json) {
 });
 ```
 
-Note that you get JSON back, not an instance of the `Files` class, and that that JSON might be `null`.
+Note that you get JSON back, not an instance of the `Files` class, and that JSON might be `null`.
 
 ## Building
 

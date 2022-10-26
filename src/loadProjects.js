@@ -9,7 +9,7 @@ export default function loadProjects(projectsDirectoryPath, json, callback) {
 
   json = (projects !== null) ?  ///
             projects.toJSON():
-                null;
+              null;
 
   callback(json);
 }
