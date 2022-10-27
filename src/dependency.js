@@ -28,7 +28,7 @@ export default class Dependency {
     return json;
   }
 
-  fromJSON(json) {
+  static fromJSON(json) {
     const { name } = json;
 
     let { shortenedVersion } = json;
