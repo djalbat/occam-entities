@@ -1,5 +1,7 @@
 "use strict";
 
+import { MetaJSONLexer, MetaJSONParser } from "occam-grammars";
+
 import Version from "../version";
 import Dependency from "../dependency";
 import Dependencies from "../dependencies";
@@ -8,7 +10,9 @@ import ShortenedVersion from "../shortenedVersion";
 import { trimDoubleQuotes } from "../utilities/content";
 import { nodeQuery, nodesQuery } from "../utilities/query";
 
-const dependencyNodesQuery = nodesQuery("//dependencies/dependency"),
+const metaJSONLexer = MetaJSONLexer.fromNothing(),
+      metaJSONParser = MetaJSONParser.fromNothing(),
+      dependencyNodesQuery = nodesQuery("//dependencies/dependency"),
       repositoryTerminalNodeQuery = nodeQuery("//repository!/@*!"),
       versionNumberTerminalNodeQuery = nodeQuery("//version!/versionNumber!/@*!"),
       dependencyNameTerminalNodeQuery = nodeQuery("/dependency/name!/@*!"),
@@ -73,6 +77,15 @@ export function dependencyNamesFromNode(node) {
         });
 
   return dependencyNames;
+}
+
+export function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
+  const content = metaJSONFile.getContent(),
+        tokens = metaJSONLexer.tokenise(content),
+        node = metaJSONParser.parse(tokens),
+        metaJSONNode = node;  ///
+
+  return metaJSONNode;
 }
 
 export default {

@@ -7,6 +7,9 @@ import Dependencies from "./dependencies";
 import entriesMixins from "./mixins/entries";
 import patternMixins from "./mixins/pattern";
 
+import { metaJSONFileFromFiles } from "./utilities/files";
+import { repositoryFromNode, dependenciesFromNode, metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
+
 class Project {
   constructor(name, entries, repository, dependencies) {
     this.name = name;
@@ -73,9 +76,9 @@ class Project {
 
     dependencies = Dependencies.fromJSON(json);
 
-    const release = new Project(name, entries, repository, dependencies);
+    const project = new Project(name, entries, repository, dependencies);
 
-    return release;
+    return project;
   }
 
   static fromName(name) {
@@ -87,7 +90,24 @@ class Project {
     return project;
   }
 
-  static fromNameEntriesRepositoryAndDependencies(name, entries, repository, dependencies) {
+  static fromNameAndEntries(name, entries) {
+    const files = entries.getFiles(),
+          metaJSONFile = metaJSONFileFromFiles(files);
+
+    let repository = null,
+        dependencies = Dependencies.fromNothing();
+
+    if (metaJSONFile !== null) {
+      const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+
+      if (metaJSONNode !== null) {
+        const node = metaJSONNode;  ///
+
+        repository = repositoryFromNode(node);
+        dependencies = dependenciesFromNode(node);
+      }
+    }
+
     const project = new Project(name, entries, repository, dependencies);
 
     return project;

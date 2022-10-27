@@ -8,6 +8,9 @@ import Dependencies from "./dependencies";
 import entriesMixins from "./mixins/entries";
 import patternMixins from "./mixins/pattern";
 
+import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
+import { versionFromNode, repositoryFromNode, dependenciesFromNode, metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
+
 class Release {
   constructor(name, entries, version, repository, dependencies) {
     this.name = name;
@@ -92,8 +95,25 @@ class Release {
     return release;
   }
 
-  static fromNameEntriesVersionRepositoryAndDependencies(name, entries, version, repository, dependencies) {
-    const release = new Release(name, entries, version, repository, dependencies);
+  static fromNameAndEntries(name, entries) {
+    let release = null;
+
+    const files = entries.getFiles(),
+          readmeFile = readmeFileFromFiles(files),
+          metaJSONFile = metaJSONFileFromFiles(files);
+
+    if ((readmeFile !== null) && (metaJSONFile !== null)) {
+      const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+
+      if (metaJSONNode !== null) {
+        const node = metaJSONNode,  ///
+              version = versionFromNode(node),
+              repository = repositoryFromNode(node),
+              dependencies = dependenciesFromNode(node);
+
+        release = new Release(name, entries, version, repository, dependencies);
+      }
+    }
 
     return release;
   }

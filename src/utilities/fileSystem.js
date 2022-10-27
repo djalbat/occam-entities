@@ -2,7 +2,6 @@
 
 import mkdirp from "mkdirp";
 
-import { MetaJSONLexer, MetaJSONParser } from "occam-grammars";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
 import File from "../file";
@@ -16,14 +15,9 @@ import Directory from "../directory";
 import { isNameHiddenName } from "../utilities/name";
 import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
-import { metaJSONFileFromFiles, readmeFileFromFiles } from "../utilities/files";
-import { versionFromNode, repositoryFromNode, dependenciesFromNode } from "./metaJSON";
 
 const { concatenatePaths, topmostDirectoryPathFromPath } = pathUtilities,
       { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities;
-
-const metaJSONLexer = MetaJSONLexer.fromNothing(),
-      metaJSONParser = MetaJSONParser.fromNothing();
 
 export function loadFile(path, projectsDirectoryPath) {
   let file = null;
@@ -85,27 +79,10 @@ export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnl
 }
 
 export function loadRelease(topmostDirectoryName, projectsDirectoryPath) {
-  let release = null;
-
   const name = topmostDirectoryName,  ///
         loadOnlyRecognisedFiles = true,
         entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
-        files = entries.getFiles(),
-        readmeFile = readmeFileFromFiles(files),
-        metaJSONFile = metaJSONFileFromFiles(files);
-
-  if ((readmeFile !== null) && (metaJSONFile !== null)) {
-    const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
-
-    if (metaJSONNode !== null) {
-      const node = metaJSONNode,  ///
-            version = versionFromNode(node),
-            repository = repositoryFromNode(node),
-            dependencies = dependenciesFromNode(node);
-
-      release = Release.fromNameEntriesVersionRepositoryAndDependencies(name, entries, version, repository, dependencies);
-    }
-  }
+        release = Release.fromNameAndEntries(name, entries);
 
   return release;
 }
@@ -113,21 +90,7 @@ export function loadRelease(topmostDirectoryName, projectsDirectoryPath) {
 export function loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const name = topmostDirectoryName,  ///
         entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
-        files = entries.getFiles(),
-        metaJSONFile = metaJSONFileFromFiles(files);
-
-  let repository = null,
-      dependencies = [];
-
-  if (metaJSONFile !== null) {
-    const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-          node = metaJSONNode;
-
-    repository = repositoryFromNode(node);
-    dependencies = dependenciesFromNode(node);
-  }
-
-  const project = Project.fromNameEntriesRepositoryAndDependencies(name, entries, repository, dependencies);
+        project = Project.fromNameAndEntries(name, entries);
 
   return project;
 }
@@ -186,15 +149,6 @@ export function loadDirectory(path, projectsDirectoryPath) {
   }
 
   return directory;
-}
-
-function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
-  const content = metaJSONFile.getContent(),
-        tokens = metaJSONLexer.tokenise(content),
-        node = metaJSONParser.parse(tokens),
-        metaJSONNode = node;  ///
-
-  return metaJSONNode;
 }
 
 function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles) {
