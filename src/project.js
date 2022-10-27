@@ -63,7 +63,7 @@ class Project {
 
     dependencies = Dependencies.fromJSON(json);
 
-    const release = new Release(name, entries, repository, dependencies);
+    const release = new Project(name, entries, repository, dependencies);
 
     return release;
   }
