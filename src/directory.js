@@ -36,6 +36,12 @@ export default class Directory {
 
   static type = DIRECTORY_TYPE;
 
+  static fromPath(path) {
+    const directory = new Directory(path);
+
+    return directory;
+  }
+
   static fromJSON(json) {
     let directory = null;
 
