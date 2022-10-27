@@ -14,3 +14,4 @@ export { default as ShortenedVersion } from "./shortenedVersion";
 
 export { default as contentUtilities } from "./utilities/content";
 export { default as filePathUtilities } from "./utilities/filePath";
+export { default as metaJSONUtilities } from "./utilities/metaJSON";
