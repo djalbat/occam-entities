@@ -12,7 +12,7 @@ export default class Dependencies {
   }
 
   mapDependency(callback) {
-    this.array.map(callback);
+    return this.array.map(callback);
   }
 
   toJSON() {

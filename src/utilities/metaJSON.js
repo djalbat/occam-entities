@@ -65,12 +65,12 @@ export function dependenciesFromNode(node) {
 }
 
 export function dependencyNamesFromNode(node) {
-  const dependencies = this.dependenciesFromNode(node),
+  const dependencies = dependenciesFromNode(node),
         dependencyNames = dependencies.mapDependency((dependency) => {
           const dependencyName = dependency.getName();
 
           return dependencyName;
-        })
+        });
 
   return dependencyNames;
 }
