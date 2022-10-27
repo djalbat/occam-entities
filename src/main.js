@@ -13,6 +13,7 @@ export { default as ShortenedVersion } from "./shortenedVersion";
 
 export { default as httpUtilities } from "./utilities/http";
 export { default as contentUtilities } from "./utilities/content";
+export { default as filePathUtilities } from "./utilities/filePath";
 export { default as metaJSONUtilities } from "./utilities/metaJSON";
 
 export { default as loadFile } from "./loadFile";

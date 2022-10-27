@@ -13,7 +13,6 @@ import Projects from "../projects";
 import Releases from "../releases";
 import Directory from "../directory";
 
-import { PERIOD } from "../constants";
 import { isNameHiddenName } from "../utilities/name";
 import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
@@ -85,7 +84,7 @@ export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnl
   return entries;
 }
 
-export function loadRelease(topmostDirectoryName, projectsDirectoryPath = PERIOD) {
+export function loadRelease(topmostDirectoryName, projectsDirectoryPath) {
   let release = null;
 
   const name = topmostDirectoryName,  ///

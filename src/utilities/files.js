@@ -93,11 +93,3 @@ export function customGrammarPatternFilesFromFiles(files) {
 
   return customGrammarPatternFiles;
 }
-
-export default {
-  readmeFileFromFiles,
-  metaJSONFileFromFiles,
-  florenceFilesFromFiles,
-  customGrammarBNFFilesFromFiles,
-  customGrammarPatternFilesFromFiles
-};

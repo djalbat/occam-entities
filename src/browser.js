@@ -11,4 +11,6 @@ export { default as Dependency } from "./dependency";
 export { default as Dependencies } from "./dependencies";
 export { default as ShortenedVersion } from "./shortenedVersion";
 
+
 export { default as contentUtilities } from "./utilities/content";
+export { default as filePathUtilities } from "./utilities/filePath";

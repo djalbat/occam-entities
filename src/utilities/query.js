@@ -29,8 +29,3 @@ export function nodesQuery(expression) {
     return nodes;
   };
 }
-
-export default {
-  nodeQuery,
-  nodesQuery
-};

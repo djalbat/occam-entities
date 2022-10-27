@@ -19,8 +19,3 @@ export function fileNameFromFilePath(filePath) {
 
   return fileName;
 }
-
-export default {
-  isNameHiddenName,
-  fileNameFromFilePath
-};
