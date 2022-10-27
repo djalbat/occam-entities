@@ -76,11 +76,11 @@ export function saveFiles(files, projectsDirectoryPath) {
   });
 }
 
-export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories) {
+export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const entries = Entries.fromNothing(),
         relativeDirectoryPath = topmostDirectoryName;  ///
 
-  entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories);
+  entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
   return entries;
 }
@@ -90,8 +90,7 @@ export function loadRelease(topmostDirectoryName, projectsDirectoryPath = PERIOD
 
   const name = topmostDirectoryName,  ///
         loadOnlyRecognisedFiles = true,
-        doNotLoadHiddenFilesAndDirectories = true,
-        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories),
+        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
         files = entries.getFiles(),
         readmeFile = readmeFileFromFiles(files),
         metaJSONFile = metaJSONFileFromFiles(files);
@@ -112,9 +111,9 @@ export function loadRelease(topmostDirectoryName, projectsDirectoryPath = PERIOD
   return release;
 }
 
-export function loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories) {
+export function loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const name = topmostDirectoryName,  ///
-        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories),
+        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
         files = entries.getFiles(),
         metaJSONFile = metaJSONFileFromFiles(files);
 
@@ -155,15 +154,15 @@ export function loadReleases(projectsDirectoryPath) {
   return releases;
 }
 
-export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories) {
+export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
   let projects;
 
   try {
     const projects = Projects.fromNothing(),
-          topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath, doNotLoadHiddenFilesAndDirectories);
+          topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
 
     topmostDirectoryNames.forEach((topmostDirectoryName) => {
-      const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories);
+      const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
       projects.addProject(project);
     });
@@ -200,17 +199,15 @@ function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
   return metaJSONNode;
 }
 
-function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories) {
+function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const absoluteDirectoryPath = concatenatePaths(projectsDirectoryPath, relativeDirectoryPath),
         subEntryNames = readDirectory(absoluteDirectoryPath);
 
   subEntryNames.forEach((subEntryName) => {
     const subEntryNameHiddenName = isNameHiddenName(subEntryName),
-          subEntryNameNotHiddenName = !subEntryNameHiddenName,
-          loadHiddenFilesAndDirectories = !doNotLoadHiddenFilesAndDirectories,
           loadUnrecognisedFilesAndDirectories = !loadOnlyRecognisedFiles;
 
-    if (subEntryNameNotHiddenName || loadHiddenFilesAndDirectories) {
+    if (!subEntryNameHiddenName) {
       const path = concatenatePaths(relativeDirectoryPath, subEntryName),
             directory = loadDirectory(path, projectsDirectoryPath);
 
@@ -221,7 +218,7 @@ function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projec
           entries.addDirectory(directory);
         }
 
-        entriesFromRelativeDirectoryPath(entries, directoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories); ///
+        entriesFromRelativeDirectoryPath(entries, directoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles); ///
       } else {
         const file = loadFile(path, projectsDirectoryPath);
 
@@ -246,10 +243,9 @@ function topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath) {
 
   topmostFileNames = subEntryNames.reduce((topmostFileNames, subEntryName) => {
     const absoluteSubEntryPath = concatenatePaths(projectsDirectoryPath, subEntryName),
-          subEntryNameHiddenName = isNameHiddenName(subEntryName),
-          subEntryNameNotHiddenName = !subEntryNameHiddenName;
+          subEntryNameHiddenName = isNameHiddenName(subEntryName);
 
-    if (subEntryNameNotHiddenName) {
+    if (!subEntryNameHiddenName) {
       const subEntryFile = isEntryFile(absoluteSubEntryPath);
 
       if (subEntryFile) {
@@ -265,18 +261,16 @@ function topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath) {
   return topmostFileNames;
 }
 
-function topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath, doNotLoadHiddenFilesAndDirectories) {
+function topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath) {
   let topmostDirectoryNames;
 
   const subEntryNames = readDirectory(projectsDirectoryPath);
 
   topmostDirectoryNames = subEntryNames.reduce((topmostDirectoryNames, subEntryName) => {
     const absoluteSubEntryPath = concatenatePaths(projectsDirectoryPath, subEntryName),
-          subEntryNameHiddenName = isNameHiddenName(subEntryName),
-          subEntryNameNotHiddenName = !subEntryNameHiddenName,
-          loadHiddenFilesAndDirectories = !doNotLoadHiddenFilesAndDirectories;
+          subEntryNameHiddenName = isNameHiddenName(subEntryName);
 
-    if (subEntryNameNotHiddenName || loadHiddenFilesAndDirectories) {
+    if (!subEntryNameHiddenName) {
       const subEntryDirectory = isEntryDirectory(absoluteSubEntryPath);
 
       if (subEntryDirectory) {
