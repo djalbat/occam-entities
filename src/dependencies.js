@@ -11,6 +11,10 @@ export default class Dependencies {
     this.array.push(dependency);
   }
 
+  mapDependency(callback) {
+    this.array.map(callback);
+  }
+
   toJSON() {
     const dependenciesJSON = this.array.map((dependency) => {
             const dependencyJSON = dependency.toJSON();

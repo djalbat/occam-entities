@@ -2,6 +2,7 @@
 
 import Version from "../version";
 import Dependency from "../dependency";
+import Dependencies from "../dependencies";
 import ShortenedVersion from "../shortenedVersion";
 
 import { trimDoubleQuotes } from "../utilities/content";
@@ -41,7 +42,7 @@ export function repositoryFromNode(node) {
 }
 
 export function dependenciesFromNode(node) {
-  const dependencies = [];
+  const dependencies = Dependencies.fromNothing();
 
   if (node !== null) {
     const dependencyNodes = dependencyNodesQuery(node);
@@ -56,7 +57,7 @@ export function dependenciesFromNode(node) {
             shortenedVersion = ShortenedVersion.fromString(string),
             dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
 
-      dependencies.push(dependency);
+      dependencies.addDependency(dependency);
     });
   }
 
@@ -65,7 +66,7 @@ export function dependenciesFromNode(node) {
 
 export function dependencyNamesFromNode(node) {
   const dependencies = this.dependenciesFromNode(node),
-        dependencyNames = dependencies.map((dependency) => {
+        dependencyNames = dependencies.mapDependency((dependency) => {
           const dependencyName = dependency.getName();
 
           return dependencyName;
