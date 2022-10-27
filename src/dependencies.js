@@ -19,6 +19,10 @@ export default class Dependencies {
     return this.array.every(callback);
   }
 
+  forEachDependency(callback) {
+    this.array.forEach(callback);
+  }
+
   toJSON() {
     const dependenciesJSON = this.array.map((dependency) => {
             const dependencyJSON = dependency.toJSON();
