@@ -31,6 +31,16 @@ class Project {
     return this.dependencies;
   }
 
+  getDependencyNames() {
+    const dependencyNames = this.dependendies.mapDependency((dependency) => {
+      const dependencyName = dependency.getName();
+
+      return dependencyName;
+    });
+
+    return dependencyNames;
+  }
+
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
           dependenciesJSON = this.dependencies.toJSON(),

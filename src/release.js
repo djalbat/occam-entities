@@ -37,6 +37,16 @@ class Release {
     return this.dependendies;
   }
 
+  getDependencyNames() {
+    const dependencyNames = this.dependendies.mapDependency((dependency) => {
+      const dependencyName = dependency.getName();
+
+      return dependencyName;
+    });
+
+    return dependencyNames;
+  }
+
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
           versionJSON = this.version.toJSON(),
