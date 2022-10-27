@@ -12,7 +12,7 @@ class Project {
     this.name = name;
     this.entries = entries;
     this.repository = repository;
-    this.dependendies = dependencies;
+    this.dependencies = dependencies;
   }
 
   getName() {
@@ -28,12 +28,12 @@ class Project {
   }
 
   getDependencies() {
-    return this.dependendies;
+    return this.dependencies;
   }
 
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
-          dependenciesJSON = this.dependendies.toJSON(),
+          dependenciesJSON = this.dependencies.toJSON(),
           name = this.name,
           entries = entriesJSON,  ///
           repository = this.repository,
