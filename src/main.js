@@ -15,6 +15,7 @@ export { default as httpUtilities } from "./utilities/http";
 export { default as contentUtilities } from "./utilities/content";
 export { default as filePathUtilities } from "./utilities/filePath";
 export { default as metaJSONUtilities } from "./utilities/metaJSON";
+export { default as fileSystemUtilities } from "./utilities/fileSystem";
 
 export { default as loadFile } from "./loadFile";
 export { default as saveFile } from "./saveFile";

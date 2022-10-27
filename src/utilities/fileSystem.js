@@ -151,6 +151,19 @@ export function loadDirectory(path, projectsDirectoryPath) {
   return directory;
 }
 
+export default {
+  loadFile,
+  saveFile,
+  loadFiles,
+  saveFiles,
+  loadEntries,
+  loadRelease,
+  loadProject,
+  loadReleases,
+  loadProjects,
+  loadDirectory
+};
+
 function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const absoluteDirectoryPath = concatenatePaths(projectsDirectoryPath, relativeDirectoryPath),
         subEntryNames = readDirectory(absoluteDirectoryPath);
