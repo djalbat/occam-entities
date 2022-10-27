@@ -44,6 +44,10 @@ class Project {
     return dependencyNames;
   }
 
+  getFilePaths() { return this.entries.getFilePaths(); }
+
+  getFile(filePath) { return this.entries.getFile(filePath); }
+
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
           dependenciesJSON = this.dependencies.toJSON(),
