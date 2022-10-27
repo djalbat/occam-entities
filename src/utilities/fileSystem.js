@@ -8,6 +8,7 @@ import File from "../file";
 import Files from "../files";
 import Entries from "../entries";
 import Project from "../project";
+import Release from "../release";
 import Projects from "../projects";
 import Releases from "../releases";
 import Directory from "../directory";
