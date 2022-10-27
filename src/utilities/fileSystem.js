@@ -154,11 +154,10 @@ export function loadReleases(projectsDirectoryPath) {
 }
 
 export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  let projects;
+  let projects = Projects.fromNothing();
 
   try {
-    const projects = Projects.fromNothing(),
-          topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
+    const topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
 
     topmostDirectoryNames.forEach((topmostDirectoryName) => {
       const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
