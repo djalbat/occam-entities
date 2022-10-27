@@ -4,8 +4,7 @@ import { loadProjects as loadProjectsEx } from "./utilities/fileSystem";
 
 export default function loadProjects(projectsDirectoryPath, json, callback) {
   const loadOnlyRecognisedFiles = false, ///
-        { doNotLoadHiddenFilesAndDirectories } = json,
-        projects = loadProjectsEx(projectsDirectoryPath, loadOnlyRecognisedFiles, doNotLoadHiddenFilesAndDirectories);
+        projects = loadProjectsEx(projectsDirectoryPath, loadOnlyRecognisedFiles);
 
   json = (projects !== null) ?  ///
             projects.toJSON():
