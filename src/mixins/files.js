@@ -6,6 +6,17 @@ import { readmeFileFromFiles,
          customGrammarBNFFilesFromFiles,
          customGrammarPatternFilesFromFiles } from "../utilities/files";
 
+function getFilePaths() {
+  const files = this.getFiles(),
+        filePaths = files.map((file) => {
+          const filePath = file.getPath();
+
+          return filePath;
+        });
+
+  return filePaths;
+}
+
 function getReadmeFile() {
   const files = this.getFiles(),
         readmeFile = readmeFileFromFiles(files);
@@ -42,6 +53,7 @@ function getCustomGrammarPatternFiles() {
 }
 
 const filesMixins = {
+  getFilePaths,
   getReadmeFile,
   getMetaJSONFile,
   getFlorenceFiles,
