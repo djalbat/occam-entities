@@ -24,9 +24,9 @@ export function versionFromNode(node) {
   if (node !== null) {
     const versionNumberTerminalNode = versionNumberTerminalNodeQuery(node),
           versionNumberTerminalNodeContent = versionNumberTerminalNode.getContent(),
-          versionNumber = trimDoubleQuotes(versionNumberTerminalNodeContent); //
+          string = trimDoubleQuotes(versionNumberTerminalNodeContent); //
 
-    version = Version.fromVersionNumber(versionNumber);
+    version = Version.fromString(string);
   }
 
   return version;
