@@ -39,7 +39,7 @@ export default class Version {
     this.patchNumber += 1;
   }
 
-  matchesShortenedVersion(shortenedVersion) {
+  matchShortenedVersion(shortenedVersion) {
     let matchesShortenedVersion = false;
 
     const majorNumber = shortenedVersion.getMajorNumber();

@@ -54,7 +54,7 @@ class Release {
 
   getFile(filePath) { return this.entries.getFile(filePath); }
 
-  matchesShortenedVersion(shortenedVersion) { return this.version.matchesShortenedVersion(shortenedVersion); }
+  matchShortenedVersion(shortenedVersion) { return this.version.matchShortenedVersion(shortenedVersion); }
 
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
