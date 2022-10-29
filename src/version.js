@@ -39,6 +39,22 @@ export default class Version {
     this.patchNumber += 1;
   }
 
+  matchesShortenedVersion(shortenedVersion) {
+    let matchesShortenedVersion = false;
+
+    const majorNumber = shortenedVersion.getMajorNumber();
+
+    if (this.majorNumber === majorNumber) {
+      const minorNumber = shortenedVersion.getMinorNumber();
+
+      if (this.minorNumber >= minorNumber) {
+        matchesShortenedVersion = true;
+      }
+    }
+
+    return matchesShortenedVersion;
+  }
+
   asNumber() {
     const number = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER + this.patchNumber * PATCH_NUMBER_MULTIPLIER;
 

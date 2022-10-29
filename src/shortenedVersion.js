@@ -23,22 +23,6 @@ export default class ShortenedVersion {
     return number;
   }
 
-  matchVersion(version) {
-    let versionMatches = false;
-
-    const majorNumber = version.getMajorNumber();
-
-    if (this.majorNumber === majorNumber) {
-      const minorNumber = version.getMinorNumber();
-
-      if (this.minorNumber >= minorNumber) {
-        versionMatches = true;
-      }
-    }
-
-    return versionMatches;
-  }
-
   toString() {
     const string = `${this.majorNumber}.${this.minorNumber}`;
 

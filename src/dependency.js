@@ -16,8 +16,6 @@ export default class Dependency {
     return this.shortenedVersion;
   }
 
-  matchVersion(version) { return this.shortenedVersion.matchVersion(version); }
-
   toJSON() {
     const shortenedVersionJSON = this.shortenedVersion.toJSON(),
           name = this.name,
