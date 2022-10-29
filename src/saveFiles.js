@@ -1,5 +1,7 @@
 "use strict";
 
+import Files from "./files";
+
 import { saveFiles as saveFilesEx } from "./utilities/fileSystem"
 
 export default function saveFiles(projectsDirectoryPath, json, callback) {
