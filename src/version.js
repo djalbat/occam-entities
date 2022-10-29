@@ -42,13 +42,17 @@ export default class Version {
   matchShortenedVersion(shortenedVersion) {
     let matchesShortenedVersion = false;
 
-    const majorNumber = shortenedVersion.getMajorNumber();
+    if (shortenedVersion === null) {
+      matchesShortenedVersion = true;
+    } else {
+      const majorNumber = shortenedVersion.getMajorNumber();
 
-    if (this.majorNumber === majorNumber) {
-      const minorNumber = shortenedVersion.getMinorNumber();
+      if (this.majorNumber === majorNumber) {
+        const minorNumber = shortenedVersion.getMinorNumber();
 
-      if (this.minorNumber >= minorNumber) {
-        matchesShortenedVersion = true;
+        if (this.minorNumber >= minorNumber) {
+          matchesShortenedVersion = true;
+        }
       }
     }
 
