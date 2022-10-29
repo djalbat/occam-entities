@@ -19,6 +19,10 @@ export default class Dependencies {
     return this.array.every(callback);
   }
 
+  reduceDependency(callback, initialValue) {
+    return this.array.reduce(callback, initialValue);
+  }
+
   forEachDependency(callback) {
     this.array.forEach(callback);
   }
