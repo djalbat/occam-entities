@@ -2,6 +2,7 @@
 
 import Dependency from "./dependency";
 
+
 export default class Dependencies {
   constructor(array) {
     this.array = array;

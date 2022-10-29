@@ -1,10 +1,7 @@
 "use strict";
 
-import { arrayUtilities } from "necessary";
-
 import { MAJOR_NUMBER_MULTIPLIER, MINOR_NUMBER_MULTIPLIER } from "./multiplers";
-
-const { second } = arrayUtilities;
+import { majorNumberFromNumber, minorNumberFromNumber, majorNumberFromString, minorNumberFromString } from "./utilities/version";
 
 export default class ShortenedVersion {
   constructor(majorNumber, minorNumber) {
@@ -82,46 +79,4 @@ export default class ShortenedVersion {
 
     return shortenedVersion;
   }
-}
-
-function majorNumberFromNumber(number) {
-  const majorNumber = (number !== null) ?
-                        Math.floor(number / MAJOR_NUMBER_MULTIPLIER) :
-                          0;  ///
-
-  return majorNumber;
-}
-
-function minorNumberFromNumber(number) {
-  const minorNumber = (number !== null) ?
-                        Math.floor(number / MINOR_NUMBER_MULTIPLIER) :
-                          0;  ///
-
-  return minorNumber;
-}
-
-function majorNumberFromString(string) {
-  let majorNumber = 0;
-
-  if (string) {
-    const matches = string.match(/^(\d+)\.\d+$/),
-          secondMatch = second(matches);
-
-    majorNumber = secondMatch;  ///
-  }
-
-  return majorNumber;
-}
-
-function minorNumberFromString(string) {
-  let minorNumber = 0;
-
-  if (string) {
-    const matches = string.match(/^\d+\.(\d+)$/),
-          secondMatch = second(matches);
-
-    minorNumber = secondMatch;  ///
-  }
-
-  return minorNumber;
 }
