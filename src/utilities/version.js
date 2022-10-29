@@ -34,7 +34,7 @@ export function majorNumberFromString(string) {
   let majorNumber = 0;
 
   if (string) {
-    const matches = string.match(/^(\d+)\.\d+\.\d+$/),
+    const matches = string.match(/^(\d+)/),
           secondMatch = second(matches);
 
     majorNumber = Number(secondMatch);  ///
@@ -47,7 +47,7 @@ export function minorNumberFromString(string) {
   let minorNumber = 0;
 
   if (string) {
-    const matches = string.match(/^\d+\.(\d+)\.\d+$/),
+    const matches = string.match(/^\d+\.(\d+)/),
           secondMatch = second(matches);
 
     minorNumber = Number(secondMatch);  ///
@@ -60,7 +60,7 @@ export function patchNumberFromString(string) {
   let patchNumber = 0;
 
   if (string) {
-    const matches = string.match(/^\d+\.\d+\.(\d+)$/),
+    const matches = string.match(/^\d+\.\d+\.(\d+)/),
           secondMatch = second(matches);
 
     patchNumber = Number(secondMatch);  ///
