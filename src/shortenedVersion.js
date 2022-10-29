@@ -2,6 +2,8 @@
 
 import { arrayUtilities } from "necessary";
 
+import { MAJOR_NUMBER_MULTIPLIER, MINOR_NUMBER_MULTIPLIER } from "./multiplers";
+
 const { second } = arrayUtilities;
 
 export default class ShortenedVersion {
@@ -18,16 +20,32 @@ export default class ShortenedVersion {
     return this.minorNumber;
   }
 
+  asNumber() {
+    const number = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER;
+
+    return number;
+  }
+
+  matchVersion(version) {
+    let versionMatches = false;
+
+    const majorNumber = version.getMajorNumber();
+
+    if (this.majorNumber === majorNumber) {
+      const minorNumber = version.getMinorNumber();
+
+      if (this.minorNumber >= minorNumber) {
+        versionMatches = true;
+      }
+    }
+
+    return versionMatches;
+  }
+
   toString() {
     const string = `${this.majorNumber}.${this.minorNumber}`;
 
     return string;
-  }
-
-  asNumber() {
-    const number = this.majorNumber * 1e12 + this.minorNumber * 1e6; ///
-
-    return number;
   }
 
   toJSON() {
@@ -68,7 +86,7 @@ export default class ShortenedVersion {
 
 function majorNumberFromNumber(number) {
   const majorNumber = (number !== null) ?
-                        Math.floor(number / 1e12) :
+                        Math.floor(number / MAJOR_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return majorNumber;
@@ -76,7 +94,7 @@ function majorNumberFromNumber(number) {
 
 function minorNumberFromNumber(number) {
   const minorNumber = (number !== null) ?
-                        Math.floor(number / 1e6) :
+                        Math.floor(number / MINOR_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return minorNumber;

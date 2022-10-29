@@ -2,6 +2,8 @@
 
 import { arrayUtilities } from "necessary";
 
+import { MAJOR_NUMBER_MULTIPLIER, MINOR_NUMBER_MULTIPLIER, PATCH_NUMBER_MULTIPLIER } from "./multiplers";
+
 const { second } = arrayUtilities;
 
 export default class Version {
@@ -35,16 +37,16 @@ export default class Version {
     this.patchNumber += 1;
   }
 
+  asNumber() {
+    const number = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER + this.patchNumber * PATCH_NUMBER_MULTIPLIER;
+
+    return number;
+  }
+
   toString() {
     const string = `${this.majorNumber}.${this.minorNumber}.${this.patchNumber}`;
 
     return string;
-  }
-
-  asNumber() {
-    const number = this.majorNumber * 1e12 + this.minorNumber * 1e6 + this.patchNumber * 1e0; ///
-
-    return number;
   }
 
   toJSON() {
@@ -89,7 +91,7 @@ export default class Version {
 
 function majorNumberFromNumber(number) {
   const majorNumber = (number !== null) ?
-                        Math.floor(number / 1e12) :
+                        Math.floor(number / MAJOR_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return majorNumber;
@@ -97,7 +99,7 @@ function majorNumberFromNumber(number) {
 
 function minorNumberFromNumber(number) {
   const minorNumber = (number !== null) ?
-                        Math.floor(number / 1e6) :
+                        Math.floor(number / MINOR_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return minorNumber;
@@ -105,7 +107,7 @@ function minorNumberFromNumber(number) {
 
 function patchNumberFromNumber(number) {
   const patchNumber = (number !== null) ?
-                        Math.floor(number / 1e0) :
+                        Math.floor(number / PATCH_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return patchNumber;
