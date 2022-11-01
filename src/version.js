@@ -100,6 +100,16 @@ export default class Version {
     return version;
   }
 
+  static fromVersion(version) {
+    const majorNumber = version.getMajorNumber(),
+          minorNumber = version.getMinorNumber(),
+          patchNumber = version.getPatchNumber();
+
+    version = new Version(majorNumber, minorNumber, patchNumber); ///
+
+    return version;
+  }
+
   static fromVersionNumber(versionNumber) {
     const number = versionNumber, ///
           majorNumber = majorNumberFromNumber(number),
