@@ -36,11 +36,11 @@ class Release {
     let repository = this.getRepository(),
         dependencies = this.getDependencies();
 
-    const versionJSON = version.toJSON(),
+    const versionString = version.toString(),
           repositoryJSON = repository,  ///
           dependenciesJSON = dependencies.toJSON();
 
-    version = versionJSON;  ///
+    version = versionString;  ///
     repository = repositoryJSON;  ///
     dependencies = dependenciesJSON;  ///
 

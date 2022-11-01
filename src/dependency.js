@@ -17,9 +17,9 @@ export default class Dependency {
   }
 
   toJSON() {
-    const shortenedVersionJSON = this.shortenedVersion.toJSON(),
+    const shortenedVersionString = this.shortenedVersion.toString(),
           name = this.name,
-          shortenedVersion = shortenedVersionJSON,  ///
+          shortenedVersion = shortenedVersionString,  ///
           json = {
             name,
             shortenedVersion
