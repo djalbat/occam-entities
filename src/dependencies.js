@@ -1,7 +1,10 @@
 "use strict";
 
+import { asynchronousUtilities } from "necessary";
+
 import Dependency from "./dependency";
 
+const { forEach } = asynchronousUtilities;
 
 export default class Dependencies {
   constructor(array) {
@@ -27,6 +30,8 @@ export default class Dependencies {
   forEachDependency(callback) {
     this.array.forEach(callback);
   }
+
+  asynchronousForEachDependency(operation, done) { forEach(this.array, operation, done); }
 
   toJSON() {
     const dependenciesJSON = this.array.map((dependency) => {
