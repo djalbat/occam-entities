@@ -29,7 +29,12 @@ class Release {
 
   getFile(filePath) { return this.entries.getFile(filePath); }
 
-  matchShortenedVersion(shortenedVersion) { return this.version.matchShortenedVersion(shortenedVersion); }
+  matchShortenedVersion(shortenedVersion) {
+    const version = this.getVersion(),
+          versionMatchesShortenedVersion = version.matchShortenedVersion(shortenedVersion);
+
+    return versionMatchesShortenedVersion;
+  }
 
   updateVersion(version) {
     let repository = this.getRepository(),
