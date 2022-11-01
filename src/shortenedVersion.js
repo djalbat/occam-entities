@@ -29,24 +29,6 @@ export default class ShortenedVersion {
     return string;
   }
 
-  toJSON() {
-    const majorNumber = this.majorNumber,
-          minorNumber = this.minorNumber,
-          json = {
-            majorNumber,
-            minorNumber
-          };
-
-    return json;
-  }
-
-  static fromJSON(json) {
-    const { majorNumber, minorNumber } = json,
-          shortenedVersion = new ShortenedVersion(majorNumber, minorNumber);
-
-    return shortenedVersion;
-  }
-
   static fromString(string) {
     const majorNumber = majorNumberFromString(string),
           minorNumber = minorNumberFromString(string),

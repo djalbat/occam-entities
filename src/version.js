@@ -71,26 +71,6 @@ export default class Version {
     return string;
   }
 
-  toJSON() {
-    const majorNumber = this.majorNumber,
-          minorNumber = this.minorNumber,
-          patchNumber = this.patchNumber,
-          json = {
-            majorNumber,
-            minorNumber,
-            patchNumber
-          };
-
-    return json;
-  }
-
-  static fromJSON(json) {
-    const { majorNumber, minorNumber, patchNumber } = json,
-          version = new Version(majorNumber, minorNumber, patchNumber);
-
-    return version;
-  }
-
   static fromString(string) {
     const majorNumber = majorNumberFromString(string),
           minorNumber = minorNumberFromString(string),

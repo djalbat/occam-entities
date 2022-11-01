@@ -33,11 +33,10 @@ export default class Dependency {
 
     let { shortenedVersion } = json;
 
-    const shortenedVersionJSON = shortenedVersion; ///
+    const shortenedVersionString = shortenedVersion, ///
+          string = shortenedVersionString;  ///
 
-    json = shortenedVersionJSON;  ///
-
-    shortenedVersion = ShortenedVersion.fromJSON(json);
+    shortenedVersion = ShortenedVersion.fromString(string);
 
     const dependency = new Dependency(name, shortenedVersion);
 
