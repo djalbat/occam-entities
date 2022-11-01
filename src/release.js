@@ -1,23 +1,20 @@
 "use strict";
 
 import Entries from "./entries";
-import Version from "./version";
 import bnfMixins from "./mixins/bnf";
 import filesMixins from "./mixins/files";
-import Dependencies from "./dependencies";
 import entriesMixins from "./mixins/entries";
 import patternMixins from "./mixins/pattern";
+import metaJSONMixins from "./mixins/metaJSON";
 
+import { DOUBLE_SPACE } from "./constants";
+import { metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
 import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
-import { versionFromNode, repositoryFromNode, dependenciesFromNode, metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
 
 class Release {
-  constructor(name, entries, version, repository, dependencies) {
+  constructor(name, entries) {
     this.name = name;
     this.entries = entries;
-    this.version = version;
-    this.repository = repository;
-    this.dependendies = dependencies;
   }
 
   getName() {
@@ -28,75 +25,60 @@ class Release {
     return this.entries;
   }
 
-  getVersion() {
-    return this.version;
-  }
-
-  getRepository() {
-    return this.repository;
-  }
-
-  getDependencies() {
-    return this.dependendies;
-  }
-
-  getDependencyNames() {
-    const dependencyNames = this.dependendies.mapDependency((dependency) => {
-      const dependencyName = dependency.getName();
-
-      return dependencyName;
-    });
-
-    return dependencyNames;
-  }
-
   getFilePaths() { return this.entries.getFilePaths(); }
 
   getFile(filePath) { return this.entries.getFile(filePath); }
 
   matchShortenedVersion(shortenedVersion) { return this.version.matchShortenedVersion(shortenedVersion); }
 
-  toJSON() {
-    const entriesJSON = this.entries.toJSON(),
-          versionJSON = this.version.toJSON(),
-          dependenciesJSON = this.dependendies.toJSON(),
-          name = this.name,
-          entries = entriesJSON,  ///
-          version = versionJSON,  ///
-          repository = this.repository,
-          dependencies = dependenciesJSON,  ///
+  updateVersion(version) {
+    let repository = this.getRepository(),
+        dependencies = this.getDependencies();
+
+    const versionJSON = version.toJSON(),
+          repositoryJSON = repository,  ///
+          dependenciesJSON = dependencies.toJSON();
+
+    version = versionJSON;  ///
+    repository = repositoryJSON;  ///
+    dependencies = dependenciesJSON;  ///
+
+    const metaJSONFile = this.getMetaJSONFile(),
           json = {
-            name,
-            entries,
             version,
             repository,
             dependencies
+          },
+          jsonString = JSON.stringify(json, null, DOUBLE_SPACE),
+          file = metaJSONFile,  ///
+          content = jsonString; ///
+
+    file.setContent(content);
+  }
+
+  toJSON() {
+    const entriesJSON = this.entries.toJSON(),
+          name = this.name,
+          entries = entriesJSON,  ///
+          json = {
+            name,
+            entries
           };
 
     return json;
   }
 
   static fromJSON(json) {
-    let { entries, version, dependencies } = json;
+    let { entries } = json;
 
-    const { name, repository } = json,
-          entriesJSON = entries,  ///
-          versionJSOM = version,  ///
-          dependenciesJSON = dependencies; ///
+    const { name } = json,
+          entriesJSON = entries;  ///
 
     json = entriesJSON; ///
 
     entries = Entries.fromJSON(json); ///
 
-    json = versionJSOM; ///
-
-    version = Version.fromJSON(json);
-
-    json = dependenciesJSON; ///
-
-    dependencies = Dependencies.fromJSON(json);
-
-    const release = new Release(name, entries, version, repository, dependencies);
+    const release = new Release(name, entries);
 
     return release;
   }
@@ -112,12 +94,7 @@ class Release {
       const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
 
       if (metaJSONNode !== null) {
-        const node = metaJSONNode,  ///
-              version = versionFromNode(node),
-              repository = repositoryFromNode(node),
-              dependencies = dependenciesFromNode(node);
-
-        release = new Release(name, entries, version, repository, dependencies);
+        release = new Release(name, entries);
       }
     }
 
@@ -129,5 +106,6 @@ Object.assign(Release.prototype, bnfMixins);
 Object.assign(Release.prototype, filesMixins);
 Object.assign(Release.prototype, entriesMixins);
 Object.assign(Release.prototype, patternMixins);
+Object.assign(Project.prototype, metaJSONMixins);
 
 export default Release;

@@ -80,10 +80,15 @@ export function dependencyNamesFromNode(node) {
 }
 
 export function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
-  const content = metaJSONFile.getContent(),
-        tokens = metaJSONLexer.tokenise(content),
-        node = metaJSONParser.parse(tokens),
-        metaJSONNode = node;  ///
+  let metaJSONNode = null;
+
+  if (metaJSONFile !== null) {
+    const content = metaJSONFile.getContent(),
+          tokens = metaJSONLexer.tokenise(content),
+          node = metaJSONParser.parse(tokens);
+
+    metaJSONNode = node;  ///
+  }
 
   return metaJSONNode;
 }
