@@ -25,10 +25,6 @@ class Release {
     return this.entries;
   }
 
-  getFilePaths() { return this.entries.getFilePaths(); }
-
-  getFile(filePath) { return this.entries.getFile(filePath); }
-
   matchShortenedVersion(shortenedVersion) {
     const version = this.getVersion(),
           versionMatchesShortenedVersion = version.matchShortenedVersion(shortenedVersion);

@@ -23,10 +23,6 @@ class Project {
     return this.entries;
   }
 
-  getFilePaths() { return this.entries.getFilePaths(); }
-
-  getFile(filePath) { return this.entries.getFile(filePath); }
-
   toJSON() {
     const entriesJSON = this.entries.toJSON(),
           name = this.name,
