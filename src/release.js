@@ -106,6 +106,6 @@ Object.assign(Release.prototype, bnfMixins);
 Object.assign(Release.prototype, filesMixins);
 Object.assign(Release.prototype, entriesMixins);
 Object.assign(Release.prototype, patternMixins);
-Object.assign(Project.prototype, metaJSONMixins);
+Object.assign(Release.prototype, metaJSONMixins);
 
 export default Release;
