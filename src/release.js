@@ -12,9 +12,10 @@ import { metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
 import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
 
 class Release {
-  constructor(name, entries) {
+  constructor(name, entries, contextJSON) {
     this.name = name;
     this.entries = entries;
+    this.contextJSON = contextJSON;
   }
 
   getName() {
@@ -23,6 +24,10 @@ class Release {
 
   getEntries() {
     return this.entries;
+  }
+
+  getContextJSON() {
+    return this.contextJSON;
   }
 
   matchShortenedVersion(shortenedVersion) {
@@ -61,9 +66,11 @@ class Release {
     const entriesJSON = this.entries.toJSON(),
           name = this.name,
           entries = entriesJSON,  ///
+          context = this.contextJSON, ///
           json = {
             name,
-            entries
+            entries,
+            context
           };
 
     return json;
@@ -72,14 +79,15 @@ class Release {
   static fromJSON(json) {
     let { entries } = json;
 
-    const { name } = json,
-          entriesJSON = entries;  ///
+    const { name, context } = json,
+          entriesJSON = entries,  ///
+          contextJSON = context;  ///
 
     json = entriesJSON; ///
 
     entries = Entries.fromJSON(json); ///
 
-    const release = new Release(name, entries);
+    const release = new Release(name, entries, contextJSON);
 
     return release;
   }
@@ -95,7 +103,9 @@ class Release {
       const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
 
       if (metaJSONNode !== null) {
-        release = new Release(name, entries);
+        const contextJSON = null;
+
+        release = new Release(name, entries, contextJSON);
       }
     }
 
