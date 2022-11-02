@@ -11,8 +11,6 @@ class Project {
   constructor(name, entries) {
     this.name = name;
     this.entries = entries;
-    this.repository = repository;
-    this.dependencies = dependencies;
   }
 
   getName() {
