@@ -3,6 +3,7 @@
 import { isFilePathReadmeFilePath,
          isFilePathFlorenceFilePath,
          isFilePathMetaJSONFilePath,
+         isFilePathContextJSONFilePath,
          isFilePathCustomGrammarBNFFilePath,
          isFilePathCustomGrammarPatternFilePath } from "../utilities/filePath";
 
@@ -56,6 +57,23 @@ export function florenceFilesFromFiles(files) {
         }, []);
 
   return florenceFiles;
+}
+
+export function contextJSONFileFromFiles(files) {
+  let contextJSONFile = null;
+
+  files.someFile((file) => {
+    const filePath = file.getPath(),
+          filePathContextJSONFilePath = isFilePathContextJSONFilePath(filePath);
+
+    if (filePathContextJSONFilePath) {
+      contextJSONFile = file;  ///
+
+      return true;
+    }
+  });
+
+  return contextJSONFile;
 }
 
 export function customGrammarBNFFilesFromFiles(files) {
