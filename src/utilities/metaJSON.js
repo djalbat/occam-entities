@@ -97,5 +97,6 @@ export default {
   versionFromNode,
   repositoryFromNode,
   dependenciesFromNode,
-  dependencyNamesFromNode
+  dependencyNamesFromNode,
+  metaJSONNodeFromMetaJSONFile
 };
