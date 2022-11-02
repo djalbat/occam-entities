@@ -3,6 +3,7 @@
 import { asynchronousUtilities } from "necessary";
 
 import Dependency from "./dependency";
+import ShortenedVersion from "./shortenedVersion";
 
 const { forEach } = asynchronousUtilities;
 
@@ -34,27 +35,33 @@ export default class Dependencies {
   asynchronousForEachDependency(operation, done) { forEach(this.array, operation, done); }
 
   toJSON() {
-    const dependenciesJSON = this.array.map((dependency) => {
-            const dependencyJSON = dependency.toJSON();
+    const dependenciesJSON = this.array.reduce((dependenciesJSON, dependency) => {
+            const name = dependency.getName(),
+                  shortenedVersion = dependency.getShortedVersion(),
+                  shortenedVersionString = shortenedVersion.toString();
+
+            dependenciesJSON[name] = shortenedVersionString;
   
-            return dependencyJSON;
-          }),
+            return dependenciesJSON;
+          }, {}),
           json = dependenciesJSON; ///
 
     return json;
   }
 
   static fromJSON(json) {
-    const array = [],
-          dependencies = new Dependencies(array),
-          dependenciesJSON = json; ///
+    const dependenciesJSON = json, ///
+          dependenciesJSONKeys = Object.keys(dependenciesJSON),
+          names = dependenciesJSONKeys, ///
+          array = names.map((name) => {
+            const shortenedVersionString = dependenciesJSON[name],
+                  string = shortenedVersionString,  ///
+                  shortenedVersion = ShortenedVersion.fromString(string),
+                  dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
 
-    dependenciesJSON.forEach((dependencyJSON) => {  ///
-      const json = dependencyJSON,  ///
-            dependency = Dependency.fromJSON(json);
-
-      dependencies.addDependency(dependency);
-    });
+            return dependency;
+          }),
+          dependencies = new Dependencies(array);
 
     return dependencies;
   }
