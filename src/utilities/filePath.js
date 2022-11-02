@@ -33,8 +33,9 @@ export function isFilePathCustomGrammarPatternFilePath(filePath) { return custom
 export default {
   isFilePathReadmeFilePath,
   isFilePathFlorenceFilePath,
-  isFilePathContextJSONFilePath,
+  isFilePathMetaJSONFilePath,
   isFilePathRecognisedFilePath,
+  isFilePathContextJSONFilePath,
   isFilePathCustomGrammarBNFFilePath,
   isFilePathCustomGrammarPatternFilePath
 };
