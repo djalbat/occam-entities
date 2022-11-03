@@ -63,7 +63,7 @@ export default class Version {
 
       case MINOR_VERSION_CHANGE:
         this.bumpMinorNumber();
-        this.resetMajorNumber();
+        this.resetPatchNumber();
         break;
 
       case PATCH_VERSION_CHANGE:
