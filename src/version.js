@@ -113,6 +113,15 @@ export default class Version {
     return version;
   }
 
+  static fromNothing() {
+    const majorNumber = 0,
+          minorNumber = 0,
+          patchNumber = 0,
+          version = new Version(majorNumber, minorNumber, patchNumber);
+
+    return version;
+  }
+
   static fromVersion(version) {
     const majorNumber = version.getMajorNumber(),
           minorNumber = version.getMinorNumber(),
