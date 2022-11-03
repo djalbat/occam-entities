@@ -24,7 +24,7 @@ export function minorNumberFromNumber(number) {
 
 export function patchNumberFromNumber(number) {
   const patchNumber = (number !== null) ?
-                        Math.floor((number & MINOR_NUMBER_MULTIPLIER) / PATCH_NUMBER_MULTIPLIER) :
+                        Math.floor((number % MINOR_NUMBER_MULTIPLIER) / PATCH_NUMBER_MULTIPLIER) :
                           0;  ///
 
   return patchNumber;
