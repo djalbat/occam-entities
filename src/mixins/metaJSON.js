@@ -1,6 +1,6 @@
 "use strict";
 
-import { versionFromNode, repositoryFromNode, dependenciesFromNode, metaJSONNodeFromMetaJSONFile } from "../utilities/metaJSON";
+import { versionFromNode, repositoryFromNode, dependenciesFromNode, dependencyNamesFromNode, metaJSONNodeFromMetaJSONFile } from "../utilities/metaJSON";
 
 function getVersion() {
   const metaJSONFile = this.getMetaJSONFile(),
