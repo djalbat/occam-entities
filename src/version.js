@@ -71,16 +71,16 @@ export default class Version {
     return matchesShortenedVersion;
   }
 
-  asNumber() {
-    const number = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER + this.patchNumber * PATCH_NUMBER_MULTIPLIER;
-
-    return number;
-  }
-
   toString() {
     const string = `${this.majorNumber}.${this.minorNumber}.${this.patchNumber}`;
 
     return string;
+  }
+
+  toVersionNumber() {
+    const versionNumber = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER + this.patchNumber * PATCH_NUMBER_MULTIPLIER;
+
+    return versionNumber;
   }
 
   static fromString(string) {

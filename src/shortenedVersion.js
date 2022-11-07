@@ -17,16 +17,16 @@ export default class ShortenedVersion {
     return this.minorNumber;
   }
 
-  asNumber() {
-    const number = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER;
-
-    return number;
-  }
-
   toString() {
     const string = `${this.majorNumber}.${this.minorNumber}`;
 
     return string;
+  }
+
+  toVersionNumber() {
+    const versionNumber = this.majorNumber * MAJOR_NUMBER_MULTIPLIER + this.minorNumber * MINOR_NUMBER_MULTIPLIER;
+
+    return versionNumber;
   }
 
   static fromString(string) {
