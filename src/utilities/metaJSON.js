@@ -7,6 +7,7 @@ import Dependency from "../dependency";
 import Dependencies from "../dependencies";
 import ShortenedVersion from "../shortenedVersion";
 
+import { DOUBLE_SPACE } from "../constants";
 import { trimDoubleQuotes } from "../utilities/content";
 import { nodeQuery, nodesQuery } from "../utilities/query";
 
@@ -79,6 +80,31 @@ export function dependencyNamesFromNode(node) {
   return dependencyNames;
 }
 
+export function updateMetaJSONFileVersion(metaJSONFile, version) {
+  const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
+        node = metaJSONNode,  ///
+        repository = repositoryFromNode(node);
+
+  let dependencies = dependenciesFromNode(node);
+
+  const string = version.toString(),
+      dependenciesJSON = dependencies.toJSON();
+
+  version = string;  ///
+
+  dependencies = dependenciesJSON;  ///
+
+  const metaJSON = {
+          version,
+          repository,
+          dependencies
+        },
+        metaJSONString = JSON.stringify(metaJSON, null, DOUBLE_SPACE),
+        metaJSONFileContent = metaJSONString; ///
+
+  metaJSONFile.setContent(metaJSONFileContent);
+}
+
 export function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
   let metaJSONNode = null;
 
@@ -98,5 +124,6 @@ export default {
   repositoryFromNode,
   dependenciesFromNode,
   dependencyNamesFromNode,
+  updateMetaJSONFileVersion,
   metaJSONNodeFromMetaJSONFile
 };
