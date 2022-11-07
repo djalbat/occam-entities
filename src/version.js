@@ -1,6 +1,5 @@
 "use strict";
 
-import { MAJOR_VERSION_CHANGE, MINOR_VERSION_CHANGE, PATCH_VERSION_CHANGE } from "./versionChanges";
 import { MAJOR_NUMBER_MULTIPLIER, MINOR_NUMBER_MULTIPLIER, PATCH_NUMBER_MULTIPLIER } from "./multiplers";
 import { majorNumberFromNumber,
          minorNumberFromNumber,
@@ -50,26 +49,6 @@ export default class Version {
 
   resetPatchNumber() {
     this.patchNumber = 0;
-  }
-
-  change(versionChange) {
-    switch (versionChange) {
-      case MAJOR_VERSION_CHANGE:
-        this.bumpMajorNumber();
-        this.resetMinorNumber();
-        this.resetPatchNumber();
-
-        break;
-
-      case MINOR_VERSION_CHANGE:
-        this.bumpMinorNumber();
-        this.resetPatchNumber();
-        break;
-
-      case PATCH_VERSION_CHANGE:
-        this.bumpPatchNumber();
-        break;
-    }
   }
 
   matchShortenedVersion(shortenedVersion) {
