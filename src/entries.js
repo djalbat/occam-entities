@@ -196,9 +196,9 @@ class Entries {
   }
 }
 
-Object.assign(Entties.prototype, bnfMixins);
-Object.assign(Entties.prototype, filesMixins);
-Object.assign(Entties.prototype, patternMixins);
+Object.assign(Entries.prototype, bnfMixins);
+Object.assign(Entries.prototype, filesMixins);
+Object.assign(Entries.prototype, patternMixins);
 Object.assign(Entries.prototype, metaJSONMixins);
 
 export default Entries;
