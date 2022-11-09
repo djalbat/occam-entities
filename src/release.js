@@ -21,13 +21,6 @@ class Release {
     return this.entries;
   }
 
-  matchShortenedVersion(shortenedVersion) {
-    const version = this.getVersion(),
-          versionMatchesShortenedVersion = version.matchShortenedVersion(shortenedVersion);
-
-    return versionMatchesShortenedVersion;
-  }
-
   updateVersion(version) {
     let repository = this.getRepository(),
         dependencies = this.getDependencies();

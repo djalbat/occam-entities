@@ -119,6 +119,13 @@ class Entries {
     return directoryPaths;
   }
 
+  matchShortenedVersion(shortenedVersion) {
+    const version = this.getVersion(),
+          versionMatchesShortenedVersion = version.matchShortenedVersion(shortenedVersion);
+
+    return versionMatchesShortenedVersion;
+  }
+
   addFile(file) {
     const entry = file; ///
 
