@@ -1,11 +1,7 @@
 "use strict";
 
 import Entries from "./entries";
-import bnfMixins from "./mixins/bnf";
-import filesMixins from "./mixins/files";
 import entriesMixins from "./mixins/entries";
-import patternMixins from "./mixins/pattern";
-import metaJSONMixins from "./mixins/metaJSON";
 
 import { DOUBLE_SPACE } from "./constants";
 import { metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
@@ -103,10 +99,6 @@ class Release {
   }
 }
 
-Object.assign(Release.prototype, bnfMixins);
-Object.assign(Release.prototype, filesMixins);
 Object.assign(Release.prototype, entriesMixins);
-Object.assign(Release.prototype, patternMixins);
-Object.assign(Release.prototype, metaJSONMixins);
 
 export default Release;

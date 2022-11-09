@@ -1,11 +1,7 @@
 "use strict";
 
 import Entries from "./entries";
-import bnfMixins from "./mixins/bnf";
-import filesMixins from "./mixins/files";
 import entriesMixins from "./mixins/entries";
-import patternMixins from "./mixins/pattern";
-import metaJSONMixins from "./mixins/metaJSON";
 
 class Project {
   constructor(name, entries) {
@@ -62,10 +58,6 @@ class Project {
   }
 }
 
-Object.assign(Project.prototype, bnfMixins);
-Object.assign(Project.prototype, filesMixins);
 Object.assign(Project.prototype, entriesMixins);
-Object.assign(Project.prototype, patternMixins);
-Object.assign(Project.prototype, metaJSONMixins);
 
 export default Project;

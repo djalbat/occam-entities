@@ -5,13 +5,18 @@ import { pathUtilities, arrayUtilities } from "necessary";
 import File from "./file";
 import Files from "./files";
 import Directory from "./directory";
+import bnfMixins from "./mixins/bnf";
+import filesMixins from "./mixins/files";
+import patternMixins from "./mixins/pattern";
+import metaJSONMixins from "./mixins/metaJSON";
+
 import { ENTRIES_MAXIMUM_LENGTH } from "./constants";
 import { ENTRIES_MAXIMUM_LENGTH_EXCEEDED_MESSAGE } from "./messages";
 
 const { first, filter } = arrayUtilities,
       { topmostDirectoryNameFromPath } = pathUtilities;
 
-export default class Entries {
+class Entries {
   constructor(array) {
     this.array = array;
   }
@@ -190,3 +195,10 @@ export default class Entries {
     return entries;
   }
 }
+
+Object.assign(Entties.prototype, bnfMixins);
+Object.assign(Entties.prototype, filesMixins);
+Object.assign(Entties.prototype, patternMixins);
+Object.assign(Entries.prototype, metaJSONMixins);
+
+export default Entries;
