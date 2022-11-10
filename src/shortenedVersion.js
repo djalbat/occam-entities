@@ -29,6 +29,23 @@ export default class ShortenedVersion {
     return versionNumber;
   }
 
+  getLeastMatchingVersionNumber() {
+    const versionNumber = this.toVersionNumber(),
+          leastMatchingVersionNumber = versionNumber; ///
+
+    return leastMatchingVersionNumber;
+  }
+
+  getGreatestMatchingVersionNumber() {
+    const majorNumber = this.majorNumber + 1,
+          minorNumber = 0,
+          shortenedVersion = ShortenedVersion.fromMajorNumberAndMinorNumber(majorNumber, minorNumber),
+          shortenedVersionNumber = shortenedVersion.toVersionNumber(),
+          greatestMatchingVersionNumber = shortenedVersionNumber - 1;
+
+    return greatestMatchingVersionNumber;
+  }
+
   static fromString(string) {
     const majorNumber = majorNumberFromString(string),
           minorNumber = minorNumberFromString(string),
@@ -42,6 +59,12 @@ export default class ShortenedVersion {
           majorNumber = majorNumberFromNumber(number),
           minorNumber = minorNumberFromNumber(number),
           shortenedVersion = new ShortenedVersion(majorNumber, minorNumber);
+
+    return shortenedVersion;
+  }
+
+  static fromMajorNumberAndMinorNumber(majorNumber, minorNumber) {
+    const shortenedVersion = new ShortenedVersion(majorNumber, minorNumber);
 
     return shortenedVersion;
   }
