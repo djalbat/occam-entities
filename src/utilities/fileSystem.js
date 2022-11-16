@@ -58,7 +58,9 @@ export function loadFiles(paths, projectsDirectoryPath) {
   paths.forEach((path) => {
     const file = loadFile(path, projectsDirectoryPath);
 
-    files.addFile(file);
+    if (file !== null) {
+      files.addFile(file);
+    }
   });
 
   return files;
@@ -80,57 +82,62 @@ export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnl
 }
 
 export function loadRelease(topmostDirectoryName, projectsDirectoryPath) {
-  const name = topmostDirectoryName,  ///
-        loadOnlyRecognisedFiles = true,
-        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
-        release = Release.fromNameAndEntries(name, entries);
+  let release = null;
+
+  try {
+    const name = topmostDirectoryName,  ///
+          loadOnlyRecognisedFiles = true,
+          entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+
+    release = Release.fromNameAndEntries(name, entries);
+  } catch (error) {
+    ///
+  }
 
   return release;
 }
 
 export function loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  const name = topmostDirectoryName,  ///
-        entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles),
-        project = Project.fromNameAndEntries(name, entries);
+  let project = null;
+
+  try {
+    const name = topmostDirectoryName,  ///
+          entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+
+    project = Project.fromNameAndEntries(name, entries);
+  } catch (error) {
+    ///
+  }
 
   return project;
 }
 
 export function loadReleases(projectsDirectoryPath) {
-  let releases;
+  const releases = Releases.fromNothing(),
+        topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath);
 
-  try {
-    const releases = Releases.fromNothing(),
-          topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath);
+  topmostFileNames.forEach((topmostFileName) => {
+    const release = loadRelease(topmostFileName, projectsDirectoryPath);
 
-    topmostFileNames.forEach((topmostFileName) => {
-      const release = loadRelease(topmostFileName, projectsDirectoryPath);
-
-      if (release !== null) {
-        releases.addRelease(release);
-      }
-    });
-  } catch (error) {
-    releases = null;
-  }
+    if (release !== null) {
+      releases.addRelease(release);
+    }
+  });
 
   return releases;
 }
 
 export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  let projects = Projects.fromNothing();
+  const projects = Projects.fromNothing(),
+        topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
 
-  try {
-    const topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
+  topmostDirectoryNames.forEach((topmostDirectoryName) => {
+    const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
-    topmostDirectoryNames.forEach((topmostDirectoryName) => {
-      const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
-
+    if (project !== null) {
       projects.addProject(project);
-    });
-  } catch (error) {
-    projects = null;
-  }
+    }
+  });
 
   return projects;
 }
