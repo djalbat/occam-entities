@@ -6,7 +6,7 @@ function getBNF() { return this.entries.getBNF(); }
 
 function getFiles() { return this.entries.getFiles(); }
 
-function getTermBNF() { return this.entriees.getTermBNF(); }
+function getTermBNF() { return this.entries.getTermBNF(); }
 
 function getVersion() { return this.entries.getVersion(); }
 
@@ -20,7 +20,7 @@ function getReadmeFile() { return this.entries.getReadmeFile(); }
 
 function getTypePattern() { return this.entries.getTypePattern(); }
 
-function getStatementBNF() { return this.entriees.getStatementBNF(); }
+function getStatementBNF() { return this.entries.getStatementBNF(); }
 
 function getDependencies() { return this.entries.getDependencies(); }
 
@@ -36,7 +36,7 @@ function getOperatorPattern() { return this.entries.getOperatorPattern(); }
 
 function getDependencyNames() { return this.entries.getDependencyNames(); }
 
-function getMetastatementBNF() { return this.entriees.getMetastatementBNF(); }
+function getMetastatementBNF() { return this.entries.getMetastatementBNF(); }
 
 function getCustomGrammarBNFFiles() { return this.entries.getCustomGrammarBNFFiles(); }
 
