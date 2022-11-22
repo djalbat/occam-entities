@@ -12,7 +12,15 @@ const { concatenatePaths } = pathUtilities,
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
         sourceEntryPaths = [],
-		    targetEntryPaths = [];
+		    targetEntryPaths = [],
+        done = () => {
+          const json = {
+            sourceEntryPaths,
+            targetEntryPaths
+          };
+
+          callback(json);
+        };
 
   asynchronousForEach(
     pathMaps,
@@ -24,14 +32,7 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
         next();
       });
     },
-    () => {
-    	const json = {
-        sourceEntryPaths,
-        targetEntryPaths
-      };
-
-      callback(json);
-    }
+    done
   );
 }
 

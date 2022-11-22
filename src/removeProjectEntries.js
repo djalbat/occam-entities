@@ -11,7 +11,15 @@ const { concatenatePaths } = pathUtilities,
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
         sourceEntryPaths = [],
-		    targetEntryPaths = [];
+		    targetEntryPaths = [],
+        done = () => {
+          const json = {
+            sourceEntryPaths,
+            targetEntryPaths
+          };
+
+          callback(json);
+        };
 
   asynchronousForEach(
     pathMaps,
@@ -23,14 +31,7 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
         next();
       });
     },
-    () => {
-    	const json = {
-        sourceEntryPaths,
-        targetEntryPaths
-      }
-
-      callback(json);
-    }
+    done
   );
 }
 
