@@ -26,4 +26,5 @@ export { default as saveFiles } from "./saveFiles";
 export { default as loadProjects } from "./loadProjects";
 export { default as loadReleases } from "./loadReleases";
 export { default as moveProjectEntries } from "./moveProjectEntries";
+export { default as renameProjectEntry } from "./renameProjectEntry";
 export { default as removeProjectEntries } from "./removeProjectEntries";
