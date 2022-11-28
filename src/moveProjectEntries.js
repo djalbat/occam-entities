@@ -43,24 +43,8 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
     return;
   }
 
-  if (sourceEntryPath === targetEntryPath) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
-
-  if (!sourceEntryExists) {
-    targetEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
     moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
@@ -69,13 +53,30 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
 
 function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceFilePath = sourceEntryPath,  ///
-        targetFilePath = targetEntryPath,  ///
-        absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
-        absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
+        targetFilePath = targetEntryPath;  ///
+
+  if (sourceFilePath === targetFilePath) {
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
+        sourceFileExists = checkEntryExists(absoluteSourceFilePath);
+
+  if (!sourceFileExists) {
+    sourceEntryPath = null;
+
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
-    sourceEntryPath = null;
+    targetEntryPath = sourceEntryPath;  ///
 
     callback(sourceEntryPath, targetEntryPath);
 
@@ -84,7 +85,7 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
 
   move(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
     if (error) {
-      sourceEntryPath = null;
+      targetEntryPath = sourceEntryPath;  ///
     }
 
     callback(sourceEntryPath, targetEntryPath);
@@ -93,13 +94,18 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
 
 function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceDirectoryPath = sourceEntryPath, ///
-        targetDirectoryPath = targetEntryPath, //
-        absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
-        absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
-        targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath),
-        sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
+        targetDirectoryPath = targetEntryPath; //
 
-  if (!sourceDirectoryEmpty) {
+  if (sourceDirectoryPath === targetDirectoryPath) {
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
+        sourceDirectoryExists = checkEntryExists(absoluteSourceDirectoryPath);
+
+  if (!sourceDirectoryExists) {
     sourceEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
@@ -107,10 +113,23 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
     return;
   }
 
+  const sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
+
+  if (!sourceDirectoryEmpty) {
+    targetEntryPath = sourceEntryPath;  ///
+
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
+        targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
+
   if (targetDirectoryExists) {
     remove(absoluteSourceDirectoryPath, (error) => {
       if (error) {
-        sourceEntryPath = null;
+        targetEntryPath = sourceEntryPath;  ///
       }
 
       callback(sourceEntryPath, targetEntryPath);
@@ -121,7 +140,7 @@ function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, 
 
   move(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
     if (error) {
-      sourceEntryPath = null;
+      targetEntryPath = sourceEntryPath;  ///
     }
 
     callback(sourceEntryPath, targetEntryPath);
