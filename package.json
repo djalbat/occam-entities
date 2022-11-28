@@ -1,7 +1,7 @@
 {
   "name": "occam-file-system",
   "author": "James Smith",
-  "version": "5.0.91",
+  "version": "5.0.92",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/occam-file-system",
   "description": "Occam's file system functionality.",

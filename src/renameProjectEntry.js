@@ -13,24 +13,37 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
         { sourceEntryPath, targetEntryPath } = pathMap;
 
   moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-    const sourceEntryPaths = pathMaps.map((pathMap) => {
-            if (sourceEntryPath !== null) {
-              ({ sourceEntryPath } = pathMap);
-            }
+    const entryMissing = (sourceEntryPath === null),
+          entryUnmoved = (sourceEntryPath === targetEntryPath),
+          sourceEntryPaths = [],
+          targetEntryPaths = [];
 
-            return sourceEntryPath;
-          }),
-          targetEntryPaths = pathMaps.map((pathMap) => {
-            if (targetEntryPath !== null) {
-              ({ targetEntryPath } = pathMap);
-            }
+    pathMaps.forEach((pathMap) => {
+      let sourceEntryPath,
+          targetEntryPath;
 
-            return targetEntryPath;
-          }),
-          json = {
-            sourceEntryPaths,
-            targetEntryPaths
-          };
+      if (false) {
+        ///
+      } else if (entryMissing) {
+        sourceEntryPath = null;
+
+        ({ targetEntryPath } = pathMap);
+      } else if (entryUnmoved) {
+        ({ sourceEntryPath } = pathMap);
+
+        targetEntryPath = sourceEntryPath;  ///
+      } else {
+        ({ sourceEntryPath, targetEntryPath } = pathMap);
+      }
+
+      sourceEntryPaths.push(sourceEntryPath);
+      targetEntryPaths.push(targetEntryPath);
+    });
+
+    const json = {
+      sourceEntryPaths,
+      targetEntryPaths
+    };
 
     callback(json);
   });
