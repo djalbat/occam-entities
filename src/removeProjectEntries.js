@@ -40,11 +40,11 @@ export function removeEntryOperation(sourceEntryPath, targetEntryPath, projectsD
         entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
-    removeDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
-      removeFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+    removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
+      removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
 
-function removeFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceFilePath = sourceEntryPath,  ///
         targetFilePath = targetEntryPath;  ///
 
@@ -74,9 +74,9 @@ function removeFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, cal
   });
 }
 
-function removeDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceDirectoryPath = sourceEntryPath, ///
-        targetDirectoryPath = targetEntryPath; //
+        targetDirectoryPath = targetEntryPath; ///
 
   if (sourceDirectoryPath === targetDirectoryPath) {
     callback(sourceEntryPath, targetEntryPath);

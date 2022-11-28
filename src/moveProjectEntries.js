@@ -47,11 +47,11 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
         entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
-    moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
-      moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+    moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
+      moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
 
-function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceFilePath = sourceEntryPath,  ///
         targetFilePath = targetEntryPath;  ///
 
@@ -92,7 +92,7 @@ function moveFile(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callb
   });
 }
 
-function moveDirectory(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceDirectoryPath = sourceEntryPath, ///
         targetDirectoryPath = targetEntryPath; //
 
