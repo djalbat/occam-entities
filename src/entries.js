@@ -102,6 +102,16 @@ class Entries {
     return filePaths;
   }
 
+  getEntryPaths() {
+    const entryPaths = this.mapEntry((entry) => {
+      const entryPath = entry.getPath();
+
+      return entryPath;
+    });
+
+    return entryPaths;
+  }
+
   getDirectoryPaths() {
     const directoryPaths = this.reduceEntry((directoryPaths, entry) => {
       const entryDirectory = entry.isDirectory();
