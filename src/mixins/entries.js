@@ -14,8 +14,6 @@ function getPattern() { return this.entries.getPattern(); }
 
 function getFilePaths() { return this.entries.getFilePaths(); }
 
-function getEntryPaths() { return this.entries.getEntryPaths(); }
-
 function getRepository() { return this.entries.getRepository(); }
 
 function getReadmeFile() { return this.entries.getReadmeFile(); }
@@ -53,7 +51,6 @@ const entriesMixins = {
   getVersion,
   getPattern,
   getFilePaths,
-  getEntryPaths,
   getRepository,
   getReadmeFile,
   getTypePattern,
