@@ -17,33 +17,25 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
   renameEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
     const entryMissing = (sourceEntryPath === null),
           entryUnmoved = (sourceEntryPath === targetEntryPath),
-          sourceEntryPaths = [],
-          targetEntryPaths = [];
+          targetEntryPaths = pathMaps.map((pathMap) => {
+            let targetEntryPath;
 
-    pathMaps.forEach((pathMap) => {
-      let sourceEntryPath,
-          targetEntryPath;
+            const { sourceEntryPath } = pathMap;
 
-      if (false) {
-        ///
-      } else if (entryMissing) {
-        sourceEntryPath = null;
+            if (false) {
+              ///
+            } else if (entryMissing) {
+              targetEntryPath = null;
+            } else if (entryUnmoved) {
+              targetEntryPath = sourceEntryPath;  ///
+            } else {
+              ({ targetEntryPath } = pathMap);
+            }
 
-        ({ targetEntryPath } = pathMap);
-      } else if (entryUnmoved) {
-        ({ sourceEntryPath } = pathMap);
-
-        targetEntryPath = sourceEntryPath;  ///
-      } else {
-        ({ sourceEntryPath, targetEntryPath } = pathMap);
-      }
-
-      sourceEntryPaths.push(sourceEntryPath);
-      targetEntryPaths.push(targetEntryPath);
-    });
+            return targetEntryPath;
+          });
 
     const json = {
-      sourceEntryPaths,
       targetEntryPaths
     };
 
@@ -56,8 +48,6 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsD
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
-    sourceEntryPath = null;
-
     targetEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);

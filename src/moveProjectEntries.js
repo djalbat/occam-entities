@@ -11,11 +11,9 @@ const { concatenatePaths } = pathUtilities,
 
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
-        sourceEntryPaths = [],
 		    targetEntryPaths = [],
         done = () => {
           const json = {
-            sourceEntryPaths,
             targetEntryPaths
           };
 
@@ -26,7 +24,6 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
       moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-        sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
         next();
@@ -47,8 +44,6 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
-    sourceEntryPath = null;
-
     targetEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);
@@ -87,7 +82,7 @@ function moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPa
 
   move(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
     if (error) {
-      targetEntryPath = sourceEntryPath;  ///
+      targetEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);

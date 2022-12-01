@@ -10,11 +10,9 @@ const { concatenatePaths } = pathUtilities,
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
-        sourceEntryPaths = [],
 		    targetEntryPaths = [],
         done = () => {
           const json = {
-            sourceEntryPaths,
             targetEntryPaths
           };
 
@@ -25,7 +23,6 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
       removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-        sourceEntryPaths.push(sourceEntryPath);
         targetEntryPaths.push(targetEntryPath);
 
         next();
@@ -40,8 +37,6 @@ export function removeEntryOperation(sourceEntryPath, targetEntryPath, projectsD
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
   if (!sourceEntryExists) {
-    sourceEntryPath = null;
-
     targetEntryPath = null;
 
     callback(sourceEntryPath, targetEntryPath);

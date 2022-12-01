@@ -15,15 +15,11 @@ export default function createProjectEntry(projectsDirectoryPath, json, callback
         { sourceEntryPath, targetEntryPath } = pathMap;
 
   createEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-    const sourceEntryPaths = [
-            sourceEntryPath
-          ],
-          targetEntryPaths = [
+    const targetEntryPaths = [
             targetEntryPath
           ];
 
     const json = {
-      sourceEntryPaths,
       targetEntryPaths
     };
 
@@ -43,12 +39,6 @@ export function createEntryOperation(sourceEntryPath, targetEntryPath, projectsD
 function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const targetFilePath = targetEntryPath;  ///
 
-  if (targetFilePath === null) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
   const absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
@@ -60,7 +50,7 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 
   createFile(absoluteTargetFilePath, (error) => {
     if (error) {
-      targetEntryPath = null;  ///
+      targetEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);
@@ -69,12 +59,6 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 
 function createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const targetDirectoryPath = targetEntryPath; //
-
-  if (targetDirectoryPath === null) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
 
   const absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
@@ -87,7 +71,7 @@ function createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
 
   createDirectory(absoluteTargetDirectoryPath, (error) => {
     if (error) {
-      targetEntryPath = null;  ///
+      targetEntryPath = null;
     }
 
     callback(sourceEntryPath, targetEntryPath);
