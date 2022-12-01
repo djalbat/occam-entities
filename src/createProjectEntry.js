@@ -40,6 +40,8 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
+    targetEntryPath = null;
+
     callback(sourceEntryPath, targetEntryPath);
 
     return;
@@ -61,6 +63,8 @@ function createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {
+    targetEntryPath = null;
+
     callback(sourceEntryPath, targetEntryPath);
 
     return;
