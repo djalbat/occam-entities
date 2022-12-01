@@ -53,7 +53,17 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
 
 export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
+
+  if (!sourceEntryExists) {
+    sourceEntryPath = null;
+
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
     renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
@@ -71,17 +81,7 @@ function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
   }
 
   const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
-        sourceFileExists = checkEntryExists(absoluteSourceFilePath);
-
-  if (!sourceFileExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
+        absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
@@ -112,17 +112,7 @@ function renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
   }
 
   const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
-        sourceDirectoryExists = checkEntryExists(absoluteSourceDirectoryPath);
-
-  if (!sourceDirectoryExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
+        absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {

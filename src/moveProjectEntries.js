@@ -44,9 +44,19 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
   }
 
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
-  entryDirectory ?
+  if (!sourceEntryExists) {
+    sourceEntryPath = null;
+
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const sourceEntryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+
+  sourceEntryDirectory ?
     moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
@@ -62,17 +72,7 @@ function moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPa
   }
 
   const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
-        sourceFileExists = checkEntryExists(absoluteSourceFilePath);
-
-  if (!sourceFileExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
+        absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
@@ -103,17 +103,7 @@ function moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirect
   }
 
   const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
-        sourceDirectoryExists = checkEntryExists(absoluteSourceDirectoryPath);
-
-  if (!sourceDirectoryExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
+        sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
   if (!sourceDirectoryEmpty) {
     targetEntryPath = sourceEntryPath;  ///

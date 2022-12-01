@@ -37,7 +37,17 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
 
 export function removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
+        sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
+
+  if (!sourceEntryExists) {
+    sourceEntryPath = null;
+
+    callback(sourceEntryPath, targetEntryPath);
+
+    return;
+  }
+
+  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
     removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
@@ -54,16 +64,7 @@ function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
     return;
   }
 
-  const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
-        sourceFileExists = checkEntryExists(absoluteSourceFilePath);
-
-  if (!sourceFileExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
+  const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath);
 
   remove(absoluteSourceFilePath, (error) => {
     if (error) {
@@ -85,17 +86,7 @@ function removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
   }
 
   const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
-        sourceDirectoryExists = checkEntryExists(absoluteSourceDirectoryPath);
-
-  if (!sourceDirectoryExists) {
-    sourceEntryPath = null;
-
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
+        sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
   if (!sourceDirectoryEmpty) {
     targetEntryPath = sourceEntryPath;  ///
