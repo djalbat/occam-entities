@@ -23,7 +23,7 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+      moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
         targetEntryPaths.push(targetEntryPath);
 
         next();
@@ -33,7 +33,7 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
   );
 }
 
-export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+export function moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
   if (targetEntryPath === null) {
     removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 
@@ -51,9 +51,7 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
     return;
   }
 
-  const sourceEntryDirectory = isEntryDirectory(absoluteSourceEntryPath);
-
-  sourceEntryDirectory ?
+  entryDirectory ?
     moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }

@@ -12,9 +12,9 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
   const { pathMaps } = json,
         lastPathMap = last(pathMaps),
         pathMap = lastPathMap,  ///
-        { sourceEntryPath, targetEntryPath } = pathMap;
+        { sourceEntryPath, targetEntryPath, entryDirectory } = pathMap;
 
-  renameEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+  renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
     const entryMissing = (sourceEntryPath === null),
           entryUnmoved = (sourceEntryPath === targetEntryPath),
           targetEntryPaths = pathMaps.map((pathMap) => {
@@ -43,7 +43,7 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
   });
 }
 
-export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+export function renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
@@ -54,8 +54,6 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsD
 
     return;
   }
-
-  const entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
 
   entryDirectory ?
     renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :

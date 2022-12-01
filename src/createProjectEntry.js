@@ -6,15 +6,15 @@ import { createFile, mkdirs as createDirectory } from "fs-extra";
 
 const { first } = arrayUtilities,
       { concatenatePaths } = pathUtilities,
-      { checkEntryExists, isEntryDirectory } = fileSystemUtilities;
+      { checkEntryExists } = fileSystemUtilities;
 
 export default function createProjectEntry(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
         firstPathMap = first(pathMaps),
         pathMap = firstPathMap,  ///
-        { sourceEntryPath, targetEntryPath } = pathMap;
+        { sourceEntryPath, targetEntryPath, entryDirectory } = pathMap;
 
-  createEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+  createEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
     const targetEntryPaths = [
             targetEntryPath
           ];
@@ -27,10 +27,7 @@ export default function createProjectEntry(projectsDirectoryPath, json, callback
   });
 }
 
-export function createEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
-        entryDirectory = isEntryDirectory(absoluteSourceEntryPath);
-
+export function createEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
   entryDirectory ?
     createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
