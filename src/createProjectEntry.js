@@ -34,9 +34,8 @@ export function createEntryOperation(sourceEntryPath, targetEntryPath, entryDire
 }
 
 function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const targetFilePath = targetEntryPath;  ///
-
-  const absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
+  const targetFilePath = targetEntryPath, ///
+        absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
@@ -57,9 +56,8 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 }
 
 function createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const targetDirectoryPath = targetEntryPath; //
-
-  const absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
+  const targetDirectoryPath = targetEntryPath,  ///
+        absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {

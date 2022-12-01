@@ -6,7 +6,7 @@ import { pathUtilities, fileSystemUtilities } from "necessary";
 
 const { last } = arrayUtilities,
       { concatenatePaths } = pathUtilities,
-      { checkEntryExists, isEntryDirectory } = fileSystemUtilities;
+      { checkEntryExists } = fileSystemUtilities;
 
 export default function renameProjectEntry(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
@@ -61,16 +61,9 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, entryDire
 }
 
 function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const sourceFilePath = sourceEntryPath,  ///
-        targetFilePath = targetEntryPath;  ///
-
-  if (sourceFilePath === targetFilePath) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
+  const sourceFilePath = sourceEntryPath, ///
+        targetFilePath = targetEntryPath, ///
+        absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
         absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
         targetFileExists = checkEntryExists(absoluteTargetFilePath);
 
@@ -92,16 +85,9 @@ function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 }
 
 function renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const sourceDirectoryPath = sourceEntryPath, ///
-        targetDirectoryPath = targetEntryPath; //
-
-  if (sourceDirectoryPath === targetDirectoryPath) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
+  const sourceDirectoryPath = sourceEntryPath,  ///
+        targetDirectoryPath = targetEntryPath,  ///
+        absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
         absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 

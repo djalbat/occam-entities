@@ -6,7 +6,7 @@ import { pathUtilities, fileSystemUtilities } from "necessary";
 import { asynchronousForEach } from "./utilities/pathMaps";
 
 const { concatenatePaths } = pathUtilities,
-      { checkEntryExists, isEntryDirectory, isDirectoryEmpty } = fileSystemUtilities;
+      { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json,
@@ -50,16 +50,8 @@ export function removeEntryOperation(sourceEntryPath, targetEntryPath, entryDire
 }
 
 function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const sourceFilePath = sourceEntryPath,  ///
-        targetFilePath = targetEntryPath;  ///
-
-  if (sourceFilePath === targetFilePath) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath);
+  const sourceFilePath = sourceEntryPath, ///
+        absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath);
 
   remove(absoluteSourceFilePath, (error) => {
     if (error) {
@@ -71,16 +63,8 @@ function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 }
 
 function removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  const sourceDirectoryPath = sourceEntryPath, ///
-        targetDirectoryPath = targetEntryPath; ///
-
-  if (sourceDirectoryPath === targetDirectoryPath) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
-  const absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
+  const sourceDirectoryPath = sourceEntryPath,  ///
+        absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
         sourceDirectoryEmpty = isDirectoryEmpty(absoluteSourceDirectoryPath);
 
   if (!sourceDirectoryEmpty) {
