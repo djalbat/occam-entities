@@ -58,6 +58,8 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsD
   if (!sourceEntryExists) {
     sourceEntryPath = null;
 
+    targetEntryPath = null;
+
     callback(sourceEntryPath, targetEntryPath);
 
     return;

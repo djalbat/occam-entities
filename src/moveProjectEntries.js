@@ -49,6 +49,8 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDir
   if (!sourceEntryExists) {
     sourceEntryPath = null;
 
+    targetEntryPath = null;
+
     callback(sourceEntryPath, targetEntryPath);
 
     return;
