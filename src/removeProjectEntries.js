@@ -36,12 +36,6 @@ export default function removeProjectEntries(projectsDirectoryPath, json, callba
 }
 
 export function removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  if (sourceEntryPath === null) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 

@@ -52,12 +52,6 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
 }
 
 export function renameEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  if (sourceEntryPath === null) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 

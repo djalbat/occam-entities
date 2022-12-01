@@ -37,12 +37,6 @@ export default function moveProjectEntries(projectsDirectoryPath, json, callback
 }
 
 export function moveEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
-  if (sourceEntryPath === null) {
-    callback(sourceEntryPath, targetEntryPath);
-
-    return;
-  }
-
   if (targetEntryPath === null) {
     removeEntryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 
