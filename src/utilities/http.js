@@ -10,14 +10,14 @@ const { POST_METHOD } = methods,
       { createRequest } = requestUtilities,
       { OK_200_STATUS_CODE } = statusCodes,
       { ACCEPT_HEADER, CONTENT_TYPE_HEADER } = headers,
-      { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } = contentTypes;
+      { APPLICATION_JSON_CHARSET_UTF_8_CONTENT_TYPE } = contentTypes;
 
 export function post(host, uri, query, json, callback) {
 	const content = JSON.stringify(json),	///
 				method = POST_METHOD,
 				headers = {
-          [ACCEPT_HEADER]: APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE,
-          [CONTENT_TYPE_HEADER]: APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE
+          [ACCEPT_HEADER]: APPLICATION_JSON_CHARSET_UTF_8_CONTENT_TYPE,
+          [CONTENT_TYPE_HEADER]: APPLICATION_JSON_CHARSET_UTF_8_CONTENT_TYPE
         };
 
 	const request = createRequest(host, uri, query, method, headers, (error, response) => {
