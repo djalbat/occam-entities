@@ -9,16 +9,16 @@ import { END, DATA, EMPTY_STRING } from "../constants";
 const { POST_METHOD } = methods,
       { createRequest } = requestUtilities,
       { OK_200_STATUS_CODE } = statusCodes,
-      { CONTENT_TYPE_HEADER } = headers,
+      { ACCEPT_HEADER, CONTENT_TYPE_HEADER } = headers,
       { APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } = contentTypes;
 
 export function post(host, uri, query, json, callback) {
 	const content = JSON.stringify(json),	///
 				method = POST_METHOD,
-				headers = {},
-				contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE;
-
-	headers[CONTENT_TYPE_HEADER] = contentType;
+				headers = {
+          [ACCEPT_HEADER]: APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE,
+          [CONTENT_TYPE_HEADER]: APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE
+        };
 
 	const request = createRequest(host, uri, query, method, headers, (error, response) => {
 					if (response === null) {
