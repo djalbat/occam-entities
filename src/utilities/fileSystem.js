@@ -58,9 +58,7 @@ export function loadFiles(paths, projectsDirectoryPath) {
   paths.forEach((path) => {
     const file = loadFile(path, projectsDirectoryPath);
 
-    if (file !== null) {
-      files.addFile(file);
-    }
+    files.addFile(file);
   });
 
   return files;
