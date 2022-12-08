@@ -145,10 +145,11 @@ export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognis
 
 export function loadReleases(projectsDirectoryPath) {
   const releases = Releases.fromNothing(),
-        topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath);
+        topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath),
+        releaseNames = topmostFileNames;  ///
 
-  topmostFileNames.forEach((topmostFileName) => {
-    const release = loadRelease(topmostFileName, projectsDirectoryPath);
+  releaseNames.forEach((releaseName) => {
+    const release = loadRelease(releaseName, projectsDirectoryPath);
 
     if (release !== null) {
       releases.addRelease(release);
@@ -160,10 +161,11 @@ export function loadReleases(projectsDirectoryPath) {
 
 export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const projects = Projects.fromNothing(),
-        topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath);
+        topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath),
+        projectNames = topmostDirectoryNames; ///
 
-  topmostDirectoryNames.forEach((topmostDirectoryName) => {
-    const project = loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+  projectNames.forEach((projectName) => {
+    const project = loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
     if (project !== null) {
       projects.addProject(project);
