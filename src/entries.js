@@ -32,7 +32,7 @@ class Entries {
       topmostDirectoryName = topmostDirectoryNameFromPath(firstEntryPath);
 
       if (topmostDirectoryName === null) {
-        topmostDirectoryName = firstEntryPath;
+        topmostDirectoryName = firstEntryPath;  ///
       }
     }
 
