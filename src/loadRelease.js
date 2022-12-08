@@ -3,13 +3,13 @@
 import { loadRelease as loadReleaseEx } from "./utilities/fileSystem"
 
 export default function loadRelease(projectsDirectoryPath, json, callback) {
-  const { filePath } = json,
-        path = filePath,  ///
-        file = loadReleaseEx(path, projectsDirectoryPath);
+  const { fileName } = json,
+        topmostFileName = fileName,  ///
+        release = loadReleaseEx(topmostFileName, projectsDirectoryPath);
 
-  json = (file !== null) ?  ///
-           file.toJSON():
-             null;
+  json = (release !== null) ?  ///
+            release.toJSON():
+              null;
 
   return callback(json);
 }

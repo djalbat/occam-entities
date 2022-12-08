@@ -79,15 +79,21 @@ export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnl
   return entries;
 }
 
-export function loadRelease(topmostDirectoryName, projectsDirectoryPath) {
+export function loadRelease(topmostFileName, projectsDirectoryPath) {
   let release = null;
 
   try {
-    const name = topmostDirectoryName,  ///
-          loadOnlyRecognisedFiles = true,
-          entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+    const name = topmostFileName, ///
+          absolutePath = concatenatePaths(projectsDirectoryPath, name),
+          entryFile = isEntryFile(absolutePath);
 
-    release = Release.fromNameAndEntries(name, entries);
+    if (entryFile) {
+      const content = readFile(absolutePath),
+            json = JSON.parse(content),
+            entries = Entries.fromJSON(json);
+
+      release = Release.fromNameAndEntries(name, entries);
+    }
   } catch (error) {
     ///
   }

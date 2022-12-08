@@ -8,8 +8,8 @@ export default function loadFiles(projectsDirectoryPath, json, callback) {
         files = loadFilesEx(paths, projectsDirectoryPath);
 
   json = (files !== null) ? ///
-           files.toJSON() :
-             null;
+            files.toJSON() :
+              null;
 
   return callback(json);
 }
