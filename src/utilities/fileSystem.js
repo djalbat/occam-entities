@@ -57,15 +57,21 @@ export function loadFiles(paths, projectsDirectoryPath) {
   let files = null;
 
   try {
-    const topmostDirectoryName = topmostDirectoryNameFromPath(path);
+    const pathsLength = paths.length;
 
-    if (topmostDirectoryName !== null) {
-      const absolutePath = concatenatePaths(projectsDirectoryPath, topmostDirectoryName),
-            entryDirectory = isEntryDirectory(absolutePath);
+    if (pathsLength > 0) {
+      const firstPath = first(paths),
+            path = firstPath, ///
+            topmostDirectoryName = topmostDirectoryNameFromPath(path);
 
-      files = entryDirectory ?
-                filesFromProject(paths, projectsDirectoryPath) :
-                  filesFromRelease(paths, projectsDirectoryPath);
+      if (topmostDirectoryName !== null) {
+        const absolutePath = concatenatePaths(projectsDirectoryPath, topmostDirectoryName),
+              entryDirectory = isEntryDirectory(absolutePath);
+
+        files = entryDirectory ?
+                  filesFromProject(paths, projectsDirectoryPath) :
+                    filesFromRelease(paths, projectsDirectoryPath);
+      }
     }
   } catch (error) {
     ///
