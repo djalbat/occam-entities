@@ -2,7 +2,7 @@
 
 import mkdirp from "mkdirp";
 
-import { pathUtilities, fileSystemUtilities } from "necessary";
+import { arrayUtilities, pathUtilities, fileSystemUtilities } from "necessary";
 
 import File from "../file";
 import Files from "../files";
@@ -17,22 +17,23 @@ import { isNameHiddenName } from "../utilities/name";
 import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
 
-const { concatenatePaths, topmostDirectoryPathFromPath } = pathUtilities,
-      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities;
+const { first } = arrayUtilities,
+      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities,
+      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
   let file = null;
 
   try {
-    const absolutePath = concatenatePaths(projectsDirectoryPath, path),
-          entryFile = isEntryFile(absolutePath);
+    const topmostDirectoryName = topmostDirectoryNameFromPath(path);
 
-    if (entryFile) {
-      let content = readFile(absolutePath);
+    if (topmostDirectoryName !== null) {
+      const absolutePath = concatenatePaths(projectsDirectoryPath, topmostDirectoryName),
+            entryDirectory = isEntryDirectory(absolutePath);
 
-      content = convertContentTabsToWhitespace(content);  ///
-
-      file = File.fromPathAndContent(path, content);
+      file = entryDirectory ?
+               fileFromProject(path, projectsDirectoryPath) :
+                 fileFromRelease(path, projectsDirectoryPath);
     }
   } catch (error) {
     ///
@@ -53,13 +54,22 @@ export function saveFile(file, projectsDirectoryPath) {
 }
 
 export function loadFiles(paths, projectsDirectoryPath) {
-  const files = Files.fromNothing();
+  let files = null;
 
-  paths.forEach((path) => {
-    const file = loadFile(path, projectsDirectoryPath);
+  try {
+    const topmostDirectoryName = topmostDirectoryNameFromPath(path);
 
-    files.addFile(file);
-  });
+    if (topmostDirectoryName !== null) {
+      const absolutePath = concatenatePaths(projectsDirectoryPath, topmostDirectoryName),
+            entryDirectory = isEntryDirectory(absolutePath);
+
+      files = entryDirectory ?
+                filesFromProject(paths, projectsDirectoryPath) :
+                  filesFromRelease(paths, projectsDirectoryPath);
+    }
+  } catch (error) {
+    ///
+  }
 
   return files;
 }
@@ -184,6 +194,73 @@ export default {
   loadProjects,
   loadDirectory
 };
+
+function fileFromProject(path, projectsDirectoryPath) {
+  let file = null;
+
+  const absolutePath = concatenatePaths(projectsDirectoryPath, path),
+        entryFile = isEntryFile(absolutePath);
+
+  if (entryFile) {
+    let content = readFile(absolutePath);
+
+    content = convertContentTabsToWhitespace(content);  ///
+
+    file = File.fromPathAndContent(path, content);
+  }
+
+  return file;
+}
+
+function fileFromRelease(path, projectsDirectoryPath) {
+  const topmostDirectoryName = topmostDirectoryNameFromPath(path),
+        topmostFileName = topmostDirectoryName, ///
+        release = loadRelease(topmostFileName, projectsDirectoryPath),
+        pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
+
+  path = pathWithoutTopmostDirectoryName; ///
+
+  const file = release.getFile(path);
+
+  return file;
+}
+
+function filesFromProject(paths, projectsDirectoryPath) {
+  const files = Files.fromNothing();
+
+  paths.forEach((path) => {
+    const file = fileFromProject(path, projectsDirectoryPath);
+
+    files.addFile(file);
+  });
+
+  return files;
+}
+
+function filesFromRelease(paths, projectsDirectoryPath) {
+  const files = Files.fromNothing(),
+        pathsLength = paths.length;
+
+  if (pathsLength > 0) {
+    const firstPath = first(paths),
+          path = firstPath, ///
+          topmostDirectoryName = topmostDirectoryNameFromPath(path),
+          topmostFileName = topmostDirectoryName, ///
+          release = loadRelease(topmostFileName, projectsDirectoryPath);
+
+    paths.forEach((path) => {
+      const pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
+
+      path = pathWithoutTopmostDirectoryName; ///
+
+      const file = release.getFile(path);
+
+      files.addFile(file);
+    });
+  }
+
+  return files;
+}
 
 function entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   const absoluteDirectoryPath = concatenatePaths(projectsDirectoryPath, relativeDirectoryPath),
