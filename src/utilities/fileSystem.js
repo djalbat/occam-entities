@@ -216,11 +216,7 @@ function fileFromRelease(path, projectsDirectoryPath) {
   const topmostDirectoryName = topmostDirectoryNameFromPath(path),
         topmostFileName = topmostDirectoryName, ///
         release = loadRelease(topmostFileName, projectsDirectoryPath),
-        pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
-
-  path = pathWithoutTopmostDirectoryName; ///
-
-  const file = release.getFile(path);
+        file = release.getFile(path);
 
   return file;
 }
@@ -249,10 +245,6 @@ function filesFromRelease(paths, projectsDirectoryPath) {
           release = loadRelease(topmostFileName, projectsDirectoryPath);
 
     paths.forEach((path) => {
-      const pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
-
-      path = pathWithoutTopmostDirectoryName; ///
-
       const file = release.getFile(path);
 
       files.addFile(file);
