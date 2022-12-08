@@ -10,27 +10,15 @@ const { concatenatePaths } = pathUtilities,
       { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
 
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
-  const { pathMaps } = json,
-		    targetEntryPaths = [],
-        done = () => {
-          const json = {
-            targetEntryPaths
-          };
+  const { pathMaps } = json;
 
-          callback(json);
-        };
+  moveEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
+    const json = {
+      targetEntryPaths
+    };
 
-  asynchronousForEach(
-    pathMaps,
-    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-        targetEntryPaths.push(targetEntryPath);
-
-        next();
-      });
-    },
-    done
-  );
+    callback(json);
+  });
 }
 
 export function moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
@@ -54,6 +42,24 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirect
   entryDirectory ?
     moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+}
+
+function moveEntries(pathMaps, projectsDirectoryPath, callback) {
+  const targetEntryPaths = [];
+
+  asynchronousForEach(
+    pathMaps,
+    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
+      moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        targetEntryPaths.push(targetEntryPath);
+
+        next();
+      });
+    },
+    () => {
+      callback(targetEntryPaths);
+    }
+  );
 }
 
 function moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {

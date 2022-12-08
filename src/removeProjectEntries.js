@@ -9,27 +9,15 @@ const { concatenatePaths } = pathUtilities,
       { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
-  const { pathMaps } = json,
-		    targetEntryPaths = [],
-        done = () => {
-          const json = {
-            targetEntryPaths
-          };
+  const { pathMaps } = json;
 
-          callback(json);
-        };
+  removeEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
+    const json = {
+      targetEntryPaths
+    };
 
-  asynchronousForEach(
-    pathMaps,
-    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      removeEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-        targetEntryPaths.push(targetEntryPath);
-
-        next();
-      });
-    },
-    done
-  );
+    callback(json);
+  });
 }
 
 export function removeEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
@@ -47,6 +35,24 @@ export function removeEntryOperation(sourceEntryPath, targetEntryPath, entryDire
   entryDirectory ?
     removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+}
+
+function removeEntries(pathMaps, projectsDirectoryPath, callback) {
+  const targetEntryPaths = [];
+
+  asynchronousForEach(
+    pathMaps,
+    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
+      removeEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        targetEntryPaths.push(targetEntryPath);
+
+        next();
+      });
+    },
+    () => {
+      callback(targetEntryPaths);
+    }
+  );
 }
 
 function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
