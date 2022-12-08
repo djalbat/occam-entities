@@ -88,9 +88,18 @@ export function loadRelease(topmostFileName, projectsDirectoryPath) {
           entryFile = isEntryFile(absolutePath);
 
     if (entryFile) {
-      const content = readFile(absolutePath),
-            json = JSON.parse(content),
-            entries = Entries.fromJSON(json);
+      let json,
+          entries;
+
+      const content = readFile(absolutePath);
+
+      json = JSON.parse(content);
+
+      ({ entries } = json);
+
+      json  = entries;  ///
+
+      entries = Entries.fromJSON(json);
 
       release = Release.fromNameAndEntries(name, entries);
     }
