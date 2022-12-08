@@ -3,10 +3,9 @@
 import { loadProject as loadProjectEx } from "./utilities/fileSystem"
 
 export default function loadProject(projectsDirectoryPath, json, callback) {
-  const { directoryName } = json,
-        topmostDirectoryName = directoryName,  ///
+  const { projectName } = json,
         loadOnlyRecognisedFiles = false, ///
-        project = loadProjectEx(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+        project = loadProjectEx(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
   json = (project !== null) ?  ///
             project.toJSON():

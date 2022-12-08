@@ -95,12 +95,13 @@ export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnl
   return entries;
 }
 
-export function loadRelease(topmostFileName, projectsDirectoryPath) {
+export function loadRelease(releaseName, projectsDirectoryPath) {
   let release = null;
 
   try {
-    const name = topmostFileName, ///
-          absolutePath = concatenatePaths(projectsDirectoryPath, name),
+    const name = releaseName, ///
+          topmostFileName = releaseName,  ///
+          absolutePath = concatenatePaths(projectsDirectoryPath, topmostFileName),
           entryFile = isEntryFile(absolutePath);
 
     if (entryFile) {
@@ -126,11 +127,12 @@ export function loadRelease(topmostFileName, projectsDirectoryPath) {
   return release;
 }
 
-export function loadProject(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
+export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
   let project = null;
 
   try {
-    const name = topmostDirectoryName,  ///
+    const name = projectName,  ///
+          topmostDirectoryName = projectName, ///
           entries = loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
     project = Project.fromNameAndEntries(name, entries);
