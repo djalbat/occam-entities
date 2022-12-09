@@ -92,7 +92,7 @@ class Release {
 
     const entriesReleasable = areEntriesReleasable(entries);
 
-    if (entriesReleasable()) {
+    if (entriesReleasable) {
       const name = project.getName(),
             releasedEntries = releaseEntries(entries);
 
