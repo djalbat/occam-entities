@@ -4,9 +4,10 @@ import { FILE_TYPE } from "./types";
 import { convertContentTabsToWhitespace } from "./utilities/content"
 
 export default class File {
-  constructor(path, content) {
+  constructor(path, content, released) {
     this.path = path;
     this.content = content;
+    this.released = released;
   }
 
   getPath() {
@@ -15,6 +16,10 @@ export default class File {
 
   getContent() {
     return this.content;
+  }
+
+  isReleased() {
+    return this.released;
   }
 
   isFile() {
@@ -37,14 +42,20 @@ export default class File {
     this.content = content;
   }
 
+  setReleased(released) {
+    this.released = released;
+  }
+
   toJSON() {
     const { type } = File,
           path = this.path,
           content = this.content,
+          released = this.released,
           json = {
             type,
             path,
-            content
+            content,
+            released
           };
 
     return json;
@@ -61,11 +72,11 @@ export default class File {
       if (type === FILE_TYPE) {
         let { content } = json;
 
-        const { path } = json;
+        const { path, released } = json;
 
         content = convertContentTabsToWhitespace(content);  ///
 
-        file = new File(path, content);
+        file = new File(path, content, released);
       }
     }
 
@@ -74,21 +85,22 @@ export default class File {
 
   static fromDocument(document) {
     const filePath = document.getFilePath(),
+          released = document.isReleased(),
           path = filePath;  ///
 
     let content = document.getContent();
 
     content = convertContentTabsToWhitespace(content);  ///
 
-    const file = new File(path, content);
+    const file = new File(path, content, released);
 
     return file;
   }
 
-  static fromPathAndContent(path, content) {
+  static fromPathContentAndReleased(path, content, released) {
     content = convertContentTabsToWhitespace(content);  ///
 
-    const file = new File(path, content);
+    const file = new File(path, content, released);
 
     return file;
   }

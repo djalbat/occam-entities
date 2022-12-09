@@ -212,11 +212,13 @@ function fileFromProject(path, projectsDirectoryPath) {
         entryFile = isEntryFile(absolutePath);
 
   if (entryFile) {
+    const released = false;
+
     let content = readFile(absolutePath);
 
     content = convertContentTabsToWhitespace(content);  ///
 
-    file = File.fromPathAndContent(path, content);
+    file = File.fromPathContentAndReleased(path, content, released);
   }
 
   return file;
