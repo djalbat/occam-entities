@@ -1,5 +1,6 @@
 "use strict";
 
+import File from "./file";
 import Entries from "./entries";
 import entriesMixins from "./mixins/entries";
 
@@ -76,16 +77,28 @@ class Release {
   static fromNameAndEntries(name, entries) {
     let release = null;
 
-    const files = entries.getFiles(),
-          readmeFile = readmeFileFromFiles(files),
-          metaJSONFile = metaJSONFileFromFiles(files);
+    const filesReleasable = areEntriesReleasable(entries);
 
-    if ((readmeFile !== null) && (metaJSONFile !== null)) {
-      const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+    if (filesReleasable) {
+      release = new Release(name, entries);
+    }
 
-      if (metaJSONNode !== null) {
-        release = new Release(name, entries);
-      }
+    return release;
+  }
+
+  static fromProject(project) {
+    let release = null,
+        entries = project.getEntries();
+
+    const entriesReleasable = areEntriesReleasable(entries);
+
+    if (entriesReleasable()) {
+      const name = project.getName(),
+            releasedEntries = releaseEntries(entries);
+
+      entries = releasedEntries;  ///
+
+      release = new Release(name, entries);
     }
 
     return release;
@@ -95,3 +108,38 @@ class Release {
 Object.assign(Release.prototype, entriesMixins);
 
 export default Release;
+
+function releaseEntries(entries) {
+  const releasedEntries = Entries.fromNothing(),  ///
+        files = entries.getFiles();
+
+  files.forEachFile((file) => {
+    const path = file.getPath(),
+          content = file.getContent(),
+          released = true;
+
+    file = File.fromPathContentAndReleased(path, content, released);  ///
+
+    releasedEntries.addFile(file);
+  });
+
+  return releasedEntries;
+}
+
+function areEntriesReleasable(entries) {
+  let entriesReleasable = false;
+
+  const files = entries.getFiles(),
+        readmeFile = readmeFileFromFiles(files),
+        metaJSONFile = metaJSONFileFromFiles(files);
+
+  if ((readmeFile !== null) && (metaJSONFile !== null)) {
+    const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+
+    if (metaJSONNode !== null) {
+      entriesReleasable = true;
+    }
+  }
+
+  return entriesReleasable;
+}
