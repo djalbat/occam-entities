@@ -5,7 +5,7 @@ import Entries from "./entries";
 import entriesMixins from "./mixins/entries";
 
 import { DOUBLE_SPACE } from "./constants";
-import { metaJSONNodeFromMetaJSONFile } from "./utilities/metaJSON";
+import { isMetaJSONFileValid } from "./utilities/metaJSON";
 import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
 
 class Release {
@@ -77,9 +77,9 @@ class Release {
   static fromNameAndEntries(name, entries) {
     let release = null;
 
-    const filesReleasable = areEntriesReleasable(entries);
+    const entriesReleasable = areEntriesReleasable(entries);
 
-    if (filesReleasable) {
+    if (entriesReleasable) {
       release = new Release(name, entries);
     }
 
@@ -134,9 +134,9 @@ function areEntriesReleasable(entries) {
         metaJSONFile = metaJSONFileFromFiles(files);
 
   if ((readmeFile !== null) && (metaJSONFile !== null)) {
-    const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+    const metaJSONFileValid = isMetaJSONFileValid(metaJSONFile);
 
-    if (metaJSONNode !== null) {
+    if (metaJSONFileValid !== null) {
       entriesReleasable = true;
     }
   }

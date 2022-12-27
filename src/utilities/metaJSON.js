@@ -13,6 +13,7 @@ import { nodeQuery, nodesQuery } from "../utilities/query";
 
 const metaJSONLexer = MetaJSONLexer.fromNothing(),
       metaJSONParser = MetaJSONParser.fromNothing(),
+      errorNodesQuery = nodesQuery("//error"),
       dependencyNodesQuery = nodesQuery("//dependencies/dependency"),
       repositoryTerminalNodeQuery = nodeQuery("//repository!/@*!"),
       versionNumberTerminalNodeQuery = nodeQuery("//version!/versionNumber!/@*!"),
@@ -44,6 +45,24 @@ export function repositoryFromNode(node) {
   }
 
   return repository;
+}
+
+export function isMetaJSONFileValid(metaJSONFile) {
+  let metaJSONFileValid = false;
+
+  const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+
+  if (metaJSONNode !== null) {
+    const node = metaJSONNode,  ///
+          errorNodes = errorNodesQuery(node),
+          errorNodesLength = errorNodes.length;
+
+    if (errorNodesLength === 0) {
+      metaJSONFileValid = true;
+    }
+  }
+
+  return metaJSONFileValid;
 }
 
 export function dependenciesFromNode(node) {
@@ -122,6 +141,7 @@ export function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
 export default {
   versionFromNode,
   repositoryFromNode,
+  isMetaJSONFileValid,
   dependenciesFromNode,
   dependencyNamesFromNode,
   updateMetaJSONFileVersion,
