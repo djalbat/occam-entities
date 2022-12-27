@@ -136,7 +136,7 @@ function areEntriesReleasable(entries) {
   if ((readmeFile !== null) && (metaJSONFile !== null)) {
     const metaJSONFileValid = isMetaJSONFileValid(metaJSONFile);
 
-    if (metaJSONFileValid !== null) {
+    if (metaJSONFileValid) {
       entriesReleasable = true;
     }
   }
