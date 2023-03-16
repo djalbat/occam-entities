@@ -74,7 +74,9 @@ export function loadFiles(paths, projectsDirectoryPath) {
       }
     }
   } catch (error) {
-    ///
+    debugger
+
+    console.error(error)
   }
 
   return files;
