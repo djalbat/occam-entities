@@ -1,6 +1,6 @@
 "use strict";
 
-import { move as rename } from "fs-extra";
+import { move as edit } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
 import { asynchronousForEach } from "./utilities/pathMaps";
@@ -8,10 +8,10 @@ import { asynchronousForEach } from "./utilities/pathMaps";
 const { concatenatePaths } = pathUtilities,
       { checkEntryExists } = fileSystemUtilities;
 
-export default function renameProjectEntry(projectsDirectoryPath, json, callback) {
+export default function editProjectEntry(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
 
-  renameEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
+  editEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
     const json = {
       targetEntryPaths
     };
@@ -20,7 +20,7 @@ export default function renameProjectEntry(projectsDirectoryPath, json, callback
   });
 }
 
-export function renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
+export function editEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, callback) {
   const absoluteSourceEntryPath = concatenatePaths(projectsDirectoryPath, sourceEntryPath),
         sourceEntryExists = checkEntryExists(absoluteSourceEntryPath);
 
@@ -33,17 +33,17 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, entryDire
   }
 
   entryDirectory ?
-    renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
-      renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+    editDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
+      editFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
 
-function renameEntries(pathMaps, projectsDirectoryPath, callback) {
+function editEntries(pathMaps, projectsDirectoryPath, callback) {
   const targetEntryPaths = [];
 
   asynchronousForEach(
     pathMaps,
     (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
-      renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+      editEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
         targetEntryPaths.push(targetEntryPath);
 
         next();
@@ -55,7 +55,7 @@ function renameEntries(pathMaps, projectsDirectoryPath, callback) {
   );
 }
 
-function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function editFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceFilePath = sourceEntryPath, ///
         targetFilePath = targetEntryPath, ///
         absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
@@ -70,7 +70,7 @@ function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
     return;
   }
 
-  rename(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
+  edit(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }
@@ -79,7 +79,7 @@ function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
   });
 }
 
-function renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
+function editDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceDirectoryPath = sourceEntryPath,  ///
         targetDirectoryPath = targetEntryPath,  ///
         absoluteSourceDirectoryPath = concatenatePaths(projectsDirectoryPath, sourceDirectoryPath),
@@ -94,7 +94,7 @@ function renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
     return;
   }
 
-  rename(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
+  edit(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }
