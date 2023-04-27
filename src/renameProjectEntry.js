@@ -1,40 +1,17 @@
 "use strict";
 
 import { move as rename } from "fs-extra";
-import { arrayUtilities } from "necessary";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
-const { last } = arrayUtilities,
-      { concatenatePaths } = pathUtilities,
+import { asynchronousForEach } from "./utilities/pathMaps";
+
+const { concatenatePaths } = pathUtilities,
       { checkEntryExists } = fileSystemUtilities;
 
 export default function renameProjectEntry(projectsDirectoryPath, json, callback) {
-  const { pathMaps } = json,
-        lastPathMap = last(pathMaps),
-        pathMap = lastPathMap,  ///
-        { sourceEntryPath, targetEntryPath, entryDirectory } = pathMap;
+  const { pathMaps } = json;
 
-  renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-    const entryMissing = (sourceEntryPath === null),
-          entryUnmoved = (sourceEntryPath === targetEntryPath),
-          targetEntryPaths = pathMaps.map((pathMap) => {
-            let targetEntryPath;
-
-            const { sourceEntryPath } = pathMap;
-
-            if (false) {
-              ///
-            } else if (entryMissing) {
-              targetEntryPath = null;
-            } else if (entryUnmoved) {
-              targetEntryPath = sourceEntryPath;  ///
-            } else {
-              ({ targetEntryPath } = pathMap);
-            }
-
-            return targetEntryPath;
-          });
-
+  renameEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
     const json = {
       targetEntryPaths
     };
@@ -58,6 +35,24 @@ export function renameEntryOperation(sourceEntryPath, targetEntryPath, entryDire
   entryDirectory ?
     renameDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+}
+
+function renameEntries(pathMaps, projectsDirectoryPath, callback) {
+  const targetEntryPaths = [];
+
+  asynchronousForEach(
+    pathMaps,
+    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
+      renameEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        targetEntryPaths.push(targetEntryPath);
+
+        next();
+      });
+    },
+    () => {
+      callback(targetEntryPaths);
+    }
+  );
 }
 
 function renameFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
