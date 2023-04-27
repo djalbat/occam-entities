@@ -8,7 +8,7 @@ import { asynchronousForEach } from "./utilities/pathMaps";
 const { concatenatePaths } = pathUtilities,
       { checkEntryExists } = fileSystemUtilities;
 
-export default function editProjectEntry(projectsDirectoryPath, json, callback) {
+export default function editProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
 
   editEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {

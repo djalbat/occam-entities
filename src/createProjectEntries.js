@@ -1,24 +1,17 @@
 "use strict";
 
-import { arrayUtilities } from "necessary";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 import { createFile, mkdirs as createDirectory } from "fs-extra";
 
-const { first } = arrayUtilities,
-      { concatenatePaths } = pathUtilities,
+import { asynchronousForEach } from "./utilities/pathMaps";
+
+const { concatenatePaths } = pathUtilities,
       { checkEntryExists } = fileSystemUtilities;
 
-export default function createProjectEntry(projectsDirectoryPath, json, callback) {
-  const { pathMaps } = json,
-        firstPathMap = first(pathMaps),
-        pathMap = firstPathMap,  ///
-        { sourceEntryPath, targetEntryPath, entryDirectory } = pathMap;
+export default function createProjectEntries(projectsDirectoryPath, json, callback) {
+  const { pathMaps } = json;
 
-  createEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
-    const targetEntryPaths = [
-            targetEntryPath
-          ];
-
+  createEntries(pathMaps, projectsDirectoryPath, (targetEntryPaths) => {
     const json = {
       targetEntryPaths
     };
@@ -31,6 +24,24 @@ export function createEntryOperation(sourceEntryPath, targetEntryPath, entryDire
   entryDirectory ?
     createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+}
+
+function createEntries(pathMaps, projectsDirectoryPath, callback) {
+  const targetEntryPaths = [];
+
+  asynchronousForEach(
+    pathMaps,
+    (sourceEntryPath, targetEntryPath, entryDirectory, next, done, index) => {
+      createEntryOperation(sourceEntryPath, targetEntryPath, entryDirectory, projectsDirectoryPath, (sourceEntryPath, targetEntryPath) => {
+        targetEntryPaths.push(targetEntryPath);
+
+        next();
+      });
+    },
+    () => {
+      callback(targetEntryPaths);
+    }
+  );
 }
 
 function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
