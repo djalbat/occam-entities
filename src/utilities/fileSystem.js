@@ -164,7 +164,7 @@ export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
     projects = Projects.fromNothing();
 
     const topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath),
-      projectNames = topmostDirectoryNames; ///
+          projectNames = topmostDirectoryNames; ///
 
     projectNames.forEach((projectName) => {
       const project = loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles);
