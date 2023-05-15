@@ -18,11 +18,11 @@ import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
 
 const { first } = arrayUtilities,
-      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities,
-      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory, checkEntryExists } = fileSystemUtilities;
+      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities,
+      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
-  let file;
+  let file = null;
 
   try {
     const topmostDirectoryName = topmostDirectoryNameFromPath(path);
@@ -36,7 +36,7 @@ export function loadFile(path, projectsDirectoryPath) {
                  fileFromRelease(path, projectsDirectoryPath);
     }
   } catch (error) {
-    file = null;
+    ///
   }
 
   return file;
@@ -54,7 +54,7 @@ export function saveFile(file, projectsDirectoryPath) {
 }
 
 export function loadFiles(paths, projectsDirectoryPath) {
-  let files;
+  let files = null;
 
   try {
     const pathsLength = paths.length;
@@ -74,7 +74,7 @@ export function loadFiles(paths, projectsDirectoryPath) {
       }
     }
   } catch (error) {
-    files = null;
+    ///
   }
 
   return files;
@@ -87,7 +87,7 @@ export function saveFiles(files, projectsDirectoryPath) {
 }
 
 export function loadRelease(releaseName, projectsDirectoryPath) {
-  let release;
+  let release = null;
 
   try {
     const name = releaseName, ///
@@ -112,14 +112,14 @@ export function loadRelease(releaseName, projectsDirectoryPath) {
       release = Release.fromNameAndEntries(name, entries);
     }
   } catch (error) {
-    release = null;
+    ///
   }
 
   return release;
 }
 
 export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  let project;
+  let project = null;
 
   try {
     const name = projectName,  ///
@@ -128,7 +128,7 @@ export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognis
 
     project = Project.fromNameAndEntries(name, entries);
   } catch (error) {
-    project = null;
+    ///
   }
 
   return project;
