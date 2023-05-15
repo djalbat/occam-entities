@@ -22,7 +22,7 @@ const { first } = arrayUtilities,
       { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
-  let file = null;
+  let file;
 
   try {
     const topmostDirectoryName = topmostDirectoryNameFromPath(path);
@@ -36,7 +36,7 @@ export function loadFile(path, projectsDirectoryPath) {
                  fileFromRelease(path, projectsDirectoryPath);
     }
   } catch (error) {
-    ///
+    file = null;
   }
 
   return file;
@@ -54,7 +54,7 @@ export function saveFile(file, projectsDirectoryPath) {
 }
 
 export function loadFiles(paths, projectsDirectoryPath) {
-  let files = null;
+  let files;
 
   try {
     const pathsLength = paths.length;
@@ -74,7 +74,7 @@ export function loadFiles(paths, projectsDirectoryPath) {
       }
     }
   } catch (error) {
-    ///
+    files = null;
   }
 
   return files;
@@ -86,17 +86,8 @@ export function saveFiles(files, projectsDirectoryPath) {
   });
 }
 
-export function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  const entries = Entries.fromNothing(),
-        relativeDirectoryPath = topmostDirectoryName;  ///
-
-  entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles);
-
-  return entries;
-}
-
 export function loadRelease(releaseName, projectsDirectoryPath) {
-  let release = null;
+  let release;
 
   try {
     const name = releaseName, ///
@@ -121,14 +112,14 @@ export function loadRelease(releaseName, projectsDirectoryPath) {
       release = Release.fromNameAndEntries(name, entries);
     }
   } catch (error) {
-    ///
+    release = null;
   }
 
   return release;
 }
 
 export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  let project = null;
+  let project;
 
   try {
     const name = projectName,  ///
@@ -137,46 +128,60 @@ export function loadProject(projectName, projectsDirectoryPath, loadOnlyRecognis
 
     project = Project.fromNameAndEntries(name, entries);
   } catch (error) {
-    ///
+    project = null;
   }
 
   return project;
 }
 
 export function loadReleases(projectsDirectoryPath) {
-  const releases = Releases.fromNothing(),
-        topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath),
-        releaseNames = topmostFileNames;  ///
+  let releases;
 
-  releaseNames.forEach((releaseName) => {
-    const release = loadRelease(releaseName, projectsDirectoryPath);
+  try {
+    releases = Releases.fromNothing();
 
-    if (release !== null) {
-      releases.addRelease(release);
-    }
-  });
+    const topmostFileNames = topmostFileNamesFromProjectsDirectoryPath(projectsDirectoryPath),
+          releaseNames = topmostFileNames;  ///
+
+    releaseNames.forEach((releaseName) => {
+      const release = loadRelease(releaseName, projectsDirectoryPath);
+
+      if (release !== null) {
+        releases.addRelease(release);
+      }
+    });
+  } catch (error) {
+    releases = null;
+  }
 
   return releases;
 }
 
 export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
-  const projects = Projects.fromNothing(),
-        topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath),
-        projectNames = topmostDirectoryNames; ///
+  let projects;
 
-  projectNames.forEach((projectName) => {
-    const project = loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+  try {
+    projects = Projects.fromNothing();
 
-    if (project !== null) {
-      projects.addProject(project);
-    }
-  });
+    const topmostDirectoryNames = topmostDirectoryNamesFromProjectsDirectoryPath(projectsDirectoryPath),
+      projectNames = topmostDirectoryNames; ///
+
+    projectNames.forEach((projectName) => {
+      const project = loadProject(projectName, projectsDirectoryPath, loadOnlyRecognisedFiles);
+
+      if (project !== null) {
+        projects.addProject(project);
+      }
+    });
+  } catch (error) {
+    projects = null;
+  }
 
   return projects;
 }
 
 export function loadDirectory(path, projectsDirectoryPath) {
-  let directory = null;
+  let directory;
 
   try {
     const absolutePath = concatenatePaths(projectsDirectoryPath, path),
@@ -186,7 +191,7 @@ export function loadDirectory(path, projectsDirectoryPath) {
       directory = Directory.fromPath(path);
     }
   } catch (error) {
-    ///
+    directory = null;
   }
 
   return directory;
@@ -197,13 +202,21 @@ export default {
   saveFile,
   loadFiles,
   saveFiles,
-  loadEntries,
   loadRelease,
   loadProject,
   loadReleases,
   loadProjects,
   loadDirectory
 };
+
+function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
+  const entries = Entries.fromNothing(),
+        relativeDirectoryPath = topmostDirectoryName;  ///
+
+  entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles);
+
+  return entries;
+}
 
 function fileFromProject(path, projectsDirectoryPath) {
   let file = null;
