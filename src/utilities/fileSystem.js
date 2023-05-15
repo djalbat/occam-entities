@@ -18,8 +18,8 @@ import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
 
 const { first } = arrayUtilities,
-      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities,
-      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities;
+      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities,
+      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory, checkEntryExists } = fileSystemUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
   let file;
@@ -180,23 +180,6 @@ export function loadProjects(projectsDirectoryPath, loadOnlyRecognisedFiles) {
   return projects;
 }
 
-export function loadDirectory(path, projectsDirectoryPath) {
-  let directory;
-
-  try {
-    const absolutePath = concatenatePaths(projectsDirectoryPath, path),
-          entryDirectory = isEntryDirectory(absolutePath);
-
-    if (entryDirectory) {
-      directory = Directory.fromPath(path);
-    }
-  } catch (error) {
-    directory = null;
-  }
-
-  return directory;
-}
-
 export default {
   loadFile,
   saveFile,
@@ -205,8 +188,7 @@ export default {
   loadRelease,
   loadProject,
   loadReleases,
-  loadProjects,
-  loadDirectory
+  loadProjects
 };
 
 function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecognisedFiles) {
@@ -216,6 +198,16 @@ function loadEntries(topmostDirectoryName, projectsDirectoryPath, loadOnlyRecogn
   entriesFromRelativeDirectoryPath(entries, relativeDirectoryPath, projectsDirectoryPath, loadOnlyRecognisedFiles);
 
   return entries;
+}
+
+function loadDirectory(path, projectsDirectoryPath) {
+  const absolutePath = concatenatePaths(projectsDirectoryPath, path),
+        entryDirectory = isEntryDirectory(absolutePath),
+        directory = entryDirectory ?
+                      Directory.fromPath(path) :
+                        null;
+
+  return directory;
 }
 
 function fileFromProject(path, projectsDirectoryPath) {
