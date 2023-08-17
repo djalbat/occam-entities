@@ -6,7 +6,7 @@ import { pathUtilities, fileSystemUtilities } from "necessary";
 import { asynchronousForEach } from "./utilities/pathMaps";
 
 const { concatenatePaths } = pathUtilities,
-      { checkEntryExists } = fileSystemUtilities;
+      { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
 
 export default function editProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
