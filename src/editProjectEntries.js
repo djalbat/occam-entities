@@ -1,9 +1,10 @@
 "use strict";
 
-import { move as edit, remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
 import { asynchronousForEach } from "./utilities/pathMaps";
+
+import { moveFile as editFile, moveDirectory as editDirectory } from "./moveProjectEntries";
 
 const { concatenatePaths } = pathUtilities,
       { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
@@ -70,7 +71,10 @@ function editFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPa
     return;
   }
 
-  edit(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
+  const oldFilePath = absoluteSourceFilePath, ///
+        newFilePath = absoluteTargetFilePath; ///
+
+  editFile(oldFilePath, newFilePath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }
@@ -97,7 +101,9 @@ function editDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirect
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {
-    remove(absoluteSourceDirectoryPath, (error) => {
+    const directoryPath = absoluteSourceDirectoryPath;  ///
+
+    removeDirectory(directoryPath, (error) => {
       if (error) {
         targetEntryPath = sourceEntryPath;  ///
       }
@@ -108,7 +114,10 @@ function editDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirect
     return;
   }
 
-  edit(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
+  const oldDirectoryPath = absoluteSourceDirectoryPath, ///
+        newDirectoryPath = absoluteTargetDirectoryPath; ///
+
+  editDirectory(oldDirectoryPath, newDirectoryPath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }

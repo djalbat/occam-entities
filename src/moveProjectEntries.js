@@ -1,13 +1,17 @@
 "use strict";
 
-import { move, remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
 import { asynchronousForEach } from "./utilities/pathMaps";
 import { removeEntryOperation } from "./removeProjectEntries";
+import { removeEntry as removeDirectory } from "./removeProjectEntries";
 
-const { concatenatePaths } = pathUtilities,
-      { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
+const { concatenatePaths, pathWithoutBottommostName } = pathUtilities,
+      { isDirectoryEmpty,
+        checkEntryExists,
+        renameFile: renameFileEx,
+        renameDirectory: renameDirectoryEx,
+        checkEntryExists: checkDirectoryExists } = fileSystemUtilities;
 
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
@@ -44,6 +48,46 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirect
       moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
 
+export function moveDirectory(oldDirectoryPath, newDirectoryPath, callback) {
+  let error = null;
+
+  const newDirectoryPathWithoutBottommostName = pathWithoutBottommostName(newDirectoryPath),
+        newParentDirectoryPath = newDirectoryPathWithoutBottommostName, ///
+        newParentDirectoryExists = checkDirectoryExists(newParentDirectoryPath);
+
+  if (!newParentDirectoryExists) {
+    error = `The new '${newDirectoryPath}' directory's parent directory does not exist.`;
+  } else {
+    try {
+      renameDirectoryEx(oldDirectoryPath);
+    } catch (nativeError) {
+      error = nativeError;  ///
+    }
+  }
+
+  callback(error);
+}
+
+export function moveFile(oldFilePath, newFilePath, callback) {
+  let error = null;
+
+  const newFilePathWithoutBottommostName = pathWithoutBottommostName(newFilePath),
+        newParentDirectoryPath = newFilePathWithoutBottommostName, ///
+        newParentDirectoryExists = checkFileExists(newParentDirectoryPath);
+
+  if (!newParentDirectoryExists) {
+    error = `The new '${newFilePath}' file's parent directory does not exist.`;
+  } else {
+    try {
+      renameFileEx(oldFilePath, newFilePath);
+    } catch (nativeError) {
+      error = nativeError;  ///
+    }
+  }
+
+  callback(error);
+}
+
 function moveEntries(pathMaps, projectsDirectoryPath, callback) {
   const targetEntryPaths = [];
 
@@ -77,7 +121,10 @@ function moveFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPa
     return;
   }
 
-  move(absoluteSourceFilePath, absoluteTargetFilePath, (error) => {
+  const oldFilePath = absoluteSourceFilePath, ///
+        newFilePath = absoluteTargetFilePath; ///
+
+  moveFile(oldFilePath, newFilePath, (error) => {
     if (error) {
       targetEntryPath = null;
     }
@@ -104,7 +151,9 @@ function moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirect
         targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {
-    remove(absoluteSourceDirectoryPath, (error) => {
+    const directoryPath = absoluteSourceDirectoryPath;  ///
+
+    removeDirectory(directoryPath, (error) => {
       if (error) {
         targetEntryPath = sourceEntryPath;  ///
       }
@@ -115,7 +164,10 @@ function moveDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirect
     return;
   }
 
-  move(absoluteSourceDirectoryPath, absoluteTargetDirectoryPath, (error) => {
+  const oldDirectoryPath = absoluteSourceDirectoryPath, ///
+        newDirectoryPath = absoluteTargetDirectoryPath; ///
+
+  moveDirectory(oldDirectoryPath, newDirectoryPath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }

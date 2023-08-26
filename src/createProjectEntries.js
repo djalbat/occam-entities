@@ -1,12 +1,14 @@
 "use strict";
 
 import { pathUtilities, fileSystemUtilities } from "necessary";
-import { createFile, mkdirs as createDirectory } from "fs-extra";
 
 import { asynchronousForEach } from "./utilities/pathMaps";
 
-const { concatenatePaths } = pathUtilities,
-      { checkEntryExists } = fileSystemUtilities;
+const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities,
+      { createFile: createFileEx,
+        createDirectory: createDirectoryEx,
+        checkEntryExists: checkFileExists,
+        checkEntryExists: checkDirectoryExists } = fileSystemUtilities;
 
 export default function createProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
@@ -24,6 +26,46 @@ export function createEntryOperation(sourceEntryPath, targetEntryPath, entryDire
   entryDirectory ?
     createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) :
       createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
+}
+
+export function createDirectory(directoryPath, callback) {
+  let error = null;
+
+  const directoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(directoryPath),
+        parentDirectoryPath = directoryPathWithoutBottommostName,  ///
+        parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
+
+  if (!parentDirectoryExists) {
+    error = `The '${directoryPath}' directory's parent directory does not exist`;
+  } else {
+    try {
+      createDirectoryEx(directoryPath)
+    } catch (nativeError) {
+      error = nativeError;  ///
+    }
+  }
+
+  callback(error);
+}
+
+export function createFile(filePath, callback) {
+  let error = null;
+
+  const filePathWithoutBottommostName = pathWithoutBottommostNameFromPath(filePath),
+        parentDirectoryPath = filePathWithoutBottommostName,  ///
+        parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
+
+  if (!parentDirectoryExists) {
+    error = `The '${filePath}' file's parent directory does not exist`;
+  } else {
+    try {
+      createFileEx(filePath)
+    } catch (nativeError) {
+      error = nativeError;  ///
+    }
+  }
+
+  callback(error);
 }
 
 function createEntries(pathMaps, projectsDirectoryPath, callback) {
@@ -47,7 +89,7 @@ function createEntries(pathMaps, projectsDirectoryPath, callback) {
 function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const targetFilePath = targetEntryPath, ///
         absoluteTargetFilePath = concatenatePaths(projectsDirectoryPath, targetFilePath),
-        targetFileExists = checkEntryExists(absoluteTargetFilePath);
+        targetFileExists = checkFileExists(absoluteTargetFilePath);
 
   if (targetFileExists) {
     targetEntryPath = null;
@@ -57,7 +99,9 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
     return;
   }
 
-  createFile(absoluteTargetFilePath, (error) => {
+  const filePath = absoluteTargetFilePath;  ///
+
+  createFile(filePath, (error) => {
     if (error) {
       targetEntryPath = null;
     }
@@ -69,7 +113,7 @@ function createFileOperation(sourceEntryPath, targetEntryPath, projectsDirectory
 function createDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const targetDirectoryPath = targetEntryPath,  ///
         absoluteTargetDirectoryPath = concatenatePaths(projectsDirectoryPath, targetDirectoryPath),
-        targetDirectoryExists = checkEntryExists(absoluteTargetDirectoryPath);
+        targetDirectoryExists = checkFileExists(absoluteTargetDirectoryPath);
 
   if (targetDirectoryExists) {
     targetEntryPath = null;

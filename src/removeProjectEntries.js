@@ -1,12 +1,11 @@
 "use strict";
 
-import { remove } from "fs-extra";
 import { pathUtilities, fileSystemUtilities } from "necessary";
 
 import { asynchronousForEach } from "./utilities/pathMaps";
 
 const { concatenatePaths } = pathUtilities,
-      { checkEntryExists, isDirectoryEmpty } = fileSystemUtilities;
+      { checkEntryExists, isDirectoryEmpty, removeEntry: removeEntryEx } = fileSystemUtilities;
 
 export default function removeProjectEntries(projectsDirectoryPath, json, callback) {
   const { pathMaps } = json;
@@ -37,6 +36,24 @@ export function removeEntryOperation(sourceEntryPath, targetEntryPath, entryDire
       removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback);
 }
 
+export function removeEntry(entryPath, callback) {
+  let error = null;
+
+  const entryExists = checkEntryExists(entryPath);
+
+  if (!entryExists) {
+    error = `The '${entryPath}' entry does not exist.`;
+  } else {
+    try {
+      removeEntryEx(entryPath);
+    } catch (nativeError) {
+      error = nativeError;  ///
+    }
+  }
+
+  callback(error);
+}
+
 function removeEntries(pathMaps, projectsDirectoryPath, callback) {
   const targetEntryPaths = [];
 
@@ -57,9 +74,10 @@ function removeEntries(pathMaps, projectsDirectoryPath, callback) {
 
 function removeFileOperation(sourceEntryPath, targetEntryPath, projectsDirectoryPath, callback) {
   const sourceFilePath = sourceEntryPath, ///
-        absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath);
+        absoluteSourceFilePath = concatenatePaths(projectsDirectoryPath, sourceFilePath),
+        entryPath = absoluteSourceFilePath; ///
 
-  remove(absoluteSourceFilePath, (error) => {
+  removeEntry(entryPath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }
@@ -81,7 +99,9 @@ function removeDirectoryOperation(sourceEntryPath, targetEntryPath, projectsDire
     return;
   }
 
-  remove(absoluteSourceDirectoryPath, (error) => {
+  const entryPath = absoluteSourceDirectoryPath;  ///
+
+  removeEntry(entryPath, (error) => {
     if (error) {
       targetEntryPath = sourceEntryPath;  ///
     }
