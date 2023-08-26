@@ -16,7 +16,7 @@ import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
 
 const { first } = arrayUtilities,
-      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities,
+      { concatenatePaths, topmostDirectoryNameFromPath } = pathUtilities,
       { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory, checkEntryExists: checkFileExists } = fileSystemUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
