@@ -8,7 +8,7 @@ export default function saveFiles(projectsDirectoryPath, json, callback) {
   const files = Files.fromJSON(json),
         successes = saveFilesEx(files, projectsDirectoryPath);
 
-  json = successes;
+  json = successes; ///
 
   callback(json);
 }
