@@ -23,7 +23,6 @@ export { default as fileSystemUtilities } from "./utilities/fileSystem";
 export { default as loadFile } from "./loadFile";
 export { default as saveFile } from "./saveFile";
 export { default as loadFiles } from "./loadFiles";
-export { default as saveFiles } from "./saveFiles";
 export { default as loadProject } from "./loadProject";
 export { default as loadRelease } from "./loadRelease";
 export { default as loadProjects } from "./loadProjects";

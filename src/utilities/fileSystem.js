@@ -90,16 +90,6 @@ export function loadFiles(paths, projectsDirectoryPath) {
   return files;
 }
 
-export function saveFiles(files, projectsDirectoryPath) {
-  const successes = files.mapFile((file) => {
-    const success = saveFile(file, projectsDirectoryPath);
-
-    return success;
-  });
-
-  return successes;
-}
-
 export function loadRelease(releaseName, projectsDirectoryPath) {
   let release = null;
 
@@ -198,7 +188,6 @@ export default {
   loadFile,
   saveFile,
   loadFiles,
-  saveFiles,
   loadRelease,
   loadProject,
   loadReleases,
