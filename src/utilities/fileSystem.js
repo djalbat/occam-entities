@@ -1,7 +1,5 @@
 "use strict";
 
-import mkdirp from "mkdirp";
-
 import { arrayUtilities, pathUtilities, fileSystemUtilities } from "necessary";
 
 import File from "../file";
@@ -18,8 +16,8 @@ import { isFilePathRecognisedFilePath } from "../utilities/filePath";
 import { convertContentTabsToWhitespace } from "../utilities/content";
 
 const { first } = arrayUtilities,
-      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory } = fileSystemUtilities,
-      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities;
+      { concatenatePaths, topmostDirectoryNameFromPath, topmostDirectoryPathFromPath } = pathUtilities,
+      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory, checkEntryExists: checkFileExists } = fileSystemUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
   let file = null;
@@ -43,14 +41,26 @@ export function loadFile(path, projectsDirectoryPath) {
 }
 
 export function saveFile(file, projectsDirectoryPath) {
-  const path = file.getPath(),
-        content = file.getContent(),
-        absolutePath = concatenatePaths(projectsDirectoryPath, path),
-        topmostAbsoluteDirectoryPath = topmostDirectoryPathFromPath(absolutePath);
+  let success = false;
 
-  mkdirp.sync(topmostAbsoluteDirectoryPath);
+  const filePath = file.getPath(),
+        absoluteFilePath = concatenatePaths(projectsDirectoryPath, filePath),
+        fileExists = checkFileExists(absoluteFilePath);
 
-  writeFile(absolutePath, content);
+  if (fileExists) {
+    const filePath = absoluteFilePath,  ///
+          content = file.getContent();
+
+    try {
+      writeFile(filePath, content);
+    } catch (error) {
+      ///
+    }
+
+    success = true;
+  }
+
+  return success;
 }
 
 export function loadFiles(paths, projectsDirectoryPath) {
@@ -81,9 +91,13 @@ export function loadFiles(paths, projectsDirectoryPath) {
 }
 
 export function saveFiles(files, projectsDirectoryPath) {
-  files.forEachFile((file) => {
-    saveFile(file, projectsDirectoryPath);
+  const successes = files.mapFile((file) => {
+    const success = saveFile(file, projectsDirectoryPath);
+
+    return success;
   });
+
+  return successes;
 }
 
 export function loadRelease(releaseName, projectsDirectoryPath) {
