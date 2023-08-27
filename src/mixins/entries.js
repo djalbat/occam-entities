@@ -1,5 +1,7 @@
 "use strict";
 
+function forEachFile(callback) { return this.entries.forEachFile(callback); }
+
 function getFile(filePath) { return this.entries.getFile(filePath); }
 
 function getBNF() { return this.entries.getBNF(); }
@@ -44,6 +46,7 @@ function getCustomGrammarPatternFiles() { return this.entries.getCustomGrammarPa
 
 
 const entriesMixins = {
+  forEachFile,
   getFile,
   getBNF,
   getFiles,

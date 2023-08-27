@@ -35,7 +35,6 @@ The exported functions are:
 * `loadFile()`
 * `saveFile()`
 * `loadFiles()`
-* `saveFiles()`
 * `loadProjects()`
 * `moveProjectEntries()`
 * `removeProjectEntries()`

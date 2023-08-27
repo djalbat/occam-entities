@@ -148,6 +148,12 @@ class Entries {
     this.addEntry(entry);
   }
 
+  forEachFile(callback) {
+    const files = this.getFiles();
+
+    files.forEach(callback);
+  }
+
   mapEntry(callback) { return this.array.map(callback); }
 
   someEntry(callback) { return this.array.some(callback); }
