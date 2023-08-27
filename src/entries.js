@@ -151,7 +151,7 @@ class Entries {
   forEachFile(callback) {
     const files = this.getFiles();
 
-    files.forEach(callback);
+    files.forEachFile(callback);
   }
 
   mapEntry(callback) { return this.array.map(callback); }
