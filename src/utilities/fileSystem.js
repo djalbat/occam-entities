@@ -17,7 +17,12 @@ import { convertContentTabsToWhitespace } from "../utilities/content";
 
 const { first } = arrayUtilities,
       { concatenatePaths, topmostDirectoryNameFromPath } = pathUtilities,
-      { readFile, writeFile, isEntryFile, readDirectory, isEntryDirectory, checkEntryExists: checkFileExists } = fileSystemUtilities;
+      { readFile,
+        writeFile,
+        isEntryFile,
+        readDirectory,
+        isEntryDirectory,
+        checkEntryExists: checkFileExists } = fileSystemUtilities;
 
 export function loadFile(path, projectsDirectoryPath) {
   let file = null;

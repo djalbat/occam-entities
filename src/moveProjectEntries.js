@@ -11,6 +11,7 @@ const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities,
         checkEntryExists,
         renameFile: renameFileEx,
         renameDirectory: renameDirectoryEx,
+        checkEntryExists: checkFileExists,
         checkEntryExists: checkDirectoryExists } = fileSystemUtilities;
 
 export default function moveProjectEntries(projectsDirectoryPath, json, callback) {
