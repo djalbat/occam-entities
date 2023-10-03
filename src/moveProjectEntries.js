@@ -6,7 +6,7 @@ import { asynchronousForEach } from "./utilities/pathMaps";
 import { removeEntryOperation } from "./removeProjectEntries";
 import { removeEntry as removeDirectory } from "./removeProjectEntries";
 
-const { concatenatePaths, pathWithoutBottommostName } = pathUtilities,
+const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities,
       { isDirectoryEmpty,
         checkEntryExists,
         renameFile: renameFileEx,
@@ -51,7 +51,7 @@ export function moveEntryOperation(sourceEntryPath, targetEntryPath, entryDirect
 export function moveDirectory(oldDirectoryPath, newDirectoryPath, callback) {
   let error = null;
 
-  const newDirectoryPathWithoutBottommostName = pathWithoutBottommostName(newDirectoryPath),
+  const newDirectoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(newDirectoryPath),
         newParentDirectoryPath = newDirectoryPathWithoutBottommostName, ///
         newParentDirectoryExists = checkDirectoryExists(newParentDirectoryPath);
 
@@ -71,7 +71,7 @@ export function moveDirectory(oldDirectoryPath, newDirectoryPath, callback) {
 export function moveFile(oldFilePath, newFilePath, callback) {
   let error = null;
 
-  const newFilePathWithoutBottommostName = pathWithoutBottommostName(newFilePath),
+  const newFilePathWithoutBottommostName = pathWithoutBottommostNameFromPath(newFilePath),
         newParentDirectoryPath = newFilePathWithoutBottommostName, ///
         newParentDirectoryExists = checkFileExists(newParentDirectoryPath);
 
