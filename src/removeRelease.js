@@ -30,7 +30,7 @@ export default function removeRelease(projectsDirectoryPath, json, callback) {
     }
   }
 
-  const targetEntryPaths = pathMaps.forEach((pathMap) => {
+  const targetEntryPaths = pathMaps.map((pathMap) => {
     let targetEntryPath;
 
     if (error === null) {
