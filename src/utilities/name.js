@@ -2,15 +2,7 @@
 
 import { pathUtilities } from "necessary";
 
-const hiddenNameRegularExpression = /^\..+/;
-
 const { bottommostNameFromPath } = pathUtilities;
-
-export function isNameHiddenName(name) {
-  const nameHiddenName = hiddenNameRegularExpression.test(name);
-
-  return nameHiddenName;
-}
 
 export function fileNameFromFilePath(filePath) {
   const path = filePath,  ///
