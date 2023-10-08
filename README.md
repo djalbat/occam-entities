@@ -63,7 +63,7 @@ const json = ... ,
 
 See the source for further information on the utilities.
 
-In short, this package has little of use and little more of interest. 
+In short, this package has little of use and only a little more of interest. 
 
 ## Building
 
