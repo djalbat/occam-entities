@@ -29,6 +29,6 @@ export { default as loadProjects } from "./loadProjects";
 export { default as loadReleases } from "./loadReleases";
 export { default as removeRelease } from "./removeRelease";
 export { default as moveProjectEntries } from "./moveProjectEntries";
-export { default as editProjectEntries } from "./editProjectEntries";
 export { default as removeProjectEntries } from "./removeProjectEntries";
+export { default as renameProjectEntries } from "./renameProjectEntries";
 export { default as createProjectEntries } from "./createProjectEntries";
