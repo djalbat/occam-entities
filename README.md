@@ -1,6 +1,6 @@
 # Occam File system
 
-[Occam](https://github.com/djalbat/occam)'s file system functionality.
+[Occam](https://github.com/djalbat/occam)'s entities.
 
 ### Contents
 

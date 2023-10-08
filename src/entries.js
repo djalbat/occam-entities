@@ -10,9 +10,6 @@ import filesMixins from "./mixins/files";
 import patternMixins from "./mixins/pattern";
 import metaJSONMixins from "./mixins/metaJSON";
 
-import { ENTRIES_MAXIMUM_LENGTH } from "./constants";
-import { ENTRIES_MAXIMUM_LENGTH_EXCEEDED_MESSAGE } from "./messages";
-
 const { first, filter } = arrayUtilities,
       { topmostDirectoryNameFromPath } = pathUtilities;
 
@@ -132,15 +129,7 @@ class Entries {
     this.addEntry(entry);
   }
 
-  addEntry(entry) {
-    this.array.push(entry);
-
-    const length = this.array.length;
-
-    if (length > ENTRIES_MAXIMUM_LENGTH) {
-      throw new Error(ENTRIES_MAXIMUM_LENGTH_EXCEEDED_MESSAGE)
-    }
-  }
+  addEntry(entry) { this.array.push(entry); }
 
   addDirectory(directory) {
     const entry = directory;  ///
