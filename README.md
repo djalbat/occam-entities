@@ -1,4 +1,4 @@
-# Occam File system
+# Occam Entities
 
 [Occam](https://github.com/djalbat/occam)'s entities.
 
@@ -12,17 +12,17 @@
 
 ## Introduction
 
-Occam's file system functionality.
+Occam's entities, namely things like files, projects, versions and so on.
 
 ## Installation
 
 With [npm](https://www.npmjs.com/):
 
-    npm install occam-file-system
+    npm install occam-entities
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/occam-file-system.git
+    git clone https://github.com/djalbat/occam-entities.git
 
 ...and then install the dependencies with npm from within the project's root directory:
 
@@ -30,40 +30,40 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-The exported functions are:
+The exported classes are:
 
-* `loadFile()`
-* `saveFile()`
-* `loadFiles()`
-* `loadProjects()`
-* `moveProjectEntries()`
-* `removeProjectEntries()`
+* `File`
+* `Files`
+* `Version`
+* `Entries`
+* `Project`
+* `Release`
+* `Projects`
+* `Releases`
+* `Dependency`
+* `Dependencies`
+* `ShortenedVersion`
 
-Typical usage is as follows:
+There are also some utilities:
+
+* `contentUtilities`
+* `filePathUtilities`
+* `metaJSONUtilities`
+
+The classes have factory methods, see the source for details. Typical usage is:
 
 ```
-const open = require('occam-open-cli'), ///
-      filesystem = require('occam-file-system'); ///
+const { File }} = require('occam-entities');
 
-const { Files } = open,
-      { loadFiles } = filesystem;
+const json = ... ,
+      file = file.fromJSON(json);
 
-const filePaths = ...,
-      projectsDirectoryPath = ...,
-      json = {
-        filePaths
-      };
-
-loadFiles(projectsDirectoryPath, json, function(json) {
-  const files = (json !== null) ?
-                  Files.fromJSON(json) :
-                    null;
-
-  ...
-});
+...
 ```
 
-Note that you get JSON back, not an instance of the `Files` class, and that JSON might be `null`.
+See the source for further information on the utilities.
+
+In short, this package has little of use and little more of interest. 
 
 ## Building
 
