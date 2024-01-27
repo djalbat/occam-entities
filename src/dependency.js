@@ -14,6 +14,20 @@ export default class Dependency {
     return this.shortenedVersion;
   }
 
+  asString() {
+    let string;
+
+    if (this.shortenedVersion !== null) {
+      const shortenedVersionString = this.shortenedVersion.asString();
+
+      string = `${this.name}@${shortenedVersionString}`;
+    } else {
+      string = this.name; ///
+    }
+
+    return string;
+  }
+
   static fromName(name) {
     const shortenedVersion = null,
           dependency = new Dependency(name, shortenedVersion);
