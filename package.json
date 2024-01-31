@@ -1,7 +1,7 @@
 {
   "name": "occam-entities",
   "author": "James Smith",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/occam-entities",
   "description": "Occam's entities.",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.2.51",
-    "watchful-cli": "^1.7.43"
+    "watchful-cli": "^1.7.44"
   },
   "scripts": {
     "clean": "rm -rf ./lib",
