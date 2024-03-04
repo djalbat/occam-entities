@@ -1,6 +1,6 @@
 "use strict";
 
-import { Query } from "occam-dom";
+import { Query } from "occam-query";
 
 export function nodeQuery(expression) {
   const query = Query.fromExpression(expression);
