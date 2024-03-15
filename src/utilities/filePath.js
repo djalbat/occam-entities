@@ -4,15 +4,17 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       markdownFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.md$",
       florenceFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.fls$",
       metaJSONFilePathPattern = "^(?:[^\\/]+\\/){1}meta\\.json$",
+      markdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.mds$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement|metastatement)\\.bnf$",
       customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol|operator)\\.ptn$",
-      recognisedFilePathPattern = `${markdownFilePathPattern}|${florenceFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`;
+      recognisedFilePathPattern = `${markdownFilePathPattern}|${florenceFilePathPattern}|${metaJSONFilePathPattern}|${markdownStyleFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
       markdownFilePathRegularExpression = new RegExp(markdownFilePathPattern),
       florenceFilePathRegularExpression = new RegExp(florenceFilePathPattern),
       metaJSONFilePathRegularExpression = new RegExp(metaJSONFilePathPattern),
       recognisedFilePathRegularExpression = new RegExp(recognisedFilePathPattern),
+      markdownStyleFilePathRegularExpression = new RegExp(markdownStyleFilePathPattern),
       customGrammarBNFFilePathRegularExpression = new RegExp(customGrammarBNFFilePathPattern),
       customGrammarPatternFilePathRegularExpression = new RegExp(customGrammarPatternFilePathPattern);
 
@@ -26,6 +28,8 @@ export function isFilePathMetaJSONFilePath(filePath) { return metaJSONFilePathRe
 
 export function isFilePathRecognisedFilePath(filePath) { return recognisedFilePathRegularExpression.test(filePath); }
 
+export function isFilePathMarkdownStyleFilePath(filePath) { return markdownStyleFilePathRegularExpression.test(filePath); }
+
 export function isFilePathCustomGrammarBNFFilePath(filePath) { return customGrammarBNFFilePathRegularExpression.test(filePath); }
 
 export function isFilePathCustomGrammarPatternFilePath(filePath) { return customGrammarPatternFilePathRegularExpression.test(filePath); }
@@ -36,6 +40,7 @@ export default {
   isFilePathFlorenceFilePath,
   isFilePathMetaJSONFilePath,
   isFilePathRecognisedFilePath,
+  isFilePathMarkdownStyleFilePath,
   isFilePathCustomGrammarBNFFilePath,
   isFilePathCustomGrammarPatternFilePath
 };
