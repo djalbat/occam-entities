@@ -7,6 +7,7 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       markdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.mds$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement|metastatement)\\.bnf$",
       customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol|operator)\\.ptn$",
+      defaultMarkdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}default\\.mds$",
       recognisedFilePathPattern = `${markdownFilePathPattern}|${florenceFilePathPattern}|${metaJSONFilePathPattern}|${markdownStyleFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
@@ -16,7 +17,8 @@ const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
       recognisedFilePathRegularExpression = new RegExp(recognisedFilePathPattern),
       markdownStyleFilePathRegularExpression = new RegExp(markdownStyleFilePathPattern),
       customGrammarBNFFilePathRegularExpression = new RegExp(customGrammarBNFFilePathPattern),
-      customGrammarPatternFilePathRegularExpression = new RegExp(customGrammarPatternFilePathPattern);
+      customGrammarPatternFilePathRegularExpression = new RegExp(customGrammarPatternFilePathPattern),
+      defaultMarkdownStyleFilePathRegularExpression = new RegExp(defaultMarkdownStyleFilePathPattern);
 
 export function isFilePathReadmeFilePath(filePath) { return readmeFilePathRegularExpression.test(filePath); }
 
@@ -34,6 +36,8 @@ export function isFilePathCustomGrammarBNFFilePath(filePath) { return customGram
 
 export function isFilePathCustomGrammarPatternFilePath(filePath) { return customGrammarPatternFilePathRegularExpression.test(filePath); }
 
+export function isFilePathDefaultMarkdownStyleFilePath(filePath) { return defaultMarkdownStyleFilePathRegularExpression.test(filePath); }
+
 export default {
   isFilePathReadmeFilePath,
   isFilePathMarkdownFilePath,
@@ -42,5 +46,6 @@ export default {
   isFilePathRecognisedFilePath,
   isFilePathMarkdownStyleFilePath,
   isFilePathCustomGrammarBNFFilePath,
-  isFilePathCustomGrammarPatternFilePath
+  isFilePathCustomGrammarPatternFilePath,
+  isFilePathDefaultMarkdownStyleFilePath
 };
