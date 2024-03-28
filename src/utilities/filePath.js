@@ -7,7 +7,7 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       markdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.mds$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement|metastatement)\\.bnf$",
       customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol|operator)\\.ptn$",
-      defaultMarkdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}default\\.mds$",
+      defaultMarkdownStyleFilePathPattern = "^[^\\/]+\\/default\\.mds$",
       recognisedFilePathPattern = `${markdownFilePathPattern}|${florenceFilePathPattern}|${metaJSONFilePathPattern}|${markdownStyleFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
