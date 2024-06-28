@@ -17,7 +17,7 @@ const jsonLexer = JSONLexer.fromNothing(),
       jsonParser = JSONParser.fromNothing();
 
 const errorNodesQuery = nodesQuery("//error"),
-      propertyNodesQuery = nodeQuery("/property/json/object/property"),
+      propertyNodesQuery = nodesQuery("/property/json/object/property"),
       documentPropertyNodesQuery = nodesQuery("/document/json/object/property"),
       propertyNameTerminalNodeQuery = nodeQuery("/property/@string-literal!"),
       stringPropertyValueTerminalNodeQuery = nodeQuery("/property/json/@string-literal!");
