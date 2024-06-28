@@ -138,7 +138,7 @@ export function dependenciesFromDocumentNode(documentNode) {
     const propertyNode = dependenciesPropertyNode,  ///
           propertyNodes = propertyNodesQuery(propertyNode);
 
-    propertyNodes.reduce((propertyNode) => {
+    propertyNodes.forEach((propertyNode) => {
       const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
             string = stringPropertyValue, ///
             stringShortenedVersionString = isStringShortenedVersionString(string);
@@ -168,7 +168,7 @@ export function dependencyNamesFromDocumentNode(documentNode) {
     const propertyNode = dependenciesPropertyNode,  ///
           propertyNodes = propertyNodesQuery(propertyNode);
 
-    propertyNodes.reduce((propertyNode) => {
+    propertyNodes.forEach((propertyNode) => {
       const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
             string = stringPropertyValue, ///
             stringShortenedVersionString = isStringShortenedVersionString(string);
