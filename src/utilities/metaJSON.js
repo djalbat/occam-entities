@@ -177,7 +177,7 @@ export function dependencyNamesFromDocumentNode(documentNode) {
         const propertyName = propertyNameFromPropertyNode(propertyNode),
               dependencyName = propertyName;  ///
 
-        dependencyNames.addDependency(dependencyName);
+        dependencyNames.push(dependencyName);
       }
     });
   }
