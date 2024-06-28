@@ -107,7 +107,7 @@ export function updateMetaJSONFileVersion(metaJSONFile, version) {
   let dependencies = dependenciesFromNode(node);
 
   const string = version.toString(),
-      dependenciesJSON = dependencies.toJSON();
+        dependenciesJSON = dependencies.toJSON();
 
   version = string;  ///
 
