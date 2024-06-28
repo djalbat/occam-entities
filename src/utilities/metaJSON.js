@@ -1,6 +1,6 @@
 "use strict";
 
-import { MetaJSONLexer, MetaJSONParser } from "occam-grammars";
+import { JSONLexer, JSONParser } from "occam-grammars";
 
 import Version from "../version";
 import Dependency from "../dependency";
@@ -10,101 +10,44 @@ import ShortenedVersion from "../shortenedVersion";
 import { DOUBLE_SPACE } from "../constants";
 import { trimDoubleQuotes } from "../utilities/content";
 import { nodeQuery, nodesQuery } from "../utilities/query";
+import { isStringVersionString, isStringShortenedVersionString } from "../utilities/validate";
+import { VERSION_PROPERTY_NAME, REPOSITORY_PROPERTY_NAME, DEPENDENCIES_PROPERTY_NAME } from "../propertyNames";
 
-const metaJSONLexer = MetaJSONLexer.fromNothing(),
-      metaJSONParser = MetaJSONParser.fromNothing(),
-      errorNodesQuery = nodesQuery("//error"),
-      dependencyNodesQuery = nodesQuery("//dependencies/dependency"),
-      repositoryTerminalNodeQuery = nodeQuery("//repository!/@*!"),
-      versionNumberTerminalNodeQuery = nodeQuery("//version!/versionNumber!/@*!"),
-      dependencyNameTerminalNodeQuery = nodeQuery("/dependency/name!/@*!"),
-      shortenedVersionNumberTerminalNodeQuery = nodeQuery("//dependency/shortenedVersionNumber/@*!");
+const jsonLexer = JSONLexer.fromNothing(),
+      jsonParser = JSONParser.fromNothing();
 
-export function versionFromNode(node) {
-  let version = null;
-
-  if (node !== null) {
-    const versionNumberTerminalNode = versionNumberTerminalNodeQuery(node),
-          versionNumberTerminalNodeContent = versionNumberTerminalNode.getContent(),
-          string = trimDoubleQuotes(versionNumberTerminalNodeContent); //
-
-    version = Version.fromString(string);
-  }
-
-  return version;
-}
-
-export function repositoryFromNode(node) {
-  let repository = null;
-
-  if (node !== null) {
-    const repositoryTerminalNode = repositoryTerminalNodeQuery(node),
-          repositoryTerminalNodeContent = repositoryTerminalNode.getContent();
-
-    repository = trimDoubleQuotes(repositoryTerminalNodeContent); //
-  }
-
-  return repository;
-}
+const errorNodesQuery = nodesQuery("//error"),
+      propertyNodesQuery = nodeQuery("/property/json/object/property"),
+      documentPropertyNodesQuery = nodesQuery("/document/json/object/property"),
+      propertyNameTerminalNodeQuery = nodeQuery("/property/@string-literal!"),
+      stringPropertyValueTerminalNodeQuery = nodeQuery("/property/json/@string-literal!");
 
 export function isMetaJSONFileValid(metaJSONFile) {
   let metaJSONFileValid = false;
 
-  const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile);
+  const documentNode = documentNodeFromMetaJSONFile(metaJSONFile);
 
-  if (metaJSONNode !== null) {
-    const node = metaJSONNode,  ///
-          errorNodes = errorNodesQuery(node),
+  if (documentNode !== null) {
+    const errorNodes = errorNodesQuery(documentNode),
           errorNodesLength = errorNodes.length;
 
     if (errorNodesLength === 0) {
-      metaJSONFileValid = true;
+      const version = versionFromDocumentNode(documentNode),
+            repository = repositoryFromDocumentNode(documentNode),
+            dependencies = dependenciesFromDocumentNode(documentNode);
+
+      metaJSONFileValid = ((version !== null) && (repository !== null) && (dependencies !== null));
     }
   }
 
   return metaJSONFileValid;
 }
 
-export function dependenciesFromNode(node) {
-  const dependencies = Dependencies.fromNothing();
-
-  if (node !== null) {
-    const dependencyNodes = dependencyNodesQuery(node);
-
-    dependencyNodes.forEach((dependencyNode) => {
-      const dependencyNameTerminalNode = dependencyNameTerminalNodeQuery(dependencyNode),
-            shortenedVersionNumberTerminalNode = shortenedVersionNumberTerminalNodeQuery(dependencyNode),
-            dependencyNameTerminalNodeContent = dependencyNameTerminalNode.getContent(),
-            shortenedVersionNumberTerminalNodeContent = shortenedVersionNumberTerminalNode.getContent(),
-            string = trimDoubleQuotes(shortenedVersionNumberTerminalNodeContent),  ///
-            name = trimDoubleQuotes(dependencyNameTerminalNodeContent),///
-            shortenedVersion = ShortenedVersion.fromString(string),
-            dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
-
-      dependencies.addDependency(dependency);
-    });
-  }
-
-  return dependencies;
-}
-
-export function dependencyNamesFromNode(node) {
-  const dependencies = dependenciesFromNode(node),
-        dependencyNames = dependencies.mapDependency((dependency) => {
-          const dependencyName = dependency.getName();
-
-          return dependencyName;
-        });
-
-  return dependencyNames;
-}
-
 export function updateMetaJSONFileVersion(metaJSONFile, version) {
-  const metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-        node = metaJSONNode,  ///
-        repository = repositoryFromNode(node);
+  const documentNode = documentNodeFromMetaJSONFile(metaJSONFile),
+        repository = repositoryFromDocumentNode(documentNode);
 
-  let dependencies = dependenciesFromNode(node);
+  let dependencies = dependenciesFromDocumentNode(documentNode);
 
   const string = version.toString(),
         dependenciesJSON = dependencies.toJSON();
@@ -124,26 +67,171 @@ export function updateMetaJSONFileVersion(metaJSONFile, version) {
   metaJSONFile.setContent(metaJSONFileContent);
 }
 
-export function metaJSONNodeFromMetaJSONFile(metaJSONFile) {
-  let metaJSONNode = null;
+export function documentNodeFromMetaJSONFile(metaJSONFile) {
+  let documentNode = null;
 
   if (metaJSONFile !== null) {
     const content = metaJSONFile.getContent(),
-          tokens = metaJSONLexer.tokenise(content),
-          node = metaJSONParser.parse(tokens);
+          tokens = jsonLexer.tokenise(content),
+          node = jsonParser.parse(tokens);
 
-    metaJSONNode = node;  ///
+    documentNode = node;  ///
   }
 
-  return metaJSONNode;
+  return documentNode;
+}
+
+export function versionFromDocumentNode(documentNode) {
+  let version = null;
+
+  const documentPropertyNodes = documentPropertyNodesFromDocumentNode(documentNode);
+
+  documentPropertyNodes.some((documentPropertyNode) => {
+    const propertyNode = documentPropertyNode,  ///
+          propertyName = propertyNameFromPropertyNode(propertyNode);
+
+    if (propertyName === VERSION_PROPERTY_NAME) {
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
+            string = stringPropertyValue, ///
+            stringVersionString = isStringVersionString(string);
+
+      if (stringVersionString) {
+        version = Version.fromString(string);
+      }
+
+      return true;
+    }
+  });
+
+  return version;
+}
+
+export function repositoryFromDocumentNode(documentNode) {
+  let repository = null;
+
+  const documentPropertyNodes = documentPropertyNodesFromDocumentNode(documentNode);
+
+  documentPropertyNodes.some((documentPropertyNode) => {
+    const propertyNode = documentPropertyNode,  ///
+          propertyName = propertyNameFromPropertyNode(propertyNode);
+
+    if (propertyName === REPOSITORY_PROPERTY_NAME) {
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode);
+
+      repository = stringPropertyValue;  ///
+
+      return true;
+    }
+  });
+
+  return repository;
+}
+
+export function dependenciesFromDocumentNode(documentNode) {
+  let dependencies = null;
+
+  const dependenciesPropertyNode = dependenciesPropertyNodeFromDocumentNode(documentNode);
+
+  if (dependenciesPropertyNode !== null) {
+    dependencies = Dependencies.fromNothing();
+
+    const propertyNode = dependenciesPropertyNode,  ///
+          propertyNodes = propertyNodesQuery(propertyNode);
+
+    propertyNodes.reduce((propertyNode) => {
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
+            string = stringPropertyValue, ///
+            stringShortenedVersionString = isStringShortenedVersionString(string);
+
+      if (stringShortenedVersionString) {
+        const propertyName = propertyNameFromPropertyNode(propertyNode),
+              name = propertyName,  ///
+              shortenedVersion = ShortenedVersion.fromString(string),
+              dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
+
+        dependencies.addDependency(dependency);
+      }
+    });
+  }
+
+  return dependencies;
+}
+
+export function dependencyNamesFromDocumentNode(documentNode) {
+  let dependencyNames = null;
+
+  const dependenciesPropertyNode = dependenciesPropertyNodeFromDocumentNode(documentNode);
+
+  if (dependenciesPropertyNode !== null) {
+    dependencyNames = [];
+
+    const propertyNode = dependenciesPropertyNode,  ///
+          propertyNodes = propertyNodesQuery(propertyNode);
+
+    propertyNodes.reduce((propertyNode) => {
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
+            string = stringPropertyValue, ///
+            stringShortenedVersionString = isStringShortenedVersionString(string);
+
+      if (stringShortenedVersionString) {
+        const propertyName = propertyNameFromPropertyNode(propertyNode),
+              dependencyName = propertyName;  ///
+
+        dependencyNames.addDependency(dependencyName);
+      }
+    });
+  }
+
+  return dependencyNames;
 }
 
 export default {
-  versionFromNode,
-  repositoryFromNode,
   isMetaJSONFileValid,
-  dependenciesFromNode,
-  dependencyNamesFromNode,
   updateMetaJSONFileVersion,
-  metaJSONNodeFromMetaJSONFile
+  documentNodeFromMetaJSONFile,
+  versionFromDocumentNode,
+  repositoryFromDocumentNode,
+  dependenciesFromDocumentNode,
+  dependencyNamesFromDocumentNode
 };
+
+function propertyNameFromPropertyNode(propertyNode) {
+  const propertyNameTerminalNode = propertyNameTerminalNodeQuery(propertyNode),
+        propertyNameTerminalNodeContent = propertyNameTerminalNode.getContent(),
+        propertyName = trimDoubleQuotes(propertyNameTerminalNodeContent); ///
+
+  return propertyName;
+}
+
+function stringPropertyValueFromPropertyNode(propertyNode) {
+  const propertyValueTerminalNode = stringPropertyValueTerminalNodeQuery(propertyNode),
+        propertyValueTerminalNodeContent = propertyValueTerminalNode.getContent(),
+        stringPropertyValue = trimDoubleQuotes(propertyValueTerminalNodeContent); ///
+
+  return stringPropertyValue;
+}
+
+function documentPropertyNodesFromDocumentNode(documentNode) {
+  const documentPropertyNodes = documentPropertyNodesQuery(documentNode);
+
+  return documentPropertyNodes;
+}
+
+function dependenciesPropertyNodeFromDocumentNode(documentNode) {
+  let dependenciesPropertyNode = null;
+
+  const documentPropertyNodes = documentPropertyNodesFromDocumentNode(documentNode);
+
+  documentPropertyNodes.some((documentPropertyNode) => {
+    const propertyNode = documentPropertyNode,  ///
+          propertyName = propertyNameFromPropertyNode(propertyNode);
+
+    if (propertyName === DEPENDENCIES_PROPERTY_NAME) {
+      dependenciesPropertyNode = propertyNode;  ///
+
+      return true;
+    }
+  });
+
+  return dependenciesPropertyNode;
+}

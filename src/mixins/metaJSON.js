@@ -1,39 +1,35 @@
 "use strict";
 
-import { versionFromNode, repositoryFromNode, dependenciesFromNode, dependencyNamesFromNode, metaJSONNodeFromMetaJSONFile } from "../utilities/metaJSON";
+import { versionFromDocumentNode, repositoryFromDocumentNode, dependenciesFromDocumentNode, dependencyNamesFromDocumentNode, documentNodeFromMetaJSONFile } from "../utilities/metaJSON";
 
 function getVersion() {
   const metaJSONFile = this.getMetaJSONFile(),
-        metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-        node = metaJSONNode,  ///
-        version = versionFromNode(node);
+        documentNode = documentNodeFromMetaJSONFile(metaJSONFile),
+        version = versionFromDocumentNode(documentNode);
 
   return version;
 }
 
 function getRepository() {
   const metaJSONFile = this.getMetaJSONFile(),
-        metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-        node = metaJSONNode,  ///
-        repository = repositoryFromNode(node);
+        documentNode = documentNodeFromMetaJSONFile(metaJSONFile),
+        repository = repositoryFromDocumentNode(documentNode);
 
   return repository;
 }
 
 function getDependencies() {
   const metaJSONFile = this.getMetaJSONFile(),
-        metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-        node = metaJSONNode,  ///
-        dependencies = dependenciesFromNode(node);
+        documentNode = documentNodeFromMetaJSONFile(metaJSONFile),
+        dependencies = dependenciesFromDocumentNode(documentNode);
 
   return dependencies;
 }
 
 function getDependencyNames() {
   const metaJSONFile = this.getMetaJSONFile(),
-        metaJSONNode = metaJSONNodeFromMetaJSONFile(metaJSONFile),
-        node = metaJSONNode,  ///
-        dependencyNames = dependencyNamesFromNode(node);
+        documentNode = documentNodeFromMetaJSONFile(metaJSONFile),
+        dependencyNames = dependencyNamesFromDocumentNode(documentNode);
 
   return dependencyNames;
 }
