@@ -38,8 +38,6 @@ function getOperatorPattern() { return this.entries.getOperatorPattern(); }
 
 function getDependencyNames() { return this.entries.getDependencyNames(); }
 
-function getMetastatementBNF() { return this.entries.getMetastatementBNF(); }
-
 function getCustomGrammarBNFFiles() { return this.entries.getCustomGrammarBNFFiles(); }
 
 function getCustomGrammarPatternFiles() { return this.entries.getCustomGrammarPatternFiles(); }
@@ -65,7 +63,6 @@ const entriesMixins = {
   getDirectoryPaths,
   getOperatorPattern,
   getDependencyNames,
-  getMetastatementBNF,
   getCustomGrammarBNFFiles,
   getCustomGrammarPatternFiles
 };

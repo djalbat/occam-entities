@@ -1,7 +1,7 @@
 "use strict";
 
 import { fileNameFromFilePath } from "../utilities/name";
-import { TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME, METASTATEMENT_BNF_FILE_NAME } from "../fileNames";
+import { TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME } from "../fileNames";
 
 function getBNF(bnfFileName) {
   let bnf = null;
@@ -41,19 +41,10 @@ function getStatementBNF() {
   return statementBNF;
 }
 
-function getMetastatementBNF() {
-  const fileName = METASTATEMENT_BNF_FILE_NAME, ///
-        bnf = this.getBNF(fileName),
-        metastatementBNF = bnf;  ///
-
-  return metastatementBNF;
-}
-
 const bnfMixins = {
   getBNF,
   getTermBNF,
-  getStatementBNF,
-  getMetastatementBNF
+  getStatementBNF
 };
 
 export default bnfMixins;
