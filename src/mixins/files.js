@@ -2,7 +2,7 @@
 
 import { readmeFileFromFiles,
          metaJSONFileFromFiles,
-         florenceFilesFromFiles,
+         nominalFilesFromFiles,
          customGrammarBNFFilesFromFiles,
          customGrammarPatternFilesFromFiles } from "../utilities/files";
 
@@ -20,11 +20,11 @@ function getMetaJSONFile() {
   return metaJSONFile;
 }
 
-function getFlorenceFiles() {
+function getNominalFiles() {
   const files = this.getFiles(),
-        florenceFiles = florenceFilesFromFiles(files);
+        nominalFiles = nominalFilesFromFiles(files);
 
-  return florenceFiles;
+  return nominalFiles;
 }
 
 function getCustomGrammarBNFFiles() {
@@ -44,7 +44,7 @@ function getCustomGrammarPatternFiles() {
 const filesMixins = {
   getReadmeFile,
   getMetaJSONFile,
-  getFlorenceFiles,
+  getNominalFiles,
   getCustomGrammarBNFFiles,
   getCustomGrammarPatternFiles
 };

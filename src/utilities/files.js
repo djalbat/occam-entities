@@ -1,7 +1,7 @@
 "use strict";
 
 import { isFilePathReadmeFilePath,
-         isFilePathFlorenceFilePath,
+         isFilePathNominalFilePath,
          isFilePathMetaJSONFilePath,
          isFilePathCustomGrammarBNFFilePath,
          isFilePathCustomGrammarPatternFilePath } from "../utilities/filePath";
@@ -40,22 +40,22 @@ export function metaJSONFileFromFiles(files) {
   return metaJSONFile;
 }
 
-export function florenceFilesFromFiles(files) {
-  const florenceFiles = files.reduceFile((florenceFiles, file) => {
+export function nominalFilesFromFiles(files) {
+  const nominalFiles = files.reduceFile((nominalFiles, file) => {
           const filePath = file.getPath(),
-                filePathFlorenceFilePath = isFilePathFlorenceFilePath(filePath),
-                fileFlorenceFile = filePathFlorenceFilePath;  ///
+                filePathNominalFilePath = isFilePathNominalFilePath(filePath),
+                fileNominalFile = filePathNominalFilePath;  ///
 
-          if (fileFlorenceFile) {
-            const florenceFile = file;  ///
+          if (fileNominalFile) {
+            const nominalFile = file;  ///
 
-            florenceFiles.push(florenceFile);
+            nominalFiles.push(nominalFile);
           }
 
-          return florenceFiles;
+          return nominalFiles;
         }, []);
 
-  return florenceFiles;
+  return nominalFiles;
 }
 
 export function customGrammarBNFFilesFromFiles(files) {

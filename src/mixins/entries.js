@@ -30,7 +30,7 @@ function getMetaJSONFile() { return this.entries.getMetaJSONFile(); }
 
 function getSymbolPattern() { return this.entries.getSymbolPattern(); }
 
-function getFlorenceFiles() { return this.entries.getFlorenceFiles(); }
+function getNominalFiles() { return this.entries.getNominalFiles(); }
 
 function getDirectoryPaths() { return this.entries.getDirectoryPaths(); }
 
@@ -59,7 +59,7 @@ const entriesMixins = {
   getDependencies,
   getMetaJSONFile,
   getSymbolPattern,
-  getFlorenceFiles,
+  getNominalFiles,
   getDirectoryPaths,
   getOperatorPattern,
   getDependencyNames,
