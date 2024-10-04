@@ -6,6 +6,7 @@ import entriesMixins from "./mixins/entries";
 
 import { DOUBLE_SPACE } from "./constants";
 import { isMetaJSONFileValid } from "./utilities/metaJSON";
+import { isFilePathReleaseFilePath } from "./utilities/filePath";
 import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
 
 class Release {
@@ -114,13 +115,18 @@ function releaseEntriesFromEntries(entries) {
         files = entries.getFiles();
 
   files.forEachFile((file) => {
-    const path = file.getPath(),
-          content = file.getContent(),
-          released = true;
+    const filePath = file.getPath(),
+          filePathReleaseFilePath = isFilePathReleaseFilePath(filePath);
 
-    file = File.fromPathContentAndReleased(path, content, released);  ///
+    if (filePathReleaseFilePath) {
+      const path = filePath,  ///
+            content = file.getContent(),
+            released = true;
 
-    releasedEntries.addFile(file);
+      file = File.fromPathContentAndReleased(path, content, released);  ///
+
+      releasedEntries.addFile(file);
+    }
   });
 
   return releasedEntries;
