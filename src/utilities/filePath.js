@@ -9,9 +9,11 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement)\\.bnf$",
       customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol|operator)\\.ptn$",
       defaultMarkdownStyleFilePathPattern = "^[^\\/]+\\/default\\.mds$",
-      recognisedFilePathPattern = `${markdownFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${indexJSONFilePathPattern}|${markdownStyleFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`;
+      releaseFilePathPattern = `${readmeFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`,
+      recognisedFilePathPattern = `${releaseFilePathPattern}|${indexJSONFilePathPattern}|${markdownFilePathPattern}|${markdownStyleFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
+      releaseFilePathRegularExpression = new RegExp(releaseFilePathPattern),
       nominalFilePathRegularExpression = new RegExp(nominalFilePathPattern),
       markdownFilePathRegularExpression = new RegExp(markdownFilePathPattern),
       metaJSONFilePathRegularExpression = new RegExp(metaJSONFilePathPattern),
@@ -23,6 +25,8 @@ const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
       defaultMarkdownStyleFilePathRegularExpression = new RegExp(defaultMarkdownStyleFilePathPattern);
 
 export function isFilePathReadmeFilePath(filePath) { return readmeFilePathRegularExpression.test(filePath); }
+
+export function isFilePathReleaseFilePath(filePath) { return releaseFilePathRegularExpression.test(filePath); }
 
 export function isFilePathNominalFilePath(filePath) { return nominalFilePathRegularExpression.test(filePath); }
 
@@ -44,6 +48,7 @@ export function isFilePathDefaultMarkdownStyleFilePath(filePath) { return defaul
 
 export default {
   isFilePathReadmeFilePath,
+  isFilePathReleaseFilePath,
   isFilePathNominalFilePath,
   isFilePathMarkdownFilePath,
   isFilePathMetaJSONFilePath,

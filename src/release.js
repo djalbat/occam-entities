@@ -94,7 +94,7 @@ class Release {
 
     if (entriesReleasable) {
       const name = project.getName(),
-            releasedEntries = releaseEntries(entries);
+            releasedEntries = releaseEntriesFromEntries(entries);
 
       entries = releasedEntries;  ///
 
@@ -109,7 +109,7 @@ Object.assign(Release.prototype, entriesMixins);
 
 export default Release;
 
-function releaseEntries(entries) {
+function releaseEntriesFromEntries(entries) {
   const releasedEntries = Entries.fromNothing(),  ///
         files = entries.getFiles();
 
