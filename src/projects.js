@@ -11,29 +11,17 @@ export default class Projects {
     this.array = array;
   }
 
-  getLength() {
-    return this.array.length;
-  }
+  getLength() { return this.array.length; }
 
-  addProject(project) {
-    this.array.push(project);
-  }
+  addProject(project) { this.array.push(project); }
 
-  mapProject(callback) {
-    return this.array.map(callback);
-  }
+  mapProject(callback) { return this.array.map(callback); }
 
-  reduceProject(callback, initialValue) {
-    return this.array.reduce(callback, initialValue);
-  }
+  reduceProject(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
-  forEachProject(callback) {
-    this.array.forEach(callback);
-  }
+  forEachProject(callback) { this.array.forEach(callback); }
 
-  asynchronousForEachProject(callback, done) {
-    forEach(this.array, callback, done);
-  }
+  asynchronousForEachProject(callback, done) { forEach(this.array, callback, done); }
 
   toJSON() {
     const json = this.array.map((project) => {

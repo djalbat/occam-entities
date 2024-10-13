@@ -11,29 +11,17 @@ export default class Releases {
     this.array = array;
   }
 
-  getLength() {
-    return this.array.length;
-  }
+  getLength() { return this.array.length; }
 
-  addRelease(release) {
-    this.array.push(release);
-  }
+  addRelease(release) { this.array.push(release); }
 
-  mapRelease(callback) {
-    return this.array.map(callback);
-  }
+  mapRelease(callback) { return this.array.map(callback); }
 
-  reduceRelease(callback, initialValue) {
-    return this.array.reduce(callback, initialValue);
-  }
+  reduceRelease(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
-  forEachRelease(callback) {
-    this.array.forEach(callback);
-  }
+  forEachRelease(callback) { this.array.forEach(callback); }
 
-  asynchronousForEachRelease(callback, done) {
-    forEach(this.array, callback, done);
-  }
+  asynchronousForEachRelease(callback, done) { forEach(this.array, callback, done); }
 
   toJSON() {
     const json = this.array.map((release) => {

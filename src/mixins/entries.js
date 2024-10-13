@@ -2,7 +2,7 @@
 
 function forEachFile(callback) { return this.entries.forEachFile(callback); }
 
-function getFile(filePath) { return this.entries.getFile(filePath); }
+function findFile(filePath) { return this.entries.findFile(filePath); }
 
 function getBNF() { return this.entries.getBNF(); }
 
@@ -45,7 +45,7 @@ function getCustomGrammarPatternFiles() { return this.entries.getCustomGrammarPa
 
 const entriesMixins = {
   forEachFile,
-  getFile,
+  findFile,
   getBNF,
   getFiles,
   getTermBNF,

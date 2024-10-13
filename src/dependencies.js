@@ -12,25 +12,15 @@ export default class Dependencies {
     this.array = array;
   }
 
-  addDependency(dependency) {
-    this.array.push(dependency);
-  }
+  addDependency(dependency) { this.array.push(dependency); }
 
-  mapDependency(callback) {
-    return this.array.map(callback);
-  }
+  mapDependency(callback) { return this.array.map(callback); }
 
-  everyDependency(callback) {
-    return this.array.every(callback);
-  }
+  everyDependency(callback) { return this.array.every(callback); }
 
-  reduceDependency(callback, initialValue) {
-    return this.array.reduce(callback, initialValue);
-  }
+  reduceDependency(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
-  forEachDependency(callback) {
-    this.array.forEach(callback);
-  }
+  forEachDependency(callback) { this.array.forEach(callback); }
 
   asynchronousForEachDependency(operation, done) { forEach(this.array, operation, done); }
 

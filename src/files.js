@@ -17,29 +17,17 @@ export default class Files {
     return filePaths;
   }
 
-  addFile(file) {
-    this.array.push(file);
-  }
+  addFile(file) { this.array.push(file); }
 
-  mapFile(callback) {
-    return this.array.map(callback);
-  }
+  mapFile(callback) { return this.array.map(callback); }
 
-  someFile(callback) {
-    return this.array.some(callback);
-  }
+  someFile(callback) { return this.array.some(callback); }
 
-  reduceFile(callback, initialValue) {
-    return this.array.reduce(callback, initialValue);
-  }
+  reduceFile(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
-  forEachFile(callback) {
-    this.array.forEach(callback);
-  }
+  forEachFile(callback) { this.array.forEach(callback); }
 
-  findFile(callback) {
-    return this.array.find(callback) || null; ///
-  }
+  findFile(callback) { return this.array.find(callback) || null; }  ///
 
   toJSON() {
     const filesJSON = this.array.map((file) => {

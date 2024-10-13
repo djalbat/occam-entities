@@ -53,7 +53,7 @@ class Entries {
     });
   }
 
-  getFile(filePath) {
+  findFile(filePath) {
     const files = this.getFiles(),
           file = files.findFile((file) => {
             const path = file.getPath();
