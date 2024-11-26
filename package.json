@@ -1,7 +1,7 @@
 {
   "name": "occam-entities",
   "author": "James Smith",
-  "version": "1.0.198",
+  "version": "1.0.199",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/occam-entities",
   "description": "Occam's entities.",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "necessary": "^14.2.1",
-    "occam-grammars": "^1.0.781",
+    "occam-grammars": "^1.0.787",
     "occam-query": "^4.1.6"
   },
   "devDependencies": {
