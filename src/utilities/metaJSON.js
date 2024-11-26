@@ -19,8 +19,8 @@ const jsonLexer = JSONLexer.fromNothing(),
 const errorNodesQuery = nodesQuery("//error"),
       propertyNodesQuery = nodesQuery("/property/json/object/property"),
       documentPropertyNodesQuery = nodesQuery("/document/json/object/property"),
-      propertyNameTerminalNodeQuery = nodeQuery("/property/@string-literal!"),
-      stringPropertyValueTerminalNodeQuery = nodeQuery("/property/json/@string-literal!");
+      propertyStringLiteralTerminalNodeQuery = nodeQuery("/property/@string-literal"),
+      propertyJSONStringLiteralTerminalNodeQuery = nodeQuery("/property/json/@string-literal!");
 
 export function isMetaJSONFileValid(metaJSONFile) {
   let metaJSONFileValid = false;
@@ -196,17 +196,17 @@ export default {
 };
 
 function propertyNameFromPropertyNode(propertyNode) {
-  const propertyNameTerminalNode = propertyNameTerminalNodeQuery(propertyNode),
-        propertyNameTerminalNodeContent = propertyNameTerminalNode.getContent(),
-        propertyName = trimDoubleQuotes(propertyNameTerminalNodeContent); ///
+  const propertyStringLiteralTerminalNode = propertyStringLiteralTerminalNodeQuery(propertyNode),
+        propertyStringLiteralTerminalNodeContent = propertyStringLiteralTerminalNode.getContent(),
+        propertyName = trimDoubleQuotes(propertyStringLiteralTerminalNodeContent); ///
 
   return propertyName;
 }
 
 function stringPropertyValueFromPropertyNode(propertyNode) {
-  const propertyValueTerminalNode = stringPropertyValueTerminalNodeQuery(propertyNode),
-        propertyValueTerminalNodeContent = propertyValueTerminalNode.getContent(),
-        stringPropertyValue = trimDoubleQuotes(propertyValueTerminalNodeContent); ///
+  const propertyJSONStringLiteralTerminalNode = propertyJSONStringLiteralTerminalNodeQuery(propertyNode),
+        propertyJSONStringLiteralTerminalNodeContent = propertyJSONStringLiteralTerminalNode.getContent(),
+        stringPropertyValue = trimDoubleQuotes(propertyJSONStringLiteralTerminalNodeContent); ///
 
   return stringPropertyValue;
 }
