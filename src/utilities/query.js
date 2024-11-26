@@ -3,7 +3,7 @@
 import { Query } from "occam-query";
 
 export function nodeQuery(expression) {
-  const query = Query.fromExpression(expression);
+  const query = Query.fromExpressionString(expression);
 
   return function(node) {
     const nodes = query.execute(node);
@@ -15,7 +15,7 @@ export function nodeQuery(expression) {
 }
 
 export function nodesQuery(expression) {
-  const query = Query.fromExpression(expression);
+  const query = Query.fromExpressionString(expression);
 
   return function(node) {
     const nodes = query.execute(node);
