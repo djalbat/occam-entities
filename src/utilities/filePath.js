@@ -1,6 +1,7 @@
 "use strict";
 
 const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
+      furtleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.ftl$",
       nominalFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.nml$",
       markdownFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.md$",
       metaJSONFilePathPattern = "^(?:[^\\/]+\\/){1}meta\\.json$",
@@ -9,10 +10,11 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement)\\.bnf$",
       customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol|operator)\\.ptn$",
       defaultMarkdownStyleFilePathPattern = "^[^\\/]+\\/default\\.mds$",
-      releaseFilePathPattern = `${readmeFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`,
+      releaseFilePathPattern = `${readmeFilePathPattern}|${furtleFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`,
       recognisedFilePathPattern = `${releaseFilePathPattern}|${indexJSONFilePathPattern}|${markdownFilePathPattern}|${markdownStyleFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
+      furtleFilePathRegularExpression = new RegExp(furtleFilePathPattern),
       releaseFilePathRegularExpression = new RegExp(releaseFilePathPattern),
       nominalFilePathRegularExpression = new RegExp(nominalFilePathPattern),
       markdownFilePathRegularExpression = new RegExp(markdownFilePathPattern),
@@ -25,6 +27,8 @@ const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
       defaultMarkdownStyleFilePathRegularExpression = new RegExp(defaultMarkdownStyleFilePathPattern);
 
 export function isFilePathReadmeFilePath(filePath) { return readmeFilePathRegularExpression.test(filePath); }
+
+export function isFilePathFurtleFilePath(filePath) { return furtleFilePathRegularExpression.test(filePath); }
 
 export function isFilePathReleaseFilePath(filePath) { return releaseFilePathRegularExpression.test(filePath); }
 
@@ -48,6 +52,7 @@ export function isFilePathDefaultMarkdownStyleFilePath(filePath) { return defaul
 
 export default {
   isFilePathReadmeFilePath,
+  isFilePathFurtleFilePath,
   isFilePathReleaseFilePath,
   isFilePathNominalFilePath,
   isFilePathMarkdownFilePath,
