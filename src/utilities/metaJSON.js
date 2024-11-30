@@ -16,7 +16,7 @@ import { VERSION_PROPERTY_NAME, REPOSITORY_PROPERTY_NAME, DEPENDENCIES_PROPERTY_
 const jsonLexer = JSONLexer.fromNothing(),
       jsonParser = JSONParser.fromNothing();
 
-const errorNodesQuery = nodesQuery("//error"),
+const errorNodesQuery = nodesQuery("/*/error"),
       propertyNodesQuery = nodesQuery("/property/json/object/property"),
       documentPropertyNodesQuery = nodesQuery("/document/json/object/property"),
       propertyStringLiteralTerminalNodeQuery = nodeQuery("/property/@string-literal"),
