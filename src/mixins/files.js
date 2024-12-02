@@ -1,8 +1,9 @@
 "use strict";
 
 import { readmeFileFromFiles,
-         metaJSONFileFromFiles,
+         furtleFilesFromFiles,
          nominalFilesFromFiles,
+         metaJSONFileFromFiles,
          customGrammarBNFFilesFromFiles,
          customGrammarPatternFilesFromFiles } from "../utilities/files";
 
@@ -11,13 +12,6 @@ function getReadmeFile() {
         readmeFile = readmeFileFromFiles(files);
 
   return readmeFile;
-}
-
-function getMetaJSONFile() {
-  const files = this.getFiles(),
-        metaJSONFile = metaJSONFileFromFiles(files);
-
-  return metaJSONFile;
 }
 
 function getFurtleFiles() {
@@ -32,6 +26,13 @@ function getNominalFiles() {
         nominalFiles = nominalFilesFromFiles(files);
 
   return nominalFiles;
+}
+
+function getMetaJSONFile() {
+  const files = this.getFiles(),
+        metaJSONFile = metaJSONFileFromFiles(files);
+
+  return metaJSONFile;
 }
 
 function getCustomGrammarBNFFiles() {
@@ -50,9 +51,9 @@ function getCustomGrammarPatternFiles() {
 
 const filesMixins = {
   getReadmeFile,
-  getMetaJSONFile,
   getFurtleFiles,
   getNominalFiles,
+  getMetaJSONFile,
   getCustomGrammarBNFFiles,
   getCustomGrammarPatternFiles
 };
