@@ -1,6 +1,7 @@
 "use strict";
 
 import { isFilePathReadmeFilePath,
+         isFilePathFurtleFilePath,
          isFilePathNominalFilePath,
          isFilePathMetaJSONFilePath,
          isFilePathCustomGrammarBNFFilePath,
@@ -23,6 +24,42 @@ export function readmeFileFromFiles(files) {
   return readmeFile;
 }
 
+export function furtleFilesFromFiles(files) {
+  const furtleFiles = files.reduceFile((furtleFiles, file) => {
+    const filePath = file.getPath(),
+          filePathFurtleFilePath = isFilePathFurtleFilePath(filePath),
+          fileFurtleFile = filePathFurtleFilePath;  ///
+
+    if (fileFurtleFile) {
+      const furtleFile = file;  ///
+
+      furtleFiles.push(furtleFile);
+    }
+
+    return furtleFiles;
+  }, []);
+
+  return furtleFiles;
+}
+
+export function nominalFilesFromFiles(files) {
+  const nominalFiles = files.reduceFile((nominalFiles, file) => {
+    const filePath = file.getPath(),
+      filePathNominalFilePath = isFilePathNominalFilePath(filePath),
+      fileNominalFile = filePathNominalFilePath;  ///
+
+    if (fileNominalFile) {
+      const nominalFile = file;  ///
+
+      nominalFiles.push(nominalFile);
+    }
+
+    return nominalFiles;
+  }, []);
+
+  return nominalFiles;
+}
+
 export function metaJSONFileFromFiles(files) {
   let metaJSONFile = null;
 
@@ -38,24 +75,6 @@ export function metaJSONFileFromFiles(files) {
   });
 
   return metaJSONFile;
-}
-
-export function nominalFilesFromFiles(files) {
-  const nominalFiles = files.reduceFile((nominalFiles, file) => {
-          const filePath = file.getPath(),
-                filePathNominalFilePath = isFilePathNominalFilePath(filePath),
-                fileNominalFile = filePathNominalFilePath;  ///
-
-          if (fileNominalFile) {
-            const nominalFile = file;  ///
-
-            nominalFiles.push(nominalFile);
-          }
-
-          return nominalFiles;
-        }, []);
-
-  return nominalFiles;
 }
 
 export function customGrammarBNFFilesFromFiles(files) {

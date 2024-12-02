@@ -30,6 +30,8 @@ function getMetaJSONFile() { return this.entries.getMetaJSONFile(); }
 
 function getSymbolPattern() { return this.entries.getSymbolPattern(); }
 
+function getFurtleFiles() { return this.entries.getFurtleFiles(); }
+
 function getNominalFiles() { return this.entries.getNominalFiles(); }
 
 function getDirectoryPaths() { return this.entries.getDirectoryPaths(); }
@@ -41,7 +43,6 @@ function getDependencyNames() { return this.entries.getDependencyNames(); }
 function getCustomGrammarBNFFiles() { return this.entries.getCustomGrammarBNFFiles(); }
 
 function getCustomGrammarPatternFiles() { return this.entries.getCustomGrammarPatternFiles(); }
-
 
 const entriesMixins = {
   forEachFile,
@@ -59,6 +60,7 @@ const entriesMixins = {
   getDependencies,
   getMetaJSONFile,
   getSymbolPattern,
+  getFurtleFiles,
   getNominalFiles,
   getDirectoryPaths,
   getOperatorPattern,

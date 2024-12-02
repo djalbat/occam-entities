@@ -20,6 +20,13 @@ function getMetaJSONFile() {
   return metaJSONFile;
 }
 
+function getFurtleFiles() {
+  const files = this.getFiles(),
+        furtleFiles = furtleFilesFromFiles(files);
+
+  return furtleFiles;
+}
+
 function getNominalFiles() {
   const files = this.getFiles(),
         nominalFiles = nominalFilesFromFiles(files);
@@ -44,6 +51,7 @@ function getCustomGrammarPatternFiles() {
 const filesMixins = {
   getReadmeFile,
   getMetaJSONFile,
+  getFurtleFiles,
   getNominalFiles,
   getCustomGrammarBNFFiles,
   getCustomGrammarPatternFiles
