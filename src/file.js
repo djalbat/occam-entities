@@ -46,6 +46,12 @@ export default class File {
     this.released = released;
   }
 
+  matchFilePath(filePath) {
+    const filePathMatches = (this.path === filePath);
+
+    return filePathMatches;
+  }
+
   toJSON() {
     const { type } = File,
           path = this.path,

@@ -56,9 +56,9 @@ class Entries {
   findFile(filePath) {
     const files = this.getFiles(),
           file = files.findFile((file) => {
-            const path = file.getPath();
+            const filePathMatches = file.matchFilePath(filePath);
 
-            if (path === filePath) {
+            if (filePathMatches) {
               return true;
             }
           }) || null;
