@@ -22,21 +22,23 @@ function getReadmeFile() { return this.entries.getReadmeFile(); }
 
 function getTypePattern() { return this.entries.getTypePattern(); }
 
+function getSymbolPattern() { return this.entries.getSymbolPattern(); }
+
+function getPropertyPattern() { return this.entries.getPropertyPattern(); }
+
+function getOperatorPattern() { return this.entries.getOperatorPattern(); }
+
 function getStatementBNF() { return this.entries.getStatementBNF(); }
 
 function getDependencies() { return this.entries.getDependencies(); }
 
 function getMetaJSONFile() { return this.entries.getMetaJSONFile(); }
 
-function getSymbolPattern() { return this.entries.getSymbolPattern(); }
-
 function getFurtleFiles() { return this.entries.getFurtleFiles(); }
 
 function getNominalFiles() { return this.entries.getNominalFiles(); }
 
 function getDirectoryPaths() { return this.entries.getDirectoryPaths(); }
-
-function getOperatorPattern() { return this.entries.getOperatorPattern(); }
 
 function getDependencyNames() { return this.entries.getDependencyNames(); }
 
@@ -56,14 +58,15 @@ const entriesMixins = {
   getRepository,
   getReadmeFile,
   getTypePattern,
+  getSymbolPattern,
+  getPropertyPattern,
+  getOperatorPattern,
   getStatementBNF,
   getDependencies,
   getMetaJSONFile,
-  getSymbolPattern,
   getFurtleFiles,
   getNominalFiles,
   getDirectoryPaths,
-  getOperatorPattern,
   getDependencyNames,
   getCustomGrammarBNFFiles,
   getCustomGrammarPatternFiles

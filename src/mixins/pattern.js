@@ -1,7 +1,7 @@
 "use strict";
 
 import { fileNameFromFilePath } from "../utilities/name";
-import { TYPE_PATTERN_FILE_NAME, SYMBOL_PATTERN_FILE_NAME, OPERATOR_PATTERN_FILE_NAME } from "../fileNames";
+import { TYPE_PATTERN_FILE_NAME, SYMBOL_PATTERN_FILE_NAME, PROPERTY_PATTERN_FILE_NAME, OPERATOR_PATTERN_FILE_NAME } from "../fileNames";
 
 function getPattern(patternFileName) {
   let pattern = null;
@@ -41,6 +41,14 @@ function getSymbolPattern() {
   return symbolPattern;
 }
 
+function getPropertyPattern() {
+  const fileName = PROPERTY_PATTERN_FILE_NAME, ///
+        pattern = this.getPattern(fileName),
+        propertyPattern = pattern;  ///
+
+  return propertyPattern;
+}
+
 function getOperatorPattern() {
   const fileName = OPERATOR_PATTERN_FILE_NAME, ///
         pattern = this.getPattern(fileName),
@@ -53,6 +61,7 @@ const patternMixins =  {
   getPattern,
   getTypePattern,
   getSymbolPattern,
+  getPropertyPattern,
   getOperatorPattern
 };
 
