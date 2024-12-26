@@ -75,18 +75,6 @@ class Release {
     return release;
   }
 
-  static fromNameAndEntries(name, entries) {
-    let release = null;
-
-    const entriesReleasable = areEntriesReleasable(entries);
-
-    if (entriesReleasable) {
-      release = new Release(name, entries);
-    }
-
-    return release;
-  }
-
   static fromProject(project) {
     let release = null,
         entries = project.getEntries();
@@ -99,6 +87,18 @@ class Release {
 
       entries = releasedEntries;  ///
 
+      release = new Release(name, entries);
+    }
+
+    return release;
+  }
+
+  static fromNameAndEntries(name, entries) {
+    let release = null;
+
+    const entriesReleasable = areEntriesReleasable(entries);
+
+    if (entriesReleasable) {
       release = new Release(name, entries);
     }
 
