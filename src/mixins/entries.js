@@ -24,8 +24,6 @@ function getTypePattern() { return this.entries.getTypePattern(); }
 
 function getSymbolPattern() { return this.entries.getSymbolPattern(); }
 
-function getOperatorPattern() { return this.entries.getOperatorPattern(); }
-
 function getStatementBNF() { return this.entries.getStatementBNF(); }
 
 function getDependencies() { return this.entries.getDependencies(); }
@@ -57,7 +55,6 @@ const entriesMixins = {
   getReadmeFile,
   getTypePattern,
   getSymbolPattern,
-  getOperatorPattern,
   getStatementBNF,
   getDependencies,
   getMetaJSONFile,
