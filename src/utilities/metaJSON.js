@@ -91,15 +91,18 @@ export function versionFromDocumentNode(documentNode) {
           propertyName = propertyNameFromPropertyNode(propertyNode);
 
     if (propertyName === VERSION_PROPERTY_NAME) {
-      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
-            string = stringPropertyValue, ///
-            stringVersionString = isStringVersionString(string);
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode);
 
-      if (stringVersionString) {
-        version = Version.fromString(string);
+      if (stringPropertyValue !== null) {
+        const string = stringPropertyValue, ///
+              stringVersionString = isStringVersionString(string);
+
+        if (stringVersionString) {
+          version = Version.fromString(string);
+        }
+
+        return true;
       }
-
-      return true;
     }
   });
 
@@ -118,9 +121,11 @@ export function repositoryFromDocumentNode(documentNode) {
     if (propertyName === REPOSITORY_PROPERTY_NAME) {
       const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode);
 
-      repository = stringPropertyValue;  ///
+      if (stringPropertyValue !== null) {
+        repository = stringPropertyValue;  ///
 
-      return true;
+        return true;
+      }
     }
   });
 
@@ -139,17 +144,20 @@ export function dependenciesFromDocumentNode(documentNode) {
           propertyNodes = propertyNodesQuery(propertyNode);
 
     propertyNodes.forEach((propertyNode) => {
-      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
-            string = stringPropertyValue, ///
-            stringShortenedVersionString = isStringShortenedVersionString(string);
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode);
 
-      if (stringShortenedVersionString) {
-        const propertyName = propertyNameFromPropertyNode(propertyNode),
-              name = propertyName,  ///
-              shortenedVersion = ShortenedVersion.fromString(string),
-              dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
+      if (stringPropertyValue !== null) {
+        const string = stringPropertyValue, ///
+              stringShortenedVersionString = isStringShortenedVersionString(string);
 
-        dependencies.addDependency(dependency);
+        if (stringShortenedVersionString) {
+          const propertyName = propertyNameFromPropertyNode(propertyNode),
+                name = propertyName,  ///
+                shortenedVersion = ShortenedVersion.fromString(string),
+                dependency = Dependency.fromNameAndShortenedVersion(name, shortenedVersion);
+
+          dependencies.addDependency(dependency);
+        }
       }
     });
   }
@@ -169,15 +177,18 @@ export function dependencyNamesFromDocumentNode(documentNode) {
           propertyNodes = propertyNodesQuery(propertyNode);
 
     propertyNodes.forEach((propertyNode) => {
-      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode),
-            string = stringPropertyValue, ///
-            stringShortenedVersionString = isStringShortenedVersionString(string);
+      const stringPropertyValue = stringPropertyValueFromPropertyNode(propertyNode);
 
-      if (stringShortenedVersionString) {
-        const propertyName = propertyNameFromPropertyNode(propertyNode),
-              dependencyName = propertyName;  ///
+      if (stringPropertyValue !== null) {
+        const string = stringPropertyValue, ///
+              stringShortenedVersionString = isStringShortenedVersionString(string);
 
-        dependencyNames.push(dependencyName);
+        if (stringShortenedVersionString) {
+          const propertyName = propertyNameFromPropertyNode(propertyNode),
+                dependencyName = propertyName;  ///
+
+          dependencyNames.push(dependencyName);
+        }
       }
     });
   }
@@ -204,9 +215,15 @@ function propertyNameFromPropertyNode(propertyNode) {
 }
 
 function stringPropertyValueFromPropertyNode(propertyNode) {
-  const propertyJSONStringLiteralTerminalNode = propertyJSONStringLiteralTerminalNodeQuery(propertyNode),
-        propertyJSONStringLiteralTerminalNodeContent = propertyJSONStringLiteralTerminalNode.getContent(),
-        stringPropertyValue = trimDoubleQuotes(propertyJSONStringLiteralTerminalNodeContent); ///
+  let stringPropertyValue = null;
+
+  const propertyJSONStringLiteralTerminalNode = propertyJSONStringLiteralTerminalNodeQuery(propertyNode);
+
+  if (propertyJSONStringLiteralTerminalNode !== null) {
+    const propertyJSONStringLiteralTerminalNodeContent = propertyJSONStringLiteralTerminalNode.getContent();
+
+    stringPropertyValue = trimDoubleQuotes(propertyJSONStringLiteralTerminalNodeContent); ///
+  }
 
   return stringPropertyValue;
 }
