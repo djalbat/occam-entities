@@ -1,7 +1,7 @@
 "use strict";
 
 import { fileNameFromFilePath } from "../utilities/name";
-import { TYPE_PATTERN_FILE_NAME, TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME } from "../fileNames";
+import { TYPE_BNF_FILE_NAME, TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME } from "../fileNames";
 
 function getBNF(bnfFileName) {
   let bnf = null;
