@@ -8,8 +8,6 @@ function getBNF() { return this.entries.getBNF(); }
 
 function getFiles() { return this.entries.getFiles(); }
 
-function getTypeBNF() { return this.entries.getTypeBNF(); }
-
 function getTermBNF() { return this.entries.getTermBNF(); }
 
 function getVersion() { return this.entries.getVersion(); }
@@ -49,7 +47,6 @@ const entriesMixins = {
   findFile,
   getBNF,
   getFiles,
-  getTypeBNF,
   getTermBNF,
   getVersion,
   getPattern,
