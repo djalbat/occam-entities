@@ -1,7 +1,7 @@
 "use strict";
 
 import { fileNameFromFilePath } from "../utilities/name";
-import { TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME } from "../fileNames";
+import { TYPE_PATTERN_FILE_NAME, TERM_BNF_FILE_NAME, STATEMENT_BNF_FILE_NAME } from "../fileNames";
 
 function getBNF(bnfFileName) {
   let bnf = null;
@@ -25,6 +25,14 @@ function getBNF(bnfFileName) {
   return bnf;
 }
 
+function getTypeBNF() {
+  const fileName = TYPE_BNF_FILE_NAME, ///
+        bnf = this.getBNF(fileName),
+        typeBNF = bnf;  ///
+
+  return typeBNF;
+}
+
 function getTermBNF() {
   const fileName = TERM_BNF_FILE_NAME, ///
         bnf = this.getBNF(fileName),
@@ -43,6 +51,7 @@ function getStatementBNF() {
 
 const bnfMixins = {
   getBNF,
+  getTypeBNF,
   getTermBNF,
   getStatementBNF
 };
