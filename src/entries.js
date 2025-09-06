@@ -7,8 +7,8 @@ import Files from "./files";
 import Directory from "./directory";
 import bnfMixins from "./mixins/bnf";
 import filesMixins from "./mixins/files";
-import patternMixins from "./mixins/pattern";
 import metaJSONMixins from "./mixins/metaJSON";
+import vocabularyMixins from "./mixins/vocabulary";
 
 const { first, filter } = arrayUtilities,
       { topmostDirectoryNameFromPath } = pathUtilities;
@@ -200,7 +200,7 @@ class Entries {
 
 Object.assign(Entries.prototype, bnfMixins);
 Object.assign(Entries.prototype, filesMixins);
-Object.assign(Entries.prototype, patternMixins);
 Object.assign(Entries.prototype, metaJSONMixins);
+Object.assign(Entries.prototype, vocabularyMixins);
 
 export default Entries;

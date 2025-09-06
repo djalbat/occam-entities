@@ -12,21 +12,21 @@ function getTermBNF() { return this.entries.getTermBNF(); }
 
 function getVersion() { return this.entries.getVersion(); }
 
-function getPattern() { return this.entries.getPattern(); }
-
 function getFilePaths() { return this.entries.getFilePaths(); }
+
+function getVocabulary() { return this.entries.getVocabulary(); }
 
 function getRepository() { return this.entries.getRepository(); }
 
 function getReadmeFile() { return this.entries.getReadmeFile(); }
 
-function getTypePattern() { return this.entries.getTypePattern(); }
-
-function getSymbolPattern() { return this.entries.getSymbolPattern(); }
-
 function getStatementBNF() { return this.entries.getStatementBNF(); }
 
 function getDependencies() { return this.entries.getDependencies(); }
+
+function getTypeVocabulary() { return this.entries.getTypeVocabulary(); }
+
+function getSymbolVocabulary() { return this.entries.getSymbolVocabulary(); }
 
 function getMetaJSONFile() { return this.entries.getMetaJSONFile(); }
 
@@ -40,7 +40,7 @@ function getDependencyNames() { return this.entries.getDependencyNames(); }
 
 function getCustomGrammarBNFFiles() { return this.entries.getCustomGrammarBNFFiles(); }
 
-function getCustomGrammarPatternFiles() { return this.entries.getCustomGrammarPatternFiles(); }
+function getCustomGrammarVocabularyFiles() { return this.entries.getCustomGrammarVocabularyFiles(); }
 
 const entriesMixins = {
   forEachFile,
@@ -49,21 +49,21 @@ const entriesMixins = {
   getFiles,
   getTermBNF,
   getVersion,
-  getPattern,
   getFilePaths,
+  getVocabulary,
   getRepository,
   getReadmeFile,
-  getTypePattern,
-  getSymbolPattern,
   getStatementBNF,
   getDependencies,
+  getTypeVocabulary,
+  getSymbolVocabulary,
   getMetaJSONFile,
   getFurtleFiles,
   getNominalFiles,
   getDirectoryPaths,
   getDependencyNames,
   getCustomGrammarBNFFiles,
-  getCustomGrammarPatternFiles
+  getCustomGrammarVocabularyFiles
 };
 
 export default entriesMixins;

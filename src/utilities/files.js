@@ -5,7 +5,7 @@ import { isFilePathReadmeFilePath,
          isFilePathNominalFilePath,
          isFilePathMetaJSONFilePath,
          isFilePathCustomGrammarBNFFilePath,
-         isFilePathCustomGrammarPatternFilePath } from "../utilities/filePath";
+         isFilePathCustomGrammarVocabularyFilePath } from "../utilities/filePath";
 
 export function readmeFileFromFiles(files) {
   let readmeFile = null;
@@ -95,20 +95,20 @@ export function customGrammarBNFFilesFromFiles(files) {
   return customGrammarBNFFiles;
 }
 
-export function customGrammarPatternFilesFromFiles(files) {
-  const customGrammarPatternFiles = files.reduceFile((customGrammarPatternFiles, file) => {
+export function customGrammarVocabularyFilesFromFiles(files) {
+  const customGrammarVocabularyFiles = files.reduceFile((customGrammarVocabularyFiles, file) => {
           const filePath = file.getPath(),
-                filePathCustomGrammarPatternFilePath = isFilePathCustomGrammarPatternFilePath(filePath),
-                fileCustomGrammarPatternFile = filePathCustomGrammarPatternFilePath;  ///
+                filePathCustomGrammarVocabularyFilePath = isFilePathCustomGrammarVocabularyFilePath(filePath),
+                fileCustomGrammarVocabularyFile = filePathCustomGrammarVocabularyFilePath;  ///
 
-          if (fileCustomGrammarPatternFile) {
-            const customGrammarPatternFile = file;  ///
+          if (fileCustomGrammarVocabularyFile) {
+            const customGrammarVocabularyFile = file;  ///
 
-            customGrammarPatternFiles.push(customGrammarPatternFile);
+            customGrammarVocabularyFiles.push(customGrammarVocabularyFile);
           }
 
-          return customGrammarPatternFiles;
+          return customGrammarVocabularyFiles;
         }, []);
 
-  return customGrammarPatternFiles;
+  return customGrammarVocabularyFiles;
 }

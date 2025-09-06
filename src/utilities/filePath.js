@@ -8,9 +8,9 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       indexJSONFilePathPattern = "^(?:[^\\/]+\\/){1}index\\.json$",
       markdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.mds$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement)\\.bnf$",
-      customGrammarPatternFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol)\\.ptn$",
       defaultMarkdownStyleFilePathPattern = "^[^\\/]+\\/default\\.mds$",
-      releaseFilePathPattern = `${readmeFilePathPattern}|${furtleFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarPatternFilePathPattern}`,
+      customGrammarVocabularyFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol)\\.ptn$",
+      releaseFilePathPattern = `${readmeFilePathPattern}|${furtleFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarVocabularyFilePathPattern}`,
       recognisedFilePathPattern = `${releaseFilePathPattern}|${indexJSONFilePathPattern}|${markdownFilePathPattern}|${markdownStyleFilePathPattern}`;
 
 const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
@@ -23,8 +23,8 @@ const readmeFilePathRegularExpression = new RegExp(readmeFilePathPattern),
       recognisedFilePathRegularExpression = new RegExp(recognisedFilePathPattern),
       markdownStyleFilePathRegularExpression = new RegExp(markdownStyleFilePathPattern),
       customGrammarBNFFilePathRegularExpression = new RegExp(customGrammarBNFFilePathPattern),
-      customGrammarPatternFilePathRegularExpression = new RegExp(customGrammarPatternFilePathPattern),
-      defaultMarkdownStyleFilePathRegularExpression = new RegExp(defaultMarkdownStyleFilePathPattern);
+      defaultMarkdownStyleFilePathRegularExpression = new RegExp(defaultMarkdownStyleFilePathPattern),
+      customGrammarVocabularyFilePathRegularExpression = new RegExp(customGrammarVocabularyFilePathPattern);
 
 export function isFilePathReadmeFilePath(filePath) { return readmeFilePathRegularExpression.test(filePath); }
 
@@ -46,9 +46,9 @@ export function isFilePathMarkdownStyleFilePath(filePath) { return markdownStyle
 
 export function isFilePathCustomGrammarBNFFilePath(filePath) { return customGrammarBNFFilePathRegularExpression.test(filePath); }
 
-export function isFilePathCustomGrammarPatternFilePath(filePath) { return customGrammarPatternFilePathRegularExpression.test(filePath); }
-
 export function isFilePathDefaultMarkdownStyleFilePath(filePath) { return defaultMarkdownStyleFilePathRegularExpression.test(filePath); }
+
+export function isFilePathCustomGrammarVocabularyFilePath(filePath) { return customGrammarVocabularyFilePathRegularExpression.test(filePath); }
 
 export default {
   isFilePathReadmeFilePath,
@@ -61,6 +61,6 @@ export default {
   isFilePathRecognisedFilePath,
   isFilePathMarkdownStyleFilePath,
   isFilePathCustomGrammarBNFFilePath,
-  isFilePathCustomGrammarPatternFilePath,
-  isFilePathDefaultMarkdownStyleFilePath
+  isFilePathDefaultMarkdownStyleFilePath,
+  isFilePathCustomGrammarVocabularyFilePath
 };

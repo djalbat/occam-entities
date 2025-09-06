@@ -5,7 +5,7 @@ import { readmeFileFromFiles,
          nominalFilesFromFiles,
          metaJSONFileFromFiles,
          customGrammarBNFFilesFromFiles,
-         customGrammarPatternFilesFromFiles } from "../utilities/files";
+         customGrammarVocabularyFilesFromFiles } from "../utilities/files";
 
 function getReadmeFile() {
   const files = this.getFiles(),
@@ -42,11 +42,11 @@ function getCustomGrammarBNFFiles() {
   return customGrammarBNFFiles;
 }
 
-function getCustomGrammarPatternFiles() {
+function getCustomGrammarVocabularyFiles() {
   const files = this.getFiles(),
-        customGrammarPatternFiles = customGrammarPatternFilesFromFiles(files);
+        customGrammarVocabularyFiles = customGrammarVocabularyFilesFromFiles(files);
 
-  return customGrammarPatternFiles;
+  return customGrammarVocabularyFiles;
 }
 
 const filesMixins = {
@@ -55,7 +55,7 @@ const filesMixins = {
   getNominalFiles,
   getMetaJSONFile,
   getCustomGrammarBNFFiles,
-  getCustomGrammarPatternFiles
+  getCustomGrammarVocabularyFiles
 };
 
 export default filesMixins;
