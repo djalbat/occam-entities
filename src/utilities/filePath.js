@@ -9,7 +9,7 @@ const readmeFilePathPattern = "^(?:[^\\/]+\\/){1}README\\.md$",
       markdownStyleFilePathPattern = "^(?:[^\\/]+\\/){1,}[^\\.]+\\.mds$",
       customGrammarBNFFilePathPattern = "^(?:[^\\/]+\\/){1}(term|statement)\\.bnf$",
       defaultMarkdownStyleFilePathPattern = "^[^\\/]+\\/default\\.mds$",
-      customGrammarVocabularyFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol)\\.ptn$",
+      customGrammarVocabularyFilePathPattern = "^(?:[^\\/]+\\/){1}(type|symbol)\\.vcb$",
       releaseFilePathPattern = `${readmeFilePathPattern}|${furtleFilePathPattern}|${nominalFilePathPattern}|${metaJSONFilePathPattern}|${customGrammarBNFFilePathPattern}|${customGrammarVocabularyFilePathPattern}`,
       recognisedFilePathPattern = `${releaseFilePathPattern}|${indexJSONFilePathPattern}|${markdownFilePathPattern}|${markdownStyleFilePathPattern}`;
 
