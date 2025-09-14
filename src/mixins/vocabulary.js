@@ -1,10 +1,11 @@
 "use strict";
 
+import { EMPTY_STRING } from "../constants";
 import { fileNameFromFilePath } from "../utilities/name";
 import { TYPE_VOCABULARY_FILE_NAME, SYMBOL_VOCABULARY_FILE_NAME } from "../fileNames";
 
 function getVocabulary(vocabularyFileName) {
-  let vocabulary = null;
+  let vocabulary = EMPTY_STRING;
 
   const customGrammarVocabularyFiles = this.getCustomGrammarVocabularyFiles(),
         customGrammarVocabularyFile = customGrammarVocabularyFiles.find((customGrammarVocabularyFile) => {
