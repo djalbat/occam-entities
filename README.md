@@ -1,6 +1,6 @@
 # Occam Entities
 
-[Occam](https://github.com/djalbat/occam)'s entities.
+Parts of [Occam](https://github.com/djalbat/occam)'s model.
 
 ### Contents
 
@@ -12,17 +12,17 @@
 
 ## Introduction
 
-Occam's entities, namely things like files, projects, versions and so on.
+Parts of Occam's model, such as files, projects, versions and so on.
 
 ## Installation
 
 With [npm](https://www.npmjs.com/):
 
-    npm install occam-entities
+    npm install occam-model
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/occam-entities.git
+    git clone https://github.com/djalbat/occam-model.git
 
 ...and then install the dependencies with npm from within the project's root directory:
 
@@ -53,7 +53,7 @@ There are also some utilities:
 The classes have factory methods, see the source for details. Typical usage is:
 
 ```
-const { File }} = require('occam-entities');
+const { File }} = require('occam-model');
 
 const json = ... ,
       file = file.fromJSON(json);

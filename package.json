@@ -1,13 +1,13 @@
 {
-  "name": "occam-entities",
+  "name": "occam-model",
   "author": "James Smith",
-  "version": "1.0.483",
+  "version": "1.0.484",
   "license": "MIT, Anti-996",
-  "homepage": "https://github.com/djalbat/occam-entities",
-  "description": "Occam's entities.",
+  "homepage": "https://github.com/djalbat/occam-model",
+  "description": "Parts of Occam's model.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djalbat/occam-entities"
+    "url": "https://github.com/djalbat/occam-model"
   },
   "dependencies": {
     "necessary": "^17.0.9",
