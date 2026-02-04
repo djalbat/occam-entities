@@ -1,4 +1,4 @@
-# Occam Entities
+# Occam Model
 
 Parts of [Occam](https://github.com/djalbat/occam)'s model.
 
