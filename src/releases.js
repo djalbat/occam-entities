@@ -11,6 +11,10 @@ export default class Releases {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getLength() { return this.array.length; }
 
   addRelease(release) { this.array.push(release); }

@@ -12,6 +12,10 @@ export default class Dependencies {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   addDependency(dependency) { this.array.push(dependency); }
 
   mapDependency(callback) { return this.array.map(callback); }

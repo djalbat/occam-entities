@@ -7,6 +7,10 @@ export default class Files {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getFilePaths() {
     const filePaths = this.mapFile((file) => {
       const filePath = file.getPath();

@@ -11,6 +11,10 @@ export default class Projects {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getLength() { return this.array.length; }
 
   addProject(project) { this.array.push(project); }

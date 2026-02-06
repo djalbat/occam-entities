@@ -18,6 +18,10 @@ class Entries {
     this.array = array;
   }
 
+  getArray() {
+    return this.array;
+  }
+
   getTopmostDirectoryName() {
     let topmostDirectoryName = null;
     
