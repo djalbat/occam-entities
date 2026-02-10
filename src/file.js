@@ -69,13 +69,7 @@ export default class File {
 
   static type = FILE_TYPE;
 
-  static fromJSON(Class, json) {
-    if (json === undefined) {
-      json = Class; ///
-
-      Class = File; ///
-    }
-
+  static fromJSON(json) {
     let file = null;
 
     if (json !== null) {
@@ -88,20 +82,14 @@ export default class File {
 
         content = convertContentTabsToWhitespace(content);  ///
 
-        file = new Class(path, content, released);
+        file = new File(path, content, released);
       }
     }
 
     return file;
   }
 
-  static fromDocument(Class, document) {
-    if (document === undefined) {
-      document = Class; ///
-
-      Class = File; ///
-    }
-
+  static fromDocument(document) {
     const filePath = document.getFilePath(),
           released = document.isReleased(),
           path = filePath;  ///
@@ -110,25 +98,15 @@ export default class File {
 
     content = convertContentTabsToWhitespace(content);  ///
 
-    const file = new Class(path, content, released);
+    const file = new File(path, content, released);
 
     return file;
   }
 
-  static fromPathContentAndReleased(Class, path, content, released) {
-    if (released === undefined) {
-      released = content; ///
-
-      content = path; ///
-
-      path = Class; ///
-
-      Class = File; ///
-    }
-
+  static fromPathContentAndReleased(path, content, released) {
     content = convertContentTabsToWhitespace(content);  ///
 
-    const file = new Class(path, content, released);
+    const file = new File(path, content, released);
 
     return file;
   }
