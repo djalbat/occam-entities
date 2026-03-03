@@ -31,7 +31,7 @@ export default class Dependencies {
   toJSON() {
     const dependenciesJSON = this.array.reduce((dependenciesJSON, dependency) => {
             const name = dependency.getName(),
-                  shortenedVersion = dependency.getShortedVersion(),
+                  shortenedVersion = dependency.getShortenedVersion(),
                   shortenedVersionString = shortenedVersion.toString();
 
             dependenciesJSON[name] = shortenedVersionString;

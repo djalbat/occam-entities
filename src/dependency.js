@@ -10,7 +10,7 @@ export default class Dependency {
     return this.name;
   }
 
-  getShortedVersion() {
+  getShortenedVersion() {
     return this.shortenedVersion;
   }
 
