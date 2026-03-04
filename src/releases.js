@@ -1,10 +1,6 @@
 "use strict";
 
-import { asynchronousUtilities } from "necessary";
-
 import Release from "./release";
-
-const { forEach } = asynchronousUtilities;
 
 export default class Releases {
   constructor(array) {
@@ -24,8 +20,6 @@ export default class Releases {
   reduceRelease(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
   forEachRelease(callback) { this.array.forEach(callback); }
-
-  asynchronousForEachRelease(callback, done) { forEach(this.array, callback, done); }
 
   toJSON() {
     const json = this.array.map((release) => {

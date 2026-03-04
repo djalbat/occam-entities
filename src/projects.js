@@ -1,10 +1,6 @@
 "use strict";
 
-import { asynchronousUtilities } from "necessary";
-
 import Project from "./project";
-
-const { forEach } = asynchronousUtilities;
 
 export default class Projects {
   constructor(array) {
@@ -24,8 +20,6 @@ export default class Projects {
   reduceProject(callback, initialValue) { return this.array.reduce(callback, initialValue); }
 
   forEachProject(callback) { this.array.forEach(callback); }
-
-  asynchronousForEachProject(callback, done) { forEach(this.array, callback, done); }
 
   toJSON() {
     const json = this.array.map((project) => {
