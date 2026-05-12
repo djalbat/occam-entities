@@ -7,7 +7,6 @@ import Dependency from "../dependency";
 import Dependencies from "../dependencies";
 import ShortenedVersion from "../shortenedVersion";
 
-import { DOUBLE_SPACE } from "../constants";
 import { trimDoubleQuotes } from "../utilities/content";
 import { nodeQuery, nodesQuery } from "../utilities/query";
 import { isStringVersionString, isStringShortenedVersionString } from "../utilities/validate";
@@ -61,7 +60,7 @@ export function updateMetaJSONFileVersion(metaJSONFile, version) {
           repository,
           dependencies
         },
-        metaJSONString = JSON.stringify(metaJSON, null, DOUBLE_SPACE),
+        metaJSONString = JSON.stringify(metaJSON, null, 2),
         metaJSONFileContent = metaJSONString; ///
 
   metaJSONFile.setContent(metaJSONFileContent);

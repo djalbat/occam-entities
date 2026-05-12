@@ -4,7 +4,6 @@ import File from "./file";
 import Entries from "./entries";
 import entriesMixins from "./mixins/entries";
 
-import { DOUBLE_SPACE } from "./constants";
 import { isMetaJSONFileValid } from "./utilities/metaJSON";
 import { isFilePathReleaseFilePath } from "./utilities/filePath";
 import { readmeFileFromFiles, metaJSONFileFromFiles } from "./utilities/files";
@@ -41,7 +40,7 @@ class Release {
             repository,
             dependencies
           },
-          jsonString = JSON.stringify(json, null, DOUBLE_SPACE),
+          jsonString = JSON.stringify(json, null, 2),
           file = metaJSONFile,  ///
           content = jsonString; ///
 
