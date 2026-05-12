@@ -55,13 +55,13 @@ export function updateMetaJSONFileVersion(metaJSONFile, version) {
 
   dependencies = dependenciesJSON;  ///
 
-  const metaJSON = {
+  const json = {
           version,
           repository,
           dependencies
         },
-        metaJSONString = JSON.stringify(metaJSON, null, 2),
-        metaJSONFileContent = metaJSONString; ///
+        jsonString = JSON.stringify(json, null, 2),
+        metaJSONFileContent = jsonString; ///
 
   metaJSONFile.setContent(metaJSONFileContent);
 }
