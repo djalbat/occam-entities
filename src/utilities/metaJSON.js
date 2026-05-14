@@ -1,6 +1,6 @@
 "use strict";
 
-import { queryUtilities } from "occam-dom";
+import { queryUtilities } from "occam-query";
 import { JSONLexer, JSONParser } from "occam-grammars";
 
 import Version from "../version";
