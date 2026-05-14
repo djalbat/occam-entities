@@ -1,5 +1,6 @@
 "use strict";
 
+import { queryUtilities } from "occam-dom";
 import { JSONLexer, JSONParser } from "occam-grammars";
 
 import Version from "../version";
@@ -8,9 +9,10 @@ import Dependencies from "../dependencies";
 import ShortenedVersion from "../shortenedVersion";
 
 import { trimDoubleQuotes } from "../utilities/content";
-import { nodeQuery, nodesQuery } from "../utilities/query";
 import { isStringVersionString, isStringShortenedVersionString } from "../utilities/validate";
 import { VERSION_PROPERTY_NAME, REPOSITORY_PROPERTY_NAME, DEPENDENCIES_PROPERTY_NAME } from "../propertyNames";
+
+const { nodeQuery, nodesQuery } = queryUtilities;
 
 const jsonLexer = JSONLexer.fromNothing(),
       jsonParser = JSONParser.fromNothing();
